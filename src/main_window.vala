@@ -15,7 +15,7 @@ public class Radio.MainWindow : Gtk.Window {
 	private Granite.Widgets.AppMenu app_menu;
 
 	// Views
-	private Gtk.TreeView			list_view;
+	private Radio.StationList		list_view;
 	private Granite.Widgets.Welcome welcome_view;
 
 	private int view_index = 0;
@@ -78,8 +78,8 @@ public class Radio.MainWindow : Gtk.Window {
 		welcome_view.append_with_image (wl_add_image,"Add","Add a new station.");
 		welcome_view.append_with_image (wl_search_image,"Search","Search stations online.");
 
-		// Create List Tree - TODO Create Cell Renderers and connect a StoreList
-		list_view = new Gtk.TreeView ();
+		// Create List Tree
+		list_view = new Radio.StationList ();
 
         // Main containers
         main_box = new Gtk.Box (Gtk.Orientation.VERTICAL,0);
@@ -100,8 +100,14 @@ public class Radio.MainWindow : Gtk.Window {
 
         // Set Default view
         this.change_view(this.view_index);
+
+        this.connect_ui_signals ();
 	}
 
+	private void connect_ui_signals () {
+		tlb_play_button.clicked.connect(this.play_pause_clicked);
+		tlb_next_button.clicked.connect(this.next_clicked);
+	}
 	/*
 
 		view-0 : welcome-view
@@ -114,10 +120,45 @@ public class Radio.MainWindow : Gtk.Window {
 
 		} else {
 			welcome_view.hide ();
-			list_view.hide ();
+			list_view.show ();
 
 		}
 
 		this.view_index = view_index;
 	}
+
+
+	/* ---------------- Widgets Events ---------------- */
+
+
+	public void play_pause_clicked () {
+		var player = Radio.App.player;
+		var icon_name = "";
+
+		if (player.initialized) {
+
+			if (player.playing) {
+				player.pause ();
+				icon_name = "media-playback-start";
+			} else {
+				player.play ();
+				icon_name = "media-playback-pause";
+			}
+
+			// Update icon
+			var icon = new Gtk.Image.from_icon_name(icon_name,Gtk.IconSize.LARGE_TOOLBAR);
+			icon.show();
+			tlb_play_button.set_icon_widget( icon );
+		}
+	}
+
+	public void next_clicked () {
+
+	}
+
+	public void prev_clicked () {
+
+	}
+
+
 }

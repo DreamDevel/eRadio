@@ -24,8 +24,11 @@ set (CONFIG_FILE_REL src/config.vala)
 find_package(PkgConfig)
 
 set (program_DEPS
+    gstreamer-0.10
     gtk+-3.0
     granite
+    sqlite3
+    gee-1.0
 )
 
 
@@ -51,6 +54,10 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/main.vala
     src/radio.vala
     src/main_window.vala
+    src/stream_player.vala
+    src/station_list.vala
+    src/stations.vala
+    src/station.vala
 # tell what libraries to use when compiling
 PACKAGES
     ${program_DEPS}

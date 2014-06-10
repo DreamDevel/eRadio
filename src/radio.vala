@@ -10,6 +10,7 @@ class Radio.App : Granite.Application {
 	public const string KEYWORDS = N_("Radio;Audio;Player;Media;Songs;");
 
 	public static Gtk.Window main_window {get;private set;default = null;}
+    public static Radio.StreamPlayer player;
 
 	construct {
 		// Application info
@@ -34,6 +35,8 @@ class Radio.App : Granite.Application {
 		about_authors = {"George Sofianos <georgesofianosgr@gmail.com>",null};
 		//help_url = "http://elementaryos.org/answers/+/noise/all/newest"; No help url available yet
 		//about_artists = {"Daniel Foré <daniel@elementaryos.org>", null};
+
+        player = new Radio.StreamPlayer ();
 	}
 
 	public App () {
