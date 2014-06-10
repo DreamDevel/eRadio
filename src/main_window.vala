@@ -1,16 +1,17 @@
 public class Radio.MainWindow : Gtk.Window {
 
 	// Window widgets
+	private Gtk.Box 		main_box;
+	private Gtk.Box 		view_box;
 	private Gtk.Toolbar 	toolbar;
-	private Gtk.ToolButton 	tlb_add_button;
-	private Gtk.ToolButton 	tlb_del_button;
 	private Gtk.ToolButton 	tlb_play_button;
 	private Gtk.ToolButton 	tlb_prev_button;
 	private Gtk.ToolButton 	tlb_next_button;
-	private Gtk.ToolItem 	space_left;
-	private Gtk.ToolItem 	space_right;
-	private Gtk.Box 		main_box;
-	private Gtk.Box 		view_box;
+	private Gtk.ToolItem 	tlb_space_left;
+	private Gtk.ToolItem 	tlb_volume_item;
+	private Gtk.ToolItem 	tlb_station_item;
+	private Gtk.Label 	    tlb_station_label;
+	private Gtk.Scale 		volume_scale;
 	private Granite.Widgets.AppMenu app_menu;
 
 	// Views
@@ -30,35 +31,44 @@ public class Radio.MainWindow : Gtk.Window {
 
 		// Toolbar buttons
 		// TODO Change Stock to icon name - Reason : stock is deprecated since Gtk 3.10
-		tlb_add_button = new Gtk.ToolButton ( new Gtk.Image.from_stock(Gtk.Stock.NEW,Gtk.IconSize.LARGE_TOOLBAR), "");
-		tlb_del_button = new Gtk.ToolButton ( new Gtk.Image.from_stock(Gtk.Stock.REMOVE,Gtk.IconSize.LARGE_TOOLBAR), "");
-		tlb_play_button = new Gtk.ToolButton (new Gtk.Image.from_stock(Gtk.Stock.MEDIA_PLAY,Gtk.IconSize.LARGE_TOOLBAR),"");
-		tlb_prev_button = new Gtk.ToolButton (new Gtk.Image.from_stock(Gtk.Stock.MEDIA_PREVIOUS,Gtk.IconSize.LARGE_TOOLBAR),"");
-		tlb_next_button = new Gtk.ToolButton (new Gtk.Image.from_stock(Gtk.Stock.MEDIA_NEXT,Gtk.IconSize.LARGE_TOOLBAR),"");
+		tlb_play_button = new Gtk.ToolButton (new Gtk.Image.from_icon_name("media-playback-start",Gtk.IconSize.LARGE_TOOLBAR),"");
+		tlb_prev_button = new Gtk.ToolButton (new Gtk.Image.from_icon_name("media-skip-backward",Gtk.IconSize.LARGE_TOOLBAR),"");
+		tlb_next_button = new Gtk.ToolButton (new Gtk.Image.from_icon_name("media-skip-forward",Gtk.IconSize.LARGE_TOOLBAR),"");
 
-		// Some Toolitem that expand to add space
-		space_left = new Gtk.ToolItem ();
-		space_right = new Gtk.ToolItem ();
-		space_left.set_expand (true);
-		space_right.set_expand (true);
 
-		// Default elementary os button at the right side
-		app_menu = application.create_appmenu (new Gtk.Menu ());
+		// ToolItem to give some space
+		tlb_space_left = new Gtk.ToolItem ();
+		tlb_space_left.width_request = 20;
 
-		toolbar.add (tlb_add_button);
-		toolbar.add (tlb_del_button);
-		toolbar.add (space_left);
+		tlb_volume_item = new Gtk.ToolItem ();
+		volume_scale =  new Gtk.Scale.with_range (Gtk.Orientation.HORIZONTAL, 0, 100, 1);
+		volume_scale.width_request = 100;
+		volume_scale.draw_value = false;
+		tlb_volume_item.add (volume_scale);
+
+		tlb_station_item = new Gtk.ToolItem ();
+		tlb_station_label = new Gtk.Label(null); // TODO Add bold style instead for markup
+		tlb_station_label.set_markup("<b>No Station</b>");
+		tlb_station_item.set_expand (true);
+		tlb_station_item.add (tlb_station_label);
+
+		var menu = new Gtk.Menu ();
+		menu.append(new Gtk.MenuItem.with_label ("Add New Station"));
+		menu.append(new Gtk.MenuItem.with_label ("Search Online Stations"));
+		app_menu = application.create_appmenu (menu);
+
 		toolbar.add (tlb_prev_button);
 		toolbar.add (tlb_play_button);
 		toolbar.add (tlb_next_button);
-		toolbar.add (space_right);
+		toolbar.add (tlb_space_left);
+		toolbar.add (tlb_volume_item);
+		toolbar.add (tlb_station_item);
 		toolbar.add (app_menu);
 		toolbar.get_style_context ().add_class ("primary-toolbar");
 
 
-		// Create Welcome Page
+		// Create Welcome View
 		welcome_view = new Granite.Widgets.Welcome ("Radio","Add a station to begin listening");
-
 		var wl_add_image = new Gtk.Image.from_icon_name("document-new",Gtk.IconSize.DND);
 		var wl_search_image = new Gtk.Image.from_icon_name("system-search",Gtk.IconSize.DND);
 
@@ -68,7 +78,7 @@ public class Radio.MainWindow : Gtk.Window {
 		welcome_view.append_with_image (wl_add_image,"Add","Add a new station.");
 		welcome_view.append_with_image (wl_search_image,"Search","Search stations online.");
 
-		// Create List Tree
+		// Create List Tree - TODO Create Cell Renderers and connect a StoreList
 		list_view = new Gtk.TreeView ();
 
         // Main containers
