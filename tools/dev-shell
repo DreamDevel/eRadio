@@ -1,0 +1,6 @@
+export EXEC_NAME="radio"
+export PROJ_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && cd ../ && pwd )"
+export TOOLS_DIR="$PROJ_DIR/tools"
+export BUILD_DIR="$PROJ_DIR/build"
+export EXEC_PATH="$PROJ_DIR/build/$EXEC_NAME"
+export PATH=$PATH:$TOOLS_DIR
