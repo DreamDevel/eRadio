@@ -57,6 +57,7 @@ public class Radio.MainWindow : Gtk.Window {
 		tlb_station_item.set_expand (true);
 		tlb_station_item.add (tlb_station_label);
 
+
 		var menu = new Gtk.Menu ();
 		menu.append(new Gtk.MenuItem.with_label ("Add New Station"));
 		// Commented out until online search feature is implemented
@@ -73,7 +74,6 @@ public class Radio.MainWindow : Gtk.Window {
 		toolbar.get_style_context ().add_class ("primary-toolbar");
 
 
-		// Create Welcome View
 		welcome_view = new Granite.Widgets.Welcome ("Radio","Add a station to begin listening");
 		var wl_add_image = new Gtk.Image.from_icon_name("document-new",Gtk.IconSize.DND);
 		// Commented out until online search feature is implemented
@@ -87,7 +87,7 @@ public class Radio.MainWindow : Gtk.Window {
 		// Commented out until online search feature is implemented
 		//welcome_view.append_with_image (wl_search_image,"Search","Search stations online.");
 
-		// Create List Tree
+		// Note : With StationList creation we initialize the local db
 		try {
 			list_view = new Radio.StationList ();
 			list_view.activated.connect(this.change_station);
@@ -96,6 +96,7 @@ public class Radio.MainWindow : Gtk.Window {
 			application.quit();
 		}
 
+		// In case db has stations show list else welcome view
 		if(list_view.count () > 0 )
 			this.view_index = 1;
 
@@ -131,27 +132,9 @@ public class Radio.MainWindow : Gtk.Window {
 			var volume_value = slider.get_value();
 			Radio.App.player.set_volume(volume_value);
 		});
-
-		/*list_view.button_release_event.connect ( (event) => {
-			if(event.button == 3) {
-				stdout.printf("Right Click\n");
-				Gtk.TreePath path;
-				var row_exists = list_view.get_path_at_pos((int)event.x,(int)event.y,
-															out path,null,null,null);
-				if (row_exists) {
-
-					Gtk.Menu context_menu = new Gtk.Menu ();
-					context_menu.add(new Gtk.MenuItem.with_label ("Edit"));
-					context_menu.add(new Gtk.MenuItem.with_label ("Remove"));
-					context_menu.popup (null,null,null,event.button,event.time);
-
-				}
-			}
-			return true;
-		});*/
 	}
-	/*
 
+	/*
 		view-0 : welcome-view
 		view-1 : list-view
 	*/
