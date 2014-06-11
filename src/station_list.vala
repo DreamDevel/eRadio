@@ -42,23 +42,8 @@ public class Radio.StationList : Gtk.TreeView {
 		return num_stations;
 	}
 
-	// Add a station to db and then reload_list
-	/*public void add (Radio.Station station) {
-
-		this.reload_list ();
-	}
-
-
-	public void delete () {
-
-		this.reload_list ();
-	}
-
-	private void build_ui () {
-
-	}*/
-
-	private void row_double_clicked() {
+	// Seted this as public so we can simulate station selection from window
+	public void row_double_clicked() {
 
 		Gtk.TreeIter iter;
 		Gtk.TreeModel model;

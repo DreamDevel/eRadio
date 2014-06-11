@@ -28,25 +28,30 @@ public class Radio.StreamPlayer : GLib.Object {
 
 	public StreamPlayer () {
 
-		pipeline = null;
-		bus      = null;
+		pipeline = Gst.ElementFactory.make ("playbin2","play");
+		bus = pipeline.get_bus();
+		bus.add_watch (busCallback);
 		playing  = false;
 	}
 
 	public void add (string uri) {
 
-		if (pipeline == null) {
-			initialized = true;
-		}
+		if (!this.initialized)
+			this.initialized = true;
 
-		// Set play state to null to free previous stream
-		this.stop ();
+		pipeline.set_state(State.READY);
+		pipeline.set_property("uri",uri);
 
-		pipeline = Gst.ElementFactory.make("playbin2","play");
-		pipeline.set("uri",uri);
-		bus = pipeline.get_bus();
-		bus.add_watch(busCallback);
+	}
 
+	public void set_volume (double value) {
+		pipeline.set_property("volume",value);
+	}
+
+	public double get_volume () {
+		var val = GLib.Value (typeof(double));
+		pipeline.get_property ("volume", ref val);
+		return (double)val;
 	}
 
 	public void play() {

@@ -44,8 +44,9 @@ public class Radio.MainWindow : Gtk.Window {
 		tlb_space_left.width_request = 20;
 
 		tlb_volume_item = new Gtk.ToolItem ();
-		volume_scale =  new Gtk.Scale.with_range (Gtk.Orientation.HORIZONTAL, 0, 100, 1);
+		volume_scale =  new Gtk.Scale.with_range (Gtk.Orientation.HORIZONTAL, 0, 1, 0.01);
 		volume_scale.width_request = 100;
+		volume_scale.set_value(1);
 		volume_scale.draw_value = false;
 		tlb_volume_item.add (volume_scale);
 
@@ -58,7 +59,8 @@ public class Radio.MainWindow : Gtk.Window {
 
 		var menu = new Gtk.Menu ();
 		menu.append(new Gtk.MenuItem.with_label ("Add New Station"));
-		menu.append(new Gtk.MenuItem.with_label ("Search Online Stations"));
+		// Commented out until online search feature is implemented
+		//menu.append(new Gtk.MenuItem.with_label ("Search Online Stations"));
 		app_menu = application.create_appmenu (menu);
 
 		toolbar.add (tlb_prev_button);
@@ -74,13 +76,16 @@ public class Radio.MainWindow : Gtk.Window {
 		// Create Welcome View
 		welcome_view = new Granite.Widgets.Welcome ("Radio","Add a station to begin listening");
 		var wl_add_image = new Gtk.Image.from_icon_name("document-new",Gtk.IconSize.DND);
-		var wl_search_image = new Gtk.Image.from_icon_name("system-search",Gtk.IconSize.DND);
+		// Commented out until online search feature is implemented
+		//var wl_search_image = new Gtk.Image.from_icon_name("system-search",Gtk.IconSize.DND);
 
 		wl_add_image.set_pixel_size(128);
-		wl_search_image.set_pixel_size(128);
+		// Commented out until online search feature is implemented
+		//wl_search_image.set_pixel_size(128);
 
 		welcome_view.append_with_image (wl_add_image,"Add","Add a new station.");
-		welcome_view.append_with_image (wl_search_image,"Search","Search stations online.");
+		// Commented out until online search feature is implemented
+		//welcome_view.append_with_image (wl_search_image,"Search","Search stations online.");
 
 		// Create List Tree
 		try {
@@ -121,6 +126,29 @@ public class Radio.MainWindow : Gtk.Window {
 
 		tlb_play_button.clicked.connect(this.play_pause_clicked);
 		tlb_next_button.clicked.connect(this.next_clicked);
+		tlb_prev_button.clicked.connect(this.prev_clicked);
+		volume_scale.value_changed.connect( (slider) => {
+			var volume_value = slider.get_value();
+			Radio.App.player.set_volume(volume_value);
+		});
+
+		/*list_view.button_release_event.connect ( (event) => {
+			if(event.button == 3) {
+				stdout.printf("Right Click\n");
+				Gtk.TreePath path;
+				var row_exists = list_view.get_path_at_pos((int)event.x,(int)event.y,
+															out path,null,null,null);
+				if (row_exists) {
+
+					Gtk.Menu context_menu = new Gtk.Menu ();
+					context_menu.add(new Gtk.MenuItem.with_label ("Edit"));
+					context_menu.add(new Gtk.MenuItem.with_label ("Remove"));
+					context_menu.popup (null,null,null,event.button,event.time);
+
+				}
+			}
+			return true;
+		});*/
 	}
 	/*
 
@@ -180,12 +208,61 @@ public class Radio.MainWindow : Gtk.Window {
 		}
 	}
 
-	public void next_clicked () {
+	public void prev_clicked (Gtk.ToolButton button) {
 
+		Gtk.TreeIter iter;
+		Gtk.TreeModel model;
+
+		// Get Selection object
+		var tree_selection = list_view.get_selection ();
+
+		if (tree_selection == null) {
+			stderr.printf ("Could not get TreeSelection");
+
+		} else {
+			if (tree_selection.get_selected (out model,out iter)) {
+				bool previous_iter_exists = model.iter_previous (ref iter);
+
+				// If we reach last entry go to first
+				//if(!next_iter_exists)
+				//	model.get_iter_first(out iter);
+
+				if (previous_iter_exists) {
+					// Select next
+					tree_selection.select_iter (iter);
+					list_view.row_double_clicked();
+				}
+			}
+		}
 	}
 
-	public void prev_clicked () {
+	public void next_clicked(Gtk.ToolButton button) {
 
+		Gtk.TreeIter iter;
+		Gtk.TreeModel model;
+
+		// Get Selection object
+		var tree_selection = list_view.get_selection();
+
+		if (tree_selection == null) {
+			stderr.printf ("Could not get TreeSelection");
+
+		} else {
+			if (tree_selection.get_selected (out model,out iter)) {
+				bool next_iter_exists = model.iter_next (ref iter);
+
+				// If we reach last entry go to first
+				// Commented Out Until Implement iter_last for previous clicked - TODO
+				/*if(!next_iter_exists)
+					model.get_iter_first(out iter);*/
+
+				if (next_iter_exists) {
+					tree_selection.select_iter (iter);
+					list_view.row_double_clicked ();
+				}
+			}
+
+		}
 	}
 
 
