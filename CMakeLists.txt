@@ -58,6 +58,7 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/station_list.vala
     src/stations.vala
     src/station.vala
+    src/error.vala
 # tell what libraries to use when compiling
 PACKAGES
     ${program_DEPS}

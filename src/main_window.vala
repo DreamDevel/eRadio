@@ -21,6 +21,7 @@ public class Radio.MainWindow : Gtk.Window {
 	private int view_index = 0;
 
 	public MainWindow () {
+
 		var application = (Radio.App) GLib.Application.get_default();
 		this.set_title (application.program_name);
 		this.set_default_size (600,400);
@@ -79,7 +80,16 @@ public class Radio.MainWindow : Gtk.Window {
 		welcome_view.append_with_image (wl_search_image,"Search","Search stations online.");
 
 		// Create List Tree
-		list_view = new Radio.StationList ();
+		try {
+			list_view = new Radio.StationList ();
+			list_view.activated.connect(this.change_station);
+		} catch (Radio.Error e) {
+			stderr.printf(e.message);
+			application.quit();
+		}
+
+		if(list_view.count () > 0 )
+			this.view_index = 1;
 
         // Main containers
         main_box = new Gtk.Box (Gtk.Orientation.VERTICAL,0);
@@ -105,6 +115,7 @@ public class Radio.MainWindow : Gtk.Window {
 	}
 
 	private void connect_ui_signals () {
+
 		tlb_play_button.clicked.connect(this.play_pause_clicked);
 		tlb_next_button.clicked.connect(this.next_clicked);
 	}
@@ -114,6 +125,7 @@ public class Radio.MainWindow : Gtk.Window {
 		view-1 : list-view
 	*/
 	public void change_view (int view_index) {
+
 		if (view_index == 0) {
 			list_view.hide ();
 			welcome_view.show ();
@@ -127,11 +139,24 @@ public class Radio.MainWindow : Gtk.Window {
 		this.view_index = view_index;
 	}
 
+	public void change_station (Radio.Station station) {
+
+		tlb_station_label.set_markup(@"<b>$(station.name) - $(station.url)</b>");
+		var icon = new Gtk.Image.from_icon_name("media-playback-pause",Gtk.IconSize.LARGE_TOOLBAR);
+		icon.show();
+
+		var player = Radio.App.player;
+		tlb_play_button.set_icon_widget( icon );
+		player.add(station.url);
+		player.play();
+	}
+
 
 	/* ---------------- Widgets Events ---------------- */
 
 
 	public void play_pause_clicked () {
+
 		var player = Radio.App.player;
 		var icon_name = "";
 
