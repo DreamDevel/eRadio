@@ -24,9 +24,11 @@ public class Radio.MainWindow : Gtk.Window {
 
 		var application = (Radio.App) GLib.Application.get_default();
 		this.set_title (application.program_name);
-		this.set_default_size (600,400);
+		this.set_size_request (500, 250);
 		this.set_application (application);
 		this.set_position (Gtk.WindowPosition.CENTER);
+		this.icon_name = "radio";
+		this.resizable = false;
 
 		toolbar = new Gtk.Toolbar ();
 
@@ -48,8 +50,9 @@ public class Radio.MainWindow : Gtk.Window {
 		tlb_volume_item.add (volume_scale);
 
 		tlb_station_item = new Gtk.ToolItem ();
-		tlb_station_label = new Gtk.Label(null); // TODO Add bold style instead for markup
+		tlb_station_label = new Gtk.Label(null);
 		tlb_station_label.set_markup("<b>No Station</b>");
+		tlb_station_label.ellipsize = Pango.EllipsizeMode.END;
 		tlb_station_item.set_expand (true);
 		tlb_station_item.add (tlb_station_label);
 
@@ -141,7 +144,7 @@ public class Radio.MainWindow : Gtk.Window {
 
 	public void change_station (Radio.Station station) {
 
-		tlb_station_label.set_markup(@"<b>$(station.name) - $(station.url)</b>");
+		tlb_station_label.set_markup(@"<b>$(station.name)</b>");
 		var icon = new Gtk.Image.from_icon_name("media-playback-pause",Gtk.IconSize.LARGE_TOOLBAR);
 		icon.show();
 
