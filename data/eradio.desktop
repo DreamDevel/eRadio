@@ -1,0 +1,13 @@
+[Desktop Entry]
+Name=eRadio
+GenericName=Radio Player
+Comment=Stream online radio stations
+Categories=Audio
+Exec=eradio
+Icon=/usr/share/eradio/icon.png
+Terminal=false
+Type=Application
+Version=1.0Beta
+X-GNOME-Gettext-Domain=eradio
+X-GNOME-Keywords=Eradio;Stream;Radio;Music;Audio
+X-AppInstall-Keywords=Eradio;Stream;Radio;Music;Audio

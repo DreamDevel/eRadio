@@ -46,8 +46,18 @@ public class Radio.StationList : Gtk.TreeView {
         context_menu.show_all ();
 
         var home_dir = File.new_for_path (Environment.get_home_dir ());
-        var radio_dir = home_dir.get_child(".local").get_child("share").get_child("radio");
+        var radio_dir = home_dir.get_child(".local").get_child("share").get_child("eradio");
         var db_file = radio_dir.get_child("stations.db");
+
+        // Create ~/.local/share/eradio path
+        if (! radio_dir.query_exists ()) {
+            try {
+                radio_dir.make_directory_with_parents();
+            } catch (GLib.Error error) {
+                stderr.printf(error.message);
+            }
+
+        }
 
         try {
             this.stations_db = new Radio.Stations.with_db_file (db_file.get_path());
