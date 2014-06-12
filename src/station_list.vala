@@ -34,15 +34,18 @@ public class Radio.StationList : Gtk.TreeView {
         this.insert_column_with_attributes (-1, "Genre", cell, "text", 1);
         this.insert_column_with_attributes (-1, "Url", cell, "text", 2);
 
+        this.get_column (0).set_min_width (140);
+        this.get_column (1).set_min_width (100);
+        this.get_column (3).set_min_width (150);
+
+        this.row_activated.connect (this.row_double_clicked);
+        this.button_release_event.connect (this.open_context_menu);
+
         context_menu = new Gtk.Menu ();
         context_menu.add (new Gtk.MenuItem.with_label ("Edit"));
         context_menu.add (new Gtk.MenuItem.with_label ("Remove"));
         context_menu.show_all ();
 
-        this.row_activated.connect (this.row_double_clicked);
-        this.button_release_event.connect (this.open_context_menu);
-
-        // Get Directory paths
         var home_dir = File.new_for_path (Environment.get_home_dir ());
         var radio_dir = home_dir.get_child(".local").get_child("share").get_child("radio");
         var db_file = radio_dir.get_child("stations.db");
