@@ -1,5 +1,5 @@
 
-project (radio)
+project (eradio)
 
 cmake_minimum_required (VERSION 2.6)
 
@@ -10,10 +10,10 @@ list (APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 set (DATADIR "${CMAKE_INSTALL_PREFIX}/share")
 
 # what to call that directory where we install data too
-set (PKGDATADIR "${DATADIR}/radio")
-set (EXEC_NAME "radio")
-set (RELEASE_NAME "Radio")
-set (VERSION "0.1")
+set (PKGDATADIR "${DATADIR}/eradio")
+set (EXEC_NAME "eradio")
+set (RELEASE_NAME "eRadio")
+set (VERSION "1.0 Beta")
 set (VERSION_INFO "First Release")
 
 set (CONFIG_FILE ${CMAKE_CURRENT_SOURCE_DIR}/src/config.vala)

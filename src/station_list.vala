@@ -36,7 +36,6 @@ public class Radio.StationList : Gtk.TreeView {
 
         this.get_column (0).set_min_width (140);
         this.get_column (1).set_min_width (100);
-        this.get_column (3).set_min_width (150);
 
         this.row_activated.connect (this.row_double_clicked);
         this.button_release_event.connect (this.open_context_menu);

@@ -38,18 +38,18 @@ class Radio.App : Granite.Application {
 		build_version = Build.VERSION;
 		build_version_info = Build.VERSION_INFO;
 
-		program_name = "Radio";
-		exec_name = "radio";
+		program_name = "eRadio";
+		exec_name = "eradio";
 
 		app_copyright = "2014";
-		application_id = "org.dreamdev.radio";
-		app_icon = "radio";
-		app_launcher = "radio.desktop";
+		application_id = "org.dreamdev.eradio";
+		app_icon = "eradio";
+		app_launcher = "eradio.desktop";
 		app_years = "2014";
 
-		main_url = "https://launchpad.net/radio";
-		bug_url = "https://bugs.launchpad.net/radio/+filebug";
-		translate_url = "https://translations.launchpad.net/radio";
+		main_url = "https://launchpad.net/eradio";
+		bug_url = "https://bugs.launchpad.net/eradio/+filebug";
+		translate_url = "https://translations.launchpad.net/eradio";
 		about_authors = {"George Sofianos <georgesofianosgr@gmail.com>",null};
 		//help_url = "http://elementaryos.org/answers/+/noise/all/newest"; No help url available yet
 		//about_artists = {"Daniel Foré <daniel@elementaryos.org>", null};

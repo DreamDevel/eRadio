@@ -46,13 +46,12 @@ public class Radio.MainWindow : Gtk.Window {
 		this.set_size_request (500, 250);
 		this.set_application (application);
 		this.set_position (Gtk.WindowPosition.CENTER);
-		this.icon_name = "radio";
+		this.icon_name = "eradio";
 		this.resizable = false;
 
 		toolbar = new Gtk.Toolbar ();
 
 		// Toolbar buttons
-		// TODO Change Stock to icon name - Reason : stock is deprecated since Gtk 3.10
 		tlb_play_button = new Gtk.ToolButton (new Gtk.Image.from_icon_name("media-playback-start",Gtk.IconSize.LARGE_TOOLBAR),"");
 		tlb_prev_button = new Gtk.ToolButton (new Gtk.Image.from_icon_name("media-skip-backward",Gtk.IconSize.LARGE_TOOLBAR),"");
 		tlb_next_button = new Gtk.ToolButton (new Gtk.Image.from_icon_name("media-skip-forward",Gtk.IconSize.LARGE_TOOLBAR),"");
