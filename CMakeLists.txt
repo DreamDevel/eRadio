@@ -47,6 +47,7 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/stations.vala
     src/station.vala
     src/error.vala
+    src/station_dialog.vala
 PACKAGES
     ${PROJECT_DEPS}
 )

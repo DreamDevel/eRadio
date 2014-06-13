@@ -31,13 +31,16 @@ public class Radio.MainWindow : Gtk.Window {
 	private Gtk.ToolItem 	tlb_station_item;
 	private Gtk.Label 	    tlb_station_label;
 	private Gtk.Scale 		volume_scale;
+	private Gtk.MenuItem 	menu_item_add;
 	private Granite.Widgets.AppMenu app_menu;
+	private Radio.StationDialog 	dialog_add;
+	private Radio.StationDialog 	dialog_edit;
 
 	// Views
 	private Radio.StationList		list_view;
 	private Granite.Widgets.Welcome welcome_view;
 
-	private int view_index = 0;
+	private int view_index = 0; // Change between welcome view (0) & list view (1)
 
 	public MainWindow () {
 
@@ -77,7 +80,8 @@ public class Radio.MainWindow : Gtk.Window {
 
 
 		var menu = new Gtk.Menu ();
-		menu.append(new Gtk.MenuItem.with_label ("Add New Station"));
+		menu_item_add = new Gtk.MenuItem.with_label ("Add New Station");
+		menu.append(menu_item_add);
 		// Commented out until online search feature is implemented
 		//menu.append(new Gtk.MenuItem.with_label ("Search Online Stations"));
 		app_menu = application.create_appmenu (menu);
@@ -138,6 +142,12 @@ public class Radio.MainWindow : Gtk.Window {
         // Set Default view
         this.change_view(this.view_index);
 
+
+       	// Dialogs
+        dialog_add = new Radio.StationDialog (this,"Add");
+        dialog_edit = new Radio.StationDialog (this,"Change");
+
+
         this.connect_ui_signals ();
 	}
 
@@ -146,6 +156,17 @@ public class Radio.MainWindow : Gtk.Window {
 		tlb_play_button.clicked.connect(this.play_pause_clicked);
 		tlb_next_button.clicked.connect(this.next_clicked);
 		tlb_prev_button.clicked.connect(this.prev_clicked);
+
+		menu_item_add.activate.connect( () => {
+			dialog_add.show();
+		});
+
+		dialog_add.button_clicked.connect ( () => {
+			list_view.add (dialog_add.entry_name.text,
+						   dialog_add.entry_url.text,
+						   dialog_add.entry_genre.text);
+		});
+
 		volume_scale.value_changed.connect( (slider) => {
 			var volume_value = slider.get_value();
 			Radio.App.player.set_volume(volume_value);
@@ -172,7 +193,6 @@ public class Radio.MainWindow : Gtk.Window {
 	}
 
 	public void change_station (Radio.Station station) {
-
 		tlb_station_label.set_markup(@"<b>$(station.name)</b>");
 		var icon = new Gtk.Image.from_icon_name("media-playback-pause",Gtk.IconSize.LARGE_TOOLBAR);
 		icon.show();

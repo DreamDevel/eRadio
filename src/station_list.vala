@@ -68,6 +68,15 @@ public class Radio.StationList : Gtk.TreeView {
         this.reload_list ();
     }
 
+    public new void add (string name,string url,string genre) {
+        try {
+                stations_db.add (name,url,genre);
+                this.reload_list ();
+            } catch (Radio.Error error) {
+                stderr.printf (error.message);
+            }
+    }
+
     public int count () {
 
         var num_stations = 0;
