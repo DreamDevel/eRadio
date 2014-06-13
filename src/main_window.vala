@@ -19,108 +19,108 @@
 
 public class Radio.MainWindow : Gtk.Window {
 
-	// Window widgets
-	private Gtk.Box 		main_box;
-	private Gtk.Box 		view_box;
-	private Gtk.Toolbar 	toolbar;
-	private Gtk.ToolButton 	tlb_play_button;
-	private Gtk.ToolButton 	tlb_prev_button;
-	private Gtk.ToolButton 	tlb_next_button;
-	private Gtk.ToolItem 	tlb_space_left;
-	private Gtk.ToolItem 	tlb_volume_item;
-	private Gtk.ToolItem 	tlb_station_item;
-	private Gtk.Label 	    tlb_station_label;
-	private Gtk.Scale 		volume_scale;
-	private Gtk.MenuItem 	menu_item_add;
-	private Granite.Widgets.AppMenu app_menu;
-	private Radio.StationDialog 	dialog_add;
-	private Radio.StationDialog 	dialog_edit;
+    // Window widgets
+    private Gtk.Box         main_box;
+    private Gtk.Box         view_box;
+    private Gtk.Toolbar     toolbar;
+    private Gtk.ToolButton  tlb_play_button;
+    private Gtk.ToolButton  tlb_prev_button;
+    private Gtk.ToolButton  tlb_next_button;
+    private Gtk.ToolItem    tlb_space_left;
+    private Gtk.ToolItem    tlb_volume_item;
+    private Gtk.ToolItem    tlb_station_item;
+    private Gtk.Label       tlb_station_label;
+    private Gtk.Scale       volume_scale;
+    private Gtk.MenuItem    menu_item_add;
+    private Granite.Widgets.AppMenu app_menu;
+    private Radio.StationDialog     dialog_add;
+    private Radio.StationDialog     dialog_edit;
 
-	// Views
-	private Radio.StationList		list_view;
-	private Granite.Widgets.Welcome welcome_view;
+    // Views
+    private Radio.StationList       list_view;
+    private Granite.Widgets.Welcome welcome_view;
 
-	private int view_index = 0; // Change between welcome view (0) & list view (1)
+    private int view_index = 0; // Change between welcome view (0) & list view (1)
 
-	public MainWindow () {
+    public MainWindow () {
 
-		var application = (Radio.App) GLib.Application.get_default();
-		this.set_title (application.program_name);
-		this.set_size_request (500, 250);
-		this.set_application (application);
-		this.set_position (Gtk.WindowPosition.CENTER);
-		this.icon_name = "eradio";
-		this.resizable = false;
+        var application = (Radio.App) GLib.Application.get_default();
+        this.set_title (application.program_name);
+        this.set_size_request (500, 250);
+        this.set_application (application);
+        this.set_position (Gtk.WindowPosition.CENTER);
+        this.icon_name = "eradio";
+        this.resizable = false;
 
-		toolbar = new Gtk.Toolbar ();
+        toolbar = new Gtk.Toolbar ();
 
-		// Toolbar buttons
-		tlb_play_button = new Gtk.ToolButton (new Gtk.Image.from_icon_name("media-playback-start",Gtk.IconSize.LARGE_TOOLBAR),"");
-		tlb_prev_button = new Gtk.ToolButton (new Gtk.Image.from_icon_name("media-skip-backward",Gtk.IconSize.LARGE_TOOLBAR),"");
-		tlb_next_button = new Gtk.ToolButton (new Gtk.Image.from_icon_name("media-skip-forward",Gtk.IconSize.LARGE_TOOLBAR),"");
-
-
-		// ToolItem to give some space
-		tlb_space_left = new Gtk.ToolItem ();
-		tlb_space_left.width_request = 20;
-
-		tlb_volume_item = new Gtk.ToolItem ();
-		volume_scale =  new Gtk.Scale.with_range (Gtk.Orientation.HORIZONTAL, 0, 1, 0.01);
-		volume_scale.width_request = 100;
-		volume_scale.set_value(1);
-		volume_scale.draw_value = false;
-		tlb_volume_item.add (volume_scale);
-
-		tlb_station_item = new Gtk.ToolItem ();
-		tlb_station_label = new Gtk.Label(null);
-		tlb_station_label.set_markup("<b>No Station</b>");
-		tlb_station_label.ellipsize = Pango.EllipsizeMode.END;
-		tlb_station_item.set_expand (true);
-		tlb_station_item.add (tlb_station_label);
+        // Toolbar buttons
+        tlb_play_button = new Gtk.ToolButton (new Gtk.Image.from_icon_name("media-playback-start",Gtk.IconSize.LARGE_TOOLBAR),"");
+        tlb_prev_button = new Gtk.ToolButton (new Gtk.Image.from_icon_name("media-skip-backward",Gtk.IconSize.LARGE_TOOLBAR),"");
+        tlb_next_button = new Gtk.ToolButton (new Gtk.Image.from_icon_name("media-skip-forward",Gtk.IconSize.LARGE_TOOLBAR),"");
 
 
-		var menu = new Gtk.Menu ();
-		menu_item_add = new Gtk.MenuItem.with_label ("Add New Station");
-		menu.append(menu_item_add);
-		// Commented out until online search feature is implemented
-		//menu.append(new Gtk.MenuItem.with_label ("Search Online Stations"));
-		app_menu = application.create_appmenu (menu);
+        // ToolItem to give some space
+        tlb_space_left = new Gtk.ToolItem ();
+        tlb_space_left.width_request = 20;
 
-		toolbar.add (tlb_prev_button);
-		toolbar.add (tlb_play_button);
-		toolbar.add (tlb_next_button);
-		toolbar.add (tlb_space_left);
-		toolbar.add (tlb_volume_item);
-		toolbar.add (tlb_station_item);
-		toolbar.add (app_menu);
-		toolbar.get_style_context ().add_class ("primary-toolbar");
+        tlb_volume_item = new Gtk.ToolItem ();
+        volume_scale =  new Gtk.Scale.with_range (Gtk.Orientation.HORIZONTAL, 0, 1, 0.01);
+        volume_scale.width_request = 100;
+        volume_scale.set_value(1);
+        volume_scale.draw_value = false;
+        tlb_volume_item.add (volume_scale);
+
+        tlb_station_item = new Gtk.ToolItem ();
+        tlb_station_label = new Gtk.Label(null);
+        tlb_station_label.set_markup("<b>No Station</b>");
+        tlb_station_label.ellipsize = Pango.EllipsizeMode.END;
+        tlb_station_item.set_expand (true);
+        tlb_station_item.add (tlb_station_label);
 
 
-		welcome_view = new Granite.Widgets.Welcome ("Radio","Add a station to begin listening");
-		var wl_add_image = new Gtk.Image.from_icon_name("document-new",Gtk.IconSize.DND);
-		// Commented out until online search feature is implemented
-		//var wl_search_image = new Gtk.Image.from_icon_name("system-search",Gtk.IconSize.DND);
+        var menu = new Gtk.Menu ();
+        menu_item_add = new Gtk.MenuItem.with_label ("Add New Station");
+        menu.append(menu_item_add);
+        // Commented out until online search feature is implemented
+        //menu.append(new Gtk.MenuItem.with_label ("Search Online Stations"));
+        app_menu = application.create_appmenu (menu);
 
-		wl_add_image.set_pixel_size(128);
-		// Commented out until online search feature is implemented
-		//wl_search_image.set_pixel_size(128);
+        toolbar.add (tlb_prev_button);
+        toolbar.add (tlb_play_button);
+        toolbar.add (tlb_next_button);
+        toolbar.add (tlb_space_left);
+        toolbar.add (tlb_volume_item);
+        toolbar.add (tlb_station_item);
+        toolbar.add (app_menu);
+        toolbar.get_style_context ().add_class ("primary-toolbar");
 
-		welcome_view.append_with_image (wl_add_image,"Add","Add a new station.");
-		// Commented out until online search feature is implemented
-		//welcome_view.append_with_image (wl_search_image,"Search","Search stations online.");
 
-		// Note : With StationList creation we initialize the local db
-		try {
-			list_view = new Radio.StationList ();
-			list_view.activated.connect(this.change_station);
-		} catch (Radio.Error e) {
-			stderr.printf(e.message);
-			application.quit();
-		}
+        welcome_view = new Granite.Widgets.Welcome ("Radio","Add a station to begin listening");
+        var wl_add_image = new Gtk.Image.from_icon_name("document-new",Gtk.IconSize.DND);
+        // Commented out until online search feature is implemented
+        //var wl_search_image = new Gtk.Image.from_icon_name("system-search",Gtk.IconSize.DND);
 
-		// In case db has stations show list else welcome view
-		if(list_view.count () > 0 )
-			this.view_index = 1;
+        wl_add_image.set_pixel_size(128);
+        // Commented out until online search feature is implemented
+        //wl_search_image.set_pixel_size(128);
+
+        welcome_view.append_with_image (wl_add_image,"Add","Add a new station.");
+        // Commented out until online search feature is implemented
+        //welcome_view.append_with_image (wl_search_image,"Search","Search stations online.");
+
+        // Note : With StationList creation we initialize the local db
+        try {
+            list_view = new Radio.StationList ();
+            list_view.activated.connect(this.change_station);
+        } catch (Radio.Error e) {
+            stderr.printf(e.message);
+            application.quit();
+        }
+
+        // In case db has stations show list else welcome view
+        if(list_view.count () > 0 )
+            this.view_index = 1;
 
         // Main containers
         main_box = new Gtk.Box (Gtk.Orientation.VERTICAL,0);
@@ -143,148 +143,148 @@ public class Radio.MainWindow : Gtk.Window {
         this.change_view(this.view_index);
 
 
-       	// Dialogs
+        // Dialogs
         dialog_add = new Radio.StationDialog (this,"Add");
         dialog_edit = new Radio.StationDialog (this,"Change");
 
 
         this.connect_ui_signals ();
-	}
+    }
 
-	private void connect_ui_signals () {
+    private void connect_ui_signals () {
 
-		tlb_play_button.clicked.connect(this.play_pause_clicked);
-		tlb_next_button.clicked.connect(this.next_clicked);
-		tlb_prev_button.clicked.connect(this.prev_clicked);
+        tlb_play_button.clicked.connect(this.play_pause_clicked);
+        tlb_next_button.clicked.connect(this.next_clicked);
+        tlb_prev_button.clicked.connect(this.prev_clicked);
 
-		menu_item_add.activate.connect( () => {
-			dialog_add.show();
-		});
+        menu_item_add.activate.connect( () => {
+            dialog_add.show();
+        });
 
-		dialog_add.button_clicked.connect ( () => {
-			list_view.add (dialog_add.entry_name.text,
-						   dialog_add.entry_url.text,
-						   dialog_add.entry_genre.text);
-		});
+        dialog_add.button_clicked.connect ( () => {
+            list_view.add (dialog_add.entry_name.text,
+                           dialog_add.entry_url.text,
+                           dialog_add.entry_genre.text);
+        });
 
-		volume_scale.value_changed.connect( (slider) => {
-			var volume_value = slider.get_value();
-			Radio.App.player.set_volume(volume_value);
-		});
-	}
+        volume_scale.value_changed.connect( (slider) => {
+            var volume_value = slider.get_value();
+            Radio.App.player.set_volume(volume_value);
+        });
+    }
 
-	/*
-		view-0 : welcome-view
-		view-1 : list-view
-	*/
-	public void change_view (int view_index) {
+    /*
+        view-0 : welcome-view
+        view-1 : list-view
+    */
+    public void change_view (int view_index) {
 
-		if (view_index == 0) {
-			list_view.hide ();
-			welcome_view.show ();
+        if (view_index == 0) {
+            list_view.hide ();
+            welcome_view.show ();
 
-		} else {
-			welcome_view.hide ();
-			list_view.show ();
+        } else {
+            welcome_view.hide ();
+            list_view.show ();
 
-		}
+        }
 
-		this.view_index = view_index;
-	}
+        this.view_index = view_index;
+    }
 
-	public void change_station (Radio.Station station) {
-		tlb_station_label.set_markup(@"<b>$(station.name)</b>");
-		var icon = new Gtk.Image.from_icon_name("media-playback-pause",Gtk.IconSize.LARGE_TOOLBAR);
-		icon.show();
+    public void change_station (Radio.Station station) {
+        tlb_station_label.set_markup(@"<b>$(station.name)</b>");
+        var icon = new Gtk.Image.from_icon_name("media-playback-pause",Gtk.IconSize.LARGE_TOOLBAR);
+        icon.show();
 
-		var player = Radio.App.player;
-		tlb_play_button.set_icon_widget( icon );
-		player.add(station.url);
-		player.play();
-	}
-
-
-	/* ---------------- Widgets Events ---------------- */
+        var player = Radio.App.player;
+        tlb_play_button.set_icon_widget( icon );
+        player.add(station.url);
+        player.play();
+    }
 
 
-	public void play_pause_clicked () {
+    /* ---------------- Widgets Events ---------------- */
 
-		var player = Radio.App.player;
-		var icon_name = "";
 
-		if (player.initialized) {
+    public void play_pause_clicked () {
 
-			if (player.playing) {
-				player.pause ();
-				icon_name = "media-playback-start";
-			} else {
-				player.play ();
-				icon_name = "media-playback-pause";
-			}
+        var player = Radio.App.player;
+        var icon_name = "";
 
-			// Update icon
-			var icon = new Gtk.Image.from_icon_name(icon_name,Gtk.IconSize.LARGE_TOOLBAR);
-			icon.show();
-			tlb_play_button.set_icon_widget( icon );
-		}
-	}
+        if (player.initialized) {
 
-	public void prev_clicked (Gtk.ToolButton button) {
+            if (player.playing) {
+                player.pause ();
+                icon_name = "media-playback-start";
+            } else {
+                player.play ();
+                icon_name = "media-playback-pause";
+            }
 
-		Gtk.TreeIter iter;
-		Gtk.TreeModel model;
+            // Update icon
+            var icon = new Gtk.Image.from_icon_name(icon_name,Gtk.IconSize.LARGE_TOOLBAR);
+            icon.show();
+            tlb_play_button.set_icon_widget( icon );
+        }
+    }
 
-		// Get Selection object
-		var tree_selection = list_view.get_selection ();
+    public void prev_clicked (Gtk.ToolButton button) {
 
-		if (tree_selection == null) {
-			stderr.printf ("Could not get TreeSelection");
+        Gtk.TreeIter iter;
+        Gtk.TreeModel model;
 
-		} else {
-			if (tree_selection.get_selected (out model,out iter)) {
-				bool previous_iter_exists = model.iter_previous (ref iter);
+        // Get Selection object
+        var tree_selection = list_view.get_selection ();
 
-				// If we reach last entry go to first
-				//if(!next_iter_exists)
-				//	model.get_iter_first(out iter);
+        if (tree_selection == null) {
+            stderr.printf ("Could not get TreeSelection");
 
-				if (previous_iter_exists) {
-					// Select next
-					tree_selection.select_iter (iter);
-					list_view.row_double_clicked();
-				}
-			}
-		}
-	}
+        } else {
+            if (tree_selection.get_selected (out model,out iter)) {
+                bool previous_iter_exists = model.iter_previous (ref iter);
 
-	public void next_clicked(Gtk.ToolButton button) {
+                // If we reach last entry go to first
+                //if(!next_iter_exists)
+                //  model.get_iter_first(out iter);
 
-		Gtk.TreeIter iter;
-		Gtk.TreeModel model;
+                if (previous_iter_exists) {
+                    // Select next
+                    tree_selection.select_iter (iter);
+                    list_view.row_double_clicked();
+                }
+            }
+        }
+    }
 
-		// Get Selection object
-		var tree_selection = list_view.get_selection();
+    public void next_clicked(Gtk.ToolButton button) {
 
-		if (tree_selection == null) {
-			stderr.printf ("Could not get TreeSelection");
+        Gtk.TreeIter iter;
+        Gtk.TreeModel model;
 
-		} else {
-			if (tree_selection.get_selected (out model,out iter)) {
-				bool next_iter_exists = model.iter_next (ref iter);
+        // Get Selection object
+        var tree_selection = list_view.get_selection();
 
-				// If we reach last entry go to first
-				// Commented Out Until Implement iter_last for previous clicked - TODO
-				/*if(!next_iter_exists)
-					model.get_iter_first(out iter);*/
+        if (tree_selection == null) {
+            stderr.printf ("Could not get TreeSelection");
 
-				if (next_iter_exists) {
-					tree_selection.select_iter (iter);
-					list_view.row_double_clicked ();
-				}
-			}
+        } else {
+            if (tree_selection.get_selected (out model,out iter)) {
+                bool next_iter_exists = model.iter_next (ref iter);
 
-		}
-	}
+                // If we reach last entry go to first
+                // Commented Out Until Implement iter_last for previous clicked - TODO
+                /*if(!next_iter_exists)
+                    model.get_iter_first(out iter);*/
+
+                if (next_iter_exists) {
+                    tree_selection.select_iter (iter);
+                    list_view.row_double_clicked ();
+                }
+            }
+
+        }
+    }
 
 
 }

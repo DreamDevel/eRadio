@@ -18,8 +18,8 @@
  */
 
 public errordomain Radio.Error {
-	GENERAL,
-	SQLITE_GENERAL,
+    GENERAL,
+    SQLITE_GENERAL,
     SQLITE_OPEN_DB_FAILED,
     SQLITE_INSERT_FAILED,
     SQLITE_SELECT_FAILED,

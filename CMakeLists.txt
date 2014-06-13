@@ -38,7 +38,7 @@ ensure_vala_version("0.16" MINIMUM)
 include(ValaPrecompile)
 
 vala_precompile(VALA_C ${EXEC_NAME}
-	${CONFIG_FILE_REL}
+    ${CONFIG_FILE_REL}
     src/main.vala
     src/radio.vala
     src/main_window.vala
