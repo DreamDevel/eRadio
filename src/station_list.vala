@@ -25,6 +25,8 @@ public class Radio.StationList : Gtk.TreeView {
 
     public signal void activated(Radio.Station station);
 
+    private int context_menu_row_id;
+
     public StationList () throws Radio.Error {
         this.list_source = new Gtk.ListStore (4,typeof(string),typeof(string),typeof(string),typeof(int));
         this.set_model(this.list_source);
@@ -41,8 +43,10 @@ public class Radio.StationList : Gtk.TreeView {
         this.button_release_event.connect (this.open_context_menu);
 
         context_menu = new Gtk.Menu ();
-        context_menu.add (new Gtk.MenuItem.with_label ("Edit"));
-        context_menu.add (new Gtk.MenuItem.with_label ("Remove"));
+        var menu_item_edit = new Gtk.MenuItem.with_label ("Edit");
+        var menu_item_remove = new Gtk.MenuItem.with_label ("Remove");
+        context_menu.add (menu_item_edit);
+        context_menu.add (menu_item_remove);
         context_menu.show_all ();
 
         var home_dir = File.new_for_path (Environment.get_home_dir ());
@@ -66,6 +70,8 @@ public class Radio.StationList : Gtk.TreeView {
         }
 
         this.reload_list ();
+
+        menu_item_remove.activate.connect(this.remove_clicked);
     }
 
     public new void add (string name,string url,string genre) {
@@ -127,6 +133,15 @@ public class Radio.StationList : Gtk.TreeView {
         }
     }
 
+    private void remove_clicked () {
+        try {
+            stations_db.delete (context_menu_row_id);
+            this.reload_list ();
+        } catch (Radio.Error error) {
+            stderr.printf(error.message);
+        }
+    }
+
     private bool open_context_menu (Gdk.EventButton event) {
         if(event.button == 3) {
             Gtk.TreePath path;
@@ -134,6 +149,11 @@ public class Radio.StationList : Gtk.TreeView {
                                                         out path,null,null,null);
             if (row_exists) {
                 this.context_menu.popup (null,null,null,event.button,event.time);
+                Gtk.TreeIter iter;
+                Value val;
+                list_source.get_iter (out iter, path);
+                list_source.get_value (iter, 3, out val);
+                context_menu_row_id = (int) val;
             }
         }
         return true;
