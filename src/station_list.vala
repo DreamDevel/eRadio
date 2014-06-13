@@ -24,8 +24,9 @@ public class Radio.StationList : Gtk.TreeView {
     private Gtk.Menu        context_menu;
 
     public signal void activated(Radio.Station station);
+    public signal void edit_station(int station_id);
 
-    private int context_menu_row_id;
+    public int context_menu_row_id;
 
     public StationList () throws Radio.Error {
         this.list_source = new Gtk.ListStore (4,typeof(string),typeof(string),typeof(string),typeof(int));
@@ -71,6 +72,7 @@ public class Radio.StationList : Gtk.TreeView {
 
         this.reload_list ();
 
+        menu_item_edit.activate.connect(this.edit_clicked);
         menu_item_remove.activate.connect(this.remove_clicked);
     }
 
@@ -81,6 +83,26 @@ public class Radio.StationList : Gtk.TreeView {
             } catch (Radio.Error error) {
                 stderr.printf (error.message);
             }
+    }
+
+    public void update (Radio.Station station) {
+        try {
+                stations_db.update (station);
+                this.reload_list ();
+            } catch (Radio.Error error) {
+                stderr.printf (error.message);
+            }
+    }
+
+    public Radio.Station get_station (int station_id) throws Radio.Error {
+        var filters = new Gee.HashMap<string,string> ();
+        filters["id"] = @"$station_id";
+        try {
+            var station = stations_db.get (filters);
+            return station[0];
+        } catch (Radio.Error error) {
+            throw error;
+        }
     }
 
     public int count () {
@@ -131,6 +153,10 @@ public class Radio.StationList : Gtk.TreeView {
                 stderr.printf(e.message);
             }
         }
+    }
+
+    private void edit_clicked () {
+        edit_station (context_menu_row_id);
     }
 
     private void remove_clicked () {

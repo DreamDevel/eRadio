@@ -100,10 +100,13 @@ public class Radio.StationDialog : Gtk.Dialog {
         } );
     }
 
-    public new void show () {
-        clear_entries ();
-        button2.set_sensitive (false);
+    public new void show (bool clear_prev = true) {
+
+        if (clear_prev)
+            this.clear_entries ();
+
         this.set_focus (button_cancel);
+        this.control_button2_sensitivity;
 
         base.show ();
     }

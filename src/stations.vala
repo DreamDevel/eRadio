@@ -59,6 +59,30 @@ public class Radio.Stations {
         }
     }
 
+    public void update (Radio.Station station) throws Radio.Error {
+
+        string query = @"UPDATE Stations SET Name='$(station.name)' , URL='$(station.url)' , Genre='$(station.genre)' WHERE ID=$(station.id)";
+
+        var dbstatus = db.exec (query);
+
+        if (dbstatus != Sqlite.OK) {
+            throw new Radio.Error.SQLITE_UPDATE_FAILED(
+                "Couldn't Update Entry: Error Code %d \nError Message: %s\n".printf(db.errcode (),db.errmsg ()));
+        }
+    }
+
+    public void delete (int id) throws Radio.Error {
+
+        string query = @"DELETE FROM Stations WHERE ID=$id";
+
+        var dbstatus = db.exec (query);
+
+        if (dbstatus != Sqlite.OK) {
+            throw new Radio.Error.SQLITE_DELETE_FAILED(
+                "Couldn't Delete Entry: Error Code %d \nError Message: %s\n".printf(db.errcode (),db.errmsg ()));
+        }
+    }
+
     public Gee.ArrayList<Radio.Station> get_all () throws Radio.Error {
 
         string query = "SELECT * FROM Stations";
@@ -111,18 +135,6 @@ public class Radio.Stations {
         }
 
         return result;
-    }
-
-    public void delete (int id) throws Radio.Error {
-
-        string query = @"DELETE FROM Stations WHERE ID=$id";
-
-        var dbstatus = db.exec (query);
-
-        if (dbstatus != Sqlite.OK) {
-            throw new Radio.Error.SQLITE_DELETE_FAILED(
-                "Couldn't Delete Entry: Error Code %d \nError Message: %s\n".printf(db.errcode (),db.errmsg ()));
-        }
     }
 
     public int count () throws Radio.Error {

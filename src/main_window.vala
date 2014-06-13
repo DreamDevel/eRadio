@@ -167,9 +167,34 @@ public class Radio.MainWindow : Gtk.Window {
                            dialog_add.entry_genre.text);
         });
 
+        dialog_edit.button_clicked.connect ( () => {
+
+            var station = new Radio.Station (list_view.context_menu_row_id,
+                                            dialog_edit.entry_name.text,
+                                            dialog_edit.entry_url.text,
+                                            dialog_edit.entry_genre.text);
+
+            list_view.update(station);
+        });
+
         volume_scale.value_changed.connect( (slider) => {
             var volume_value = slider.get_value();
             Radio.App.player.set_volume(volume_value);
+        });
+
+        list_view.edit_station.connect( (station_id) => {
+            try {
+                var station = list_view.get_station(station_id);
+                dialog_edit.entry_name.set_text(station.name);
+                dialog_edit.entry_genre.text = station.genre;
+                dialog_edit.entry_url.text = station.url;
+                dialog_edit.show(false);
+
+            } catch (Radio.Error error) {
+                stderr.printf(error.message);
+                var application = (Radio.App) GLib.Application.get_default();
+                application.quit();
+            }
         });
     }
 
