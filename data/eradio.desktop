@@ -2,7 +2,7 @@
 Name=eRadio
 GenericName=Radio Player
 Comment=Stream online radio stations
-Categories=Audio
+Categories=Audio;Music;Player;AudioVideo;GNOME;GTK;
 Exec=eradio
 Icon=/usr/share/eradio/icon.png
 Terminal=false
