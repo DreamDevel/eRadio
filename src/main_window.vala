@@ -67,7 +67,7 @@ public class Radio.MainWindow : Gtk.Window {
         tlb_volume_item = new Gtk.ToolItem ();
         volume_scale =  new Gtk.Scale.with_range (Gtk.Orientation.HORIZONTAL, 0, 1, 0.01);
         volume_scale.width_request = 100;
-        volume_scale.set_value(1);
+        volume_scale.set_value(Radio.App.settings.volume);
         volume_scale.draw_value = false;
         tlb_volume_item.add (volume_scale);
 
@@ -180,6 +180,7 @@ public class Radio.MainWindow : Gtk.Window {
         volume_scale.value_changed.connect( (slider) => {
             var volume_value = slider.get_value();
             Radio.App.player.set_volume(volume_value);
+            Radio.App.settings.volume = volume_value;
         });
 
         list_view.edit_station.connect( (station_id) => {

@@ -1,0 +1,11 @@
+<schemalist>
+    <schema id="org.dreamdev.eradio.settings" path="/org/dreamdev/eradio/settings/">
+        <key name="volume" type="d">
+            <default>1.0</default>
+            <summary>Volume control</summary>
+            <description>
+                Last volume value
+            </description>
+        </key>
+    </schema>
+</schemalist>

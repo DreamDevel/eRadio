@@ -29,6 +29,7 @@ class Radio.App : Granite.Application {
 
     public static Gtk.Window main_window {get;private set;default = null;}
     public static Radio.StreamPlayer player;
+    public static Radio.Settings settings;
 
     construct {
         // Application info
@@ -55,6 +56,7 @@ class Radio.App : Granite.Application {
         //about_artists = {"Daniel Foré <daniel@elementaryos.org>", null};
 
         player = new Radio.StreamPlayer ();
+        settings = new Radio.Settings ();
     }
 
     public App () {
@@ -67,5 +69,4 @@ class Radio.App : Granite.Application {
             main_window = new Radio.MainWindow ();
         }
     }
-
 }

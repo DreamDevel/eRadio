@@ -4,6 +4,7 @@ cmake_minimum_required (VERSION 2.6)
 list (APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 
 set (HOMEDIR $ENV{HOME})
+set (HOME_DATADIR ${HOMEDIR}/.local/share/eradio)
 set (DATADIR "${CMAKE_INSTALL_PREFIX}/share")
 set (PKGDATADIR "${DATADIR}/eradio")
 
@@ -15,6 +16,9 @@ set (VERSION_INFO "First Release")
 set (CONFIG_FILE ${CMAKE_CURRENT_SOURCE_DIR}/src/config.vala)
 set (CONFIG_FILE_REL src/config.vala)
 configure_file (${CMAKE_CURRENT_SOURCE_DIR}/src/config.vala.cmake ${CONFIG_FILE})
+
+include (GSettings)
+add_schema ("schemas/org.dreamdev.eradio.gschema.xml")
 
 find_package(PkgConfig)
 
@@ -48,12 +52,12 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/station.vala
     src/error.vala
     src/station_dialog.vala
+    src/settings.vala
 PACKAGES
     ${PROJECT_DEPS}
 )
 
 add_executable(${EXEC_NAME} ${VALA_C})
 install (TARGETS ${EXEC_NAME} RUNTIME DESTINATION bin)
-
 install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/icon.png DESTINATION ${PKGDATADIR})
 install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/eradio.desktop DESTINATION ${DATADIR}/applications/)
