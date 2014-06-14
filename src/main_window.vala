@@ -122,6 +122,9 @@ public class Radio.MainWindow : Gtk.Window {
         if(list_view.count () > 0 )
             this.view_index = 1;
 
+        var scroll_view = new Gtk.ScrolledWindow (null, null);
+        scroll_view.add(list_view);
+
         // Main containers
         main_box = new Gtk.Box (Gtk.Orientation.VERTICAL,0);
         view_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL,0);
@@ -134,7 +137,7 @@ public class Radio.MainWindow : Gtk.Window {
         *   This will change in a future OS release | TODO
         */
         view_box.pack_start (welcome_view);
-        view_box.pack_start (list_view);
+        view_box.pack_start (scroll_view);
 
         this.add(main_box);
         this.show_all();
