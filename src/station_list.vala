@@ -25,6 +25,7 @@ public class Radio.StationList : Gtk.TreeView {
 
     public signal void activated(Radio.Station station);
     public signal void edit_station(int station_id);
+    public signal void delete_station (int station_id);
 
     public int context_menu_row_id;
 
@@ -162,6 +163,7 @@ public class Radio.StationList : Gtk.TreeView {
     private void remove_clicked () {
         try {
             stations_db.delete (context_menu_row_id);
+            this.delete_station (context_menu_row_id);
             this.reload_list ();
         } catch (Radio.Error error) {
             stderr.printf(error.message);

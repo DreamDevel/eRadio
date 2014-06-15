@@ -33,6 +33,7 @@ public class Radio.MainWindow : Gtk.Window {
     private Gtk.Scale       volume_scale;
     private Gtk.MenuItem    menu_item_add;
     private Granite.Widgets.AppMenu app_menu;
+    private Gtk.ScrolledWindow      scroll_view;
     private Radio.StationDialog     dialog_add;
     private Radio.StationDialog     dialog_edit;
 
@@ -122,7 +123,7 @@ public class Radio.MainWindow : Gtk.Window {
         if(list_view.count () > 0 )
             this.view_index = 1;
 
-        var scroll_view = new Gtk.ScrolledWindow (null, null);
+        scroll_view = new Gtk.ScrolledWindow (null, null);
         scroll_view.add(list_view);
 
         // Main containers
@@ -144,7 +145,6 @@ public class Radio.MainWindow : Gtk.Window {
 
         // Set Default view
         this.change_view(this.view_index);
-
 
         // Dialogs
         dialog_add = new Radio.StationDialog (this,"Add");
@@ -168,6 +168,8 @@ public class Radio.MainWindow : Gtk.Window {
             list_view.add (dialog_add.entry_name.text,
                            dialog_add.entry_url.text,
                            dialog_add.entry_genre.text);
+            if(view_index == 0 && list_view.count () > 0)
+                change_view(1);
         });
 
         dialog_edit.button_clicked.connect ( () => {
@@ -200,6 +202,17 @@ public class Radio.MainWindow : Gtk.Window {
                 application.quit();
             }
         });
+
+        list_view.delete_station.connect ( () => {
+            if(view_index == 1 && list_view.count () == 0)
+                change_view(0);
+        });
+
+        welcome_view.activated.connect ( (index) => {
+            if (index == 0) {
+                dialog_add.show();
+            }
+        });
     }
 
     /*
@@ -209,12 +222,12 @@ public class Radio.MainWindow : Gtk.Window {
     public void change_view (int view_index) {
 
         if (view_index == 0) {
-            list_view.hide ();
+            scroll_view.hide ();
             welcome_view.show ();
 
         } else {
             welcome_view.hide ();
-            list_view.show ();
+            scroll_view.show ();
 
         }
 
