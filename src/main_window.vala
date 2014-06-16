@@ -113,7 +113,6 @@ public class Radio.MainWindow : Gtk.Window {
         // Note : With StationList creation we initialize the local db
         try {
             list_view = new Radio.StationList ();
-            list_view.activated.connect(this.change_station);
         } catch (Radio.Error e) {
             stderr.printf(e.message);
             application.quit();
@@ -179,7 +178,17 @@ public class Radio.MainWindow : Gtk.Window {
                                             dialog_edit.entry_url.text,
                                             dialog_edit.entry_genre.text);
 
+            // Stop playback if playing station url changed or change name on change
+            if (Radio.App.playing_station != null && station.id == Radio.App.playing_station.id) {
+
+                if(station.url != Radio.App.playing_station.url && Radio.App.player.playing)
+                    this.stop_playback ();
+                else if(station.name != Radio.App.playing_station.name)
+                    tlb_station_label.set_markup(@"<b>$(station.name)</b>");
+            }
+
             list_view.update(station);
+            Radio.App.playing_station = station;
         });
 
         volume_scale.value_changed.connect( (slider) => {
@@ -203,10 +212,21 @@ public class Radio.MainWindow : Gtk.Window {
             }
         });
 
-        list_view.delete_station.connect ( () => {
+        list_view.delete_station.connect ( (station_id) => {
             if(view_index == 1 && list_view.count () == 0)
                 change_view(0);
+
+            // Stop playback
+            if (Radio.App.playing_station != null && Radio.App.playing_station.id == station_id &&
+                Radio.App.player.playing) {
+
+                    this.stop_playback ();
+            }
+
+            Radio.App.playing_station = null;
         });
+
+        list_view.activated.connect(this.change_station);
 
         welcome_view.activated.connect ( (index) => {
             if (index == 0) {
@@ -243,6 +263,15 @@ public class Radio.MainWindow : Gtk.Window {
         tlb_play_button.set_icon_widget( icon );
         player.add(station.url);
         player.play();
+
+        Radio.App.playing_station = station;
+    }
+
+    private void stop_playback () {
+        this.play_pause_clicked ();
+        Radio.App.player.stop ();
+        Radio.App.player.initialized = false;
+        tlb_station_label.set_markup(@"<b>No Station</b>");
     }
 
 

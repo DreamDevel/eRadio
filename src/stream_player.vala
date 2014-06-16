@@ -25,7 +25,7 @@ public class Radio.StreamPlayer : GLib.Object {
     private Gst.Element pipeline;
     private Gst.Bus bus;
     public bool playing {get;private set;}
-    public bool initialized {get;private set;}
+    public bool initialized {get;set;}
 
     private bool busCallback(Gst.Bus bus, Gst.Message message) {
         switch(message.type) {

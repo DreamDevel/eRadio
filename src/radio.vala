@@ -31,6 +31,8 @@ class Radio.App : Granite.Application {
     public static Radio.StreamPlayer player;
     public static Radio.Settings settings;
 
+    public static Radio.Station? playing_station;
+
     construct {
         // Application info
         build_data_dir = Build.DATADIR;
@@ -57,6 +59,7 @@ class Radio.App : Granite.Application {
 
         player = new Radio.StreamPlayer ();
         settings = new Radio.Settings ();
+        playing_station = null;
     }
 
     public App () {
