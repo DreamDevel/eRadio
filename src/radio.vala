@@ -54,9 +54,12 @@ class Radio.App : Granite.Application {
         bug_url = "https://bugs.launchpad.net/eradio/+filebug";
         translate_url = "https://translations.launchpad.net/eradio";
         about_authors = {"George Sofianos <georgesofianosgr@gmail.com>",null};
-        //help_url = "http://elementaryos.org/answers/+/noise/all/newest"; No help url available yet
-        //about_artists = {"Daniel Foré <daniel@elementaryos.org>", null};
+        //help_url = "";
+        about_artists = {"George Sofianos <georgesofianosgr@gmail.com>", null};
+        about_documenters = { "George Sofianos <georgesofianosgr@gmail.com>",
+                                      null };
 
+        about_license_type = Gtk.License.GPL_3_0;
         player = new Radio.StreamPlayer ();
         settings = new Radio.Settings ();
         playing_station = null;
