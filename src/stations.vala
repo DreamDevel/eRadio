@@ -49,26 +49,41 @@ public class Radio.Stations {
 
     public void add (string name,string url,string genre) throws Radio.Error {
 
-        string query = @"INSERT INTO Stations VALUES(NULL,'$name','$url','$genre')";
+        string query = "INSERT INTO Stations VALUES(NULL,?,?,?)";
 
-        var dbstatus = db.exec (query);
+        Sqlite.Statement stmt;
+        var query_status = db.prepare_v2 (query,query.length,out stmt);
 
-        if (dbstatus != Sqlite.OK) {
-            throw new Radio.Error.SQLITE_INSERT_FAILED(
+        stmt.bind_text(1,name);
+        stmt.bind_text(2,url);
+        stmt.bind_text(3,genre);
+
+        if (query_status != Sqlite.OK) {
+            throw new Radio.Error.SQLITE_SELECT_FAILED(
                 "Couldn't Insert Entry: Error Code %d \nError Message: %s\n".printf(db.errcode (),db.errmsg ()));
         }
+
+        stmt.step ();
     }
 
     public void update (Radio.Station station) throws Radio.Error {
 
-        string query = @"UPDATE Stations SET Name='$(station.name)' , URL='$(station.url)' , Genre='$(station.genre)' WHERE ID=$(station.id)";
+        string query = @"UPDATE Stations SET Name=? , URL=? , Genre=? WHERE ID=?";
 
-        var dbstatus = db.exec (query);
+        Sqlite.Statement stmt;
+        var query_status = db.prepare_v2 (query,query.length,out stmt);
 
-        if (dbstatus != Sqlite.OK) {
-            throw new Radio.Error.SQLITE_UPDATE_FAILED(
+        stmt.bind_text(1,station.name);
+        stmt.bind_text(2,station.url);
+        stmt.bind_text(3,station.genre);
+        stmt.bind_int(4,station.id);
+
+        if (query_status != Sqlite.OK) {
+            throw new Radio.Error.SQLITE_SELECT_FAILED(
                 "Couldn't Update Entry: Error Code %d \nError Message: %s\n".printf(db.errcode (),db.errmsg ()));
         }
+
+        stmt.step ();
     }
 
     public void delete (int id) throws Radio.Error {
