@@ -59,5 +59,13 @@ PACKAGES
 
 add_executable(${EXEC_NAME} ${VALA_C})
 install (TARGETS ${EXEC_NAME} RUNTIME DESTINATION bin)
-install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/icon.png DESTINATION ${PKGDATADIR})
 install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/eradio.desktop DESTINATION ${DATADIR}/applications/)
+
+set(SYSTEM_DEFAULT_THEME ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/images/icons/16x16/apps/eradio.png DESTINATION ${SYSTEM_DEFAULT_THEME}/16x16/apps)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/images/icons/24x24/apps/eradio.png DESTINATION ${SYSTEM_DEFAULT_THEME}/24x24/apps)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/images/icons/32x32/apps/eradio.png DESTINATION ${SYSTEM_DEFAULT_THEME}/32x32/apps)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/images/icons/48x48/apps/eradio.png DESTINATION ${SYSTEM_DEFAULT_THEME}/48x48/apps)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/images/icons/64x64/apps/eradio.png DESTINATION ${SYSTEM_DEFAULT_THEME}/64x64/apps)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/images/icons/96x96/apps/eradio.png DESTINATION ${SYSTEM_DEFAULT_THEME}/96x96/apps)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/images/icons/128x128/apps/eradio.png DESTINATION ${SYSTEM_DEFAULT_THEME}/128x128/apps)
