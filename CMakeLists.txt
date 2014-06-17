@@ -3,6 +3,10 @@ project (eradio)
 cmake_minimum_required (VERSION 2.6)
 list (APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 
+set(GETTEXT_PACKAGE ${CMAKE_PROJECT_NAME})
+add_definitions("-DGETTEXT_PACKAGE=\"${GETTEXT_PACKAGE}\"")
+add_definitions("-w")
+
 set (HOMEDIR $ENV{HOME})
 set (HOME_DATADIR ${HOMEDIR}/.local/share/eradio)
 set (DATADIR "${CMAKE_INSTALL_PREFIX}/share")
@@ -56,6 +60,8 @@ vala_precompile(VALA_C ${EXEC_NAME}
 PACKAGES
     ${PROJECT_DEPS}
 )
+
+add_subdirectory (po)
 
 add_executable(${EXEC_NAME} ${VALA_C})
 install (TARGETS ${EXEC_NAME} RUNTIME DESTINATION bin)

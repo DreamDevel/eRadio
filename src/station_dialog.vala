@@ -45,17 +45,17 @@ public class Radio.StationDialog : Gtk.Dialog {
         var action_area = this.get_action_area () as Gtk.ButtonBox;
 
         // Build UI
-        label_name = new Gtk.Label("Name:");
-        label_genre = new Gtk.Label("Genre:");
-        label_url = new Gtk.Label("Url:");
+        label_name = new Gtk.Label(_("Name") + ":");
+        label_genre = new Gtk.Label(_("Genre") + ":");
+        label_url = new Gtk.Label(_("Url") + ":");
 
         entry_name = new Gtk.Entry ();
         entry_genre = new Gtk.Entry ();
         entry_url = new Gtk.Entry ();
 
-        entry_name.placeholder_text = "enter station name";
-        entry_genre.placeholder_text = "enter station genre";
-        entry_url.placeholder_text = "enter station url";
+        entry_name.placeholder_text = _("enter station name");
+        entry_genre.placeholder_text = _("enter station genre");
+        entry_url.placeholder_text = _("enter station url");
 
         entry_name.max_length = 20;
         entry_genre.max_length = 14;
@@ -73,7 +73,7 @@ public class Radio.StationDialog : Gtk.Dialog {
         grid.attach (entry_url,1,2,1,1);
 
         content_area.add (grid);
-        this.add_buttons ("Cancel",0,button2_text,1);
+        this.add_buttons (_("Cancel"),0,button2_text,1);
         this.show_all ();
         this.hide();
 

@@ -42,8 +42,11 @@ public class Radio.MainWindow : Gtk.Window {
     private Granite.Widgets.Welcome welcome_view;
 
     private int view_index = 0; // Change between welcome view (0) & list view (1)
+    private string no_station_str;
 
     public MainWindow () {
+
+        no_station_str = _("No Station");
 
         var application = (Radio.App) GLib.Application.get_default();
         this.set_title (application.program_name);
@@ -74,14 +77,14 @@ public class Radio.MainWindow : Gtk.Window {
 
         tlb_station_item = new Gtk.ToolItem ();
         tlb_station_label = new Gtk.Label(null);
-        tlb_station_label.set_markup("<b>No Station</b>");
+        tlb_station_label.set_markup(@"<b>$no_station_str</b>");
         tlb_station_label.ellipsize = Pango.EllipsizeMode.END;
         tlb_station_item.set_expand (true);
         tlb_station_item.add (tlb_station_label);
 
 
         var menu = new Gtk.Menu ();
-        menu_item_add = new Gtk.MenuItem.with_label ("Add New Station");
+        menu_item_add = new Gtk.MenuItem.with_label (_("Add New Station"));
         menu.append(menu_item_add);
         // Commented out until online search feature is implemented
         //menu.append(new Gtk.MenuItem.with_label ("Search Online Stations"));
@@ -97,7 +100,7 @@ public class Radio.MainWindow : Gtk.Window {
         toolbar.get_style_context ().add_class ("primary-toolbar");
 
 
-        welcome_view = new Granite.Widgets.Welcome ("Radio","Add a station to begin listening");
+        welcome_view = new Granite.Widgets.Welcome ("eRadio",_("Add a station to begin listening"));
         var wl_add_image = new Gtk.Image.from_icon_name("document-new",Gtk.IconSize.DND);
         // Commented out until online search feature is implemented
         //var wl_search_image = new Gtk.Image.from_icon_name("system-search",Gtk.IconSize.DND);
@@ -106,7 +109,7 @@ public class Radio.MainWindow : Gtk.Window {
         // Commented out until online search feature is implemented
         //wl_search_image.set_pixel_size(128);
 
-        welcome_view.append_with_image (wl_add_image,"Add","Add a new station.");
+        welcome_view.append_with_image (wl_add_image,_("Add"),_("Add a new station."));
         // Commented out until online search feature is implemented
         //welcome_view.append_with_image (wl_search_image,"Search","Search stations online.");
 
@@ -146,8 +149,8 @@ public class Radio.MainWindow : Gtk.Window {
         this.change_view(this.view_index);
 
         // Dialogs
-        dialog_add = new Radio.StationDialog (this,"Add");
-        dialog_edit = new Radio.StationDialog (this,"Change");
+        dialog_add = new Radio.StationDialog (this,_("Add"));
+        dialog_edit = new Radio.StationDialog (this,_("Change"));
 
 
         this.connect_ui_signals ();
@@ -271,7 +274,7 @@ public class Radio.MainWindow : Gtk.Window {
         this.play_pause_clicked ();
         Radio.App.player.stop ();
         Radio.App.player.initialized = false;
-        tlb_station_label.set_markup(@"<b>No Station</b>");
+        tlb_station_label.set_markup(@"<b>$no_station_str</b>");
     }
 
 

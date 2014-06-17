@@ -34,9 +34,9 @@ public class Radio.StationList : Gtk.TreeView {
         this.set_model(this.list_source);
 
         var cell = new Gtk.CellRendererText ();
-        this.insert_column_with_attributes (-1, "Station", cell, "text", 0);
-        this.insert_column_with_attributes (-1, "Genre", cell, "text", 1);
-        this.insert_column_with_attributes (-1, "Url", cell, "text", 2);
+        this.insert_column_with_attributes (-1, _("Station"), cell, "text", 0);
+        this.insert_column_with_attributes (-1, _("Genre"), cell, "text", 1);
+        this.insert_column_with_attributes (-1, _("Url"), cell, "text", 2);
 
         this.get_column (0).set_min_width (140);
         this.get_column (1).set_min_width (100);
@@ -45,8 +45,8 @@ public class Radio.StationList : Gtk.TreeView {
         this.button_release_event.connect (this.open_context_menu);
 
         context_menu = new Gtk.Menu ();
-        var menu_item_edit = new Gtk.MenuItem.with_label ("Edit");
-        var menu_item_remove = new Gtk.MenuItem.with_label ("Remove");
+        var menu_item_edit = new Gtk.MenuItem.with_label (_("Edit"));
+        var menu_item_remove = new Gtk.MenuItem.with_label (_("Remove"));
         context_menu.add (menu_item_edit);
         context_menu.add (menu_item_remove);
         context_menu.show_all ();

@@ -32,12 +32,7 @@ public class Radio.Stations {
         }
 
         // Create Stations Table if doesn't exist
-        string query = """CREATE TABLE IF NOT EXISTS `Stations`(
-            ID INTEGER PRIMARY KEY,
-            Name TEXT,
-            URL TEXT,
-            Genre TEXT)
-        """;
+        string query = "CREATE TABLE IF NOT EXISTS `Stations`( ID INTEGER PRIMARY KEY, Name TEXT, URL TEXT, Genre TEXT)";
         dbstatus = db.exec (query);
 
         if (dbstatus != Sqlite.OK) {
