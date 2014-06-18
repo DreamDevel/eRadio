@@ -23,7 +23,7 @@ namespace Build {
     public const string PLUGIN_DIR = "";
     public const string GETTEXT_PACKAGE = "eradio";
     public const string RELEASE_NAME = "eRadio";
-    public const string VERSION = "1.0 Beta";
+    public const string VERSION = "1.0";
     public const string VERSION_INFO = "First Release";
     public const string CMAKE_INSTALL_PREFIX = "/usr";
     public const string ICON_DIR = "";
