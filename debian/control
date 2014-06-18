@@ -16,4 +16,4 @@ Package: eradio
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: A minimalist radio player for audio streaming created for Elementary OS.
- eRadio (e stands for Elementary) is a simple desktop application designed for Elementary OS. Created with Granite Framework and vala language. User is able to create a list of stations by providing their streaming url and then hear them.
+ eRadio (e stands for Elementary) is a simple desktop application designed for Elementary OS. Created with Granite Framework and vala language. User is able to create a list of stations by providing their streaming url and then listen to them.
