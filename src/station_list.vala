@@ -32,6 +32,7 @@ public class Radio.StationList : Gtk.TreeView {
     public StationList () throws Radio.Error {
         this.list_source = new Gtk.ListStore (4,typeof(string),typeof(string),typeof(string),typeof(int));
         this.set_model(this.list_source);
+        this.set_rules_hint(true);
 
         var cell = new Gtk.CellRendererText ();
         this.insert_column_with_attributes (-1, _("Station"), cell, "text", 0);
