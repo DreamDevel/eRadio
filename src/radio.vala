@@ -27,7 +27,7 @@ class Radio.App : Granite.Application {
     public const string GENERIC = N_("Radio");
     public const string KEYWORDS = N_("Radio;Audio;Player;Media;Songs;");
 
-    public static Gtk.Window main_window {get;private set;default = null;}
+    public static Radio.MainWindow main_window {get;private set;default = null;}
     public static Radio.StreamPlayer player;
     public static Radio.Settings settings;
 

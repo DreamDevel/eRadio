@@ -152,6 +152,7 @@ public class Radio.MainWindow : Gtk.Window {
         dialog_add = new Radio.StationDialog (this,_("Add"));
         dialog_edit = new Radio.StationDialog (this,_("Change"));
 
+        Radio.MediaKeyListener.instance.init ();
 
         this.connect_ui_signals ();
     }
@@ -303,7 +304,7 @@ public class Radio.MainWindow : Gtk.Window {
         }
     }
 
-    public void prev_clicked (Gtk.ToolButton button) {
+    public void prev_clicked () {
 
         Gtk.TreeIter iter;
         Gtk.TreeModel model;
@@ -331,7 +332,7 @@ public class Radio.MainWindow : Gtk.Window {
         }
     }
 
-    public void next_clicked(Gtk.ToolButton button) {
+    public void next_clicked() {
 
         Gtk.TreeIter iter;
         Gtk.TreeModel model;
