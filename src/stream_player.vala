@@ -27,6 +27,9 @@ public class Radio.StreamPlayer : GLib.Object {
     public bool playing {get;private set;}
     public bool initialized {get;set;}
 
+    public signal void volume_changed (double volume_value);
+    public signal void play_status_changed(string status);
+
     private bool busCallback(Gst.Bus bus, Gst.Message message) {
         switch(message.type) {
 
@@ -64,7 +67,8 @@ public class Radio.StreamPlayer : GLib.Object {
     }
 
     public void set_volume (double value) {
-        pipeline.set_property("volume",value);
+        pipeline.set_property ("volume",value);
+        volume_changed (value);
     }
 
     public double get_volume () {
@@ -77,6 +81,7 @@ public class Radio.StreamPlayer : GLib.Object {
         if(pipeline != null) {
             pipeline.set_state(State.PLAYING);
             playing = true;
+            play_status_changed("playing");
         }
     }
 
@@ -84,6 +89,7 @@ public class Radio.StreamPlayer : GLib.Object {
         if(pipeline != null) {
             pipeline.set_state(State.PAUSED);
             playing = false;
+            play_status_changed("paused");
         }
 
     }
@@ -92,6 +98,7 @@ public class Radio.StreamPlayer : GLib.Object {
         if(pipeline != null) {
             pipeline.set_state(State.NULL);
             playing = false;
+            play_status_changed("stopped");
         }
     }
 }

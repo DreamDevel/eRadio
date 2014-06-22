@@ -30,8 +30,11 @@ class Radio.App : Granite.Application {
     public static Radio.MainWindow main_window {get;private set;default = null;}
     public static Radio.StreamPlayer player;
     public static Radio.Settings settings;
+    public static Radio.App instance;
 
     public static Radio.Station? playing_station;
+
+    private Radio.MPRIS mpris;
 
     construct {
         // Application info
@@ -67,12 +70,15 @@ class Radio.App : Granite.Application {
 
     public App () {
         this.set_flags (ApplicationFlags.FLAGS_NONE);
+        instance = this;
 
     }
 
     public override void activate () {
         if (main_window == null) {
             main_window = new Radio.MainWindow ();
+            mpris = new Radio.MPRIS ();
+            mpris.initialize ();
         }
     }
 }

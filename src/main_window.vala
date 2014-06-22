@@ -271,7 +271,7 @@ public class Radio.MainWindow : Gtk.Window {
         Radio.App.playing_station = station;
     }
 
-    private void stop_playback () {
+    public void stop_playback () {
         this.play_pause_clicked ();
         Radio.App.player.stop ();
         Radio.App.player.initialized = false;

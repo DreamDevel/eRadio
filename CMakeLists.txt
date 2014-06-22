@@ -58,6 +58,7 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/station_dialog.vala
     src/settings.vala
     src/media_key_listener.vala
+    src/mpris.vala
 PACKAGES
     ${PROJECT_DEPS}
 )
