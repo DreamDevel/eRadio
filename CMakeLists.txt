@@ -32,6 +32,7 @@ set (PROJECT_DEPS
     granite
     sqlite3
     gee-1.0
+    libnotify
 )
 
 pkg_check_modules(DEPS REQUIRED ${PROJECT_DEPS})

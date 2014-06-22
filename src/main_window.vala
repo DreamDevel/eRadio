@@ -43,6 +43,7 @@ public class Radio.MainWindow : Gtk.Window {
 
     private int view_index = 0; // Change between welcome view (0) & list view (1)
     private string no_station_str;
+    private Notify.Notification? notification;
 
     public MainWindow () {
 
@@ -269,6 +270,20 @@ public class Radio.MainWindow : Gtk.Window {
         player.play();
 
         Radio.App.playing_station = station;
+
+        if (notification == null) {
+            notification = new Notify.Notification (station.name,"Station Changed","eradio");
+        } else {
+            notification.update (station.name,"Station Changed","eradio");
+        }
+
+        try {
+            if(!this.is_active)
+                notification.show ();
+        } catch (GLib.Error e) {
+            stderr.printf("Could not show notification : %s",e.message);
+        }
+
     }
 
     public void stop_playback () {

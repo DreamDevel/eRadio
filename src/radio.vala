@@ -66,6 +66,8 @@ class Radio.App : Granite.Application {
         player = new Radio.StreamPlayer ();
         settings = new Radio.Settings ();
         playing_station = null;
+
+        Notify.init (this.program_name);
     }
 
     public App () {
