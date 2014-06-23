@@ -46,10 +46,6 @@ public class Radio.MainWindow : Gtk.Window {
     private string no_station_str;
     private Notify.Notification? notification;
 
-    construct {
-        dialog_error = new Radio.ErrorDialog ();
-    }
-
     public MainWindow () {
 
         no_station_str = _("No Station");
@@ -157,6 +153,7 @@ public class Radio.MainWindow : Gtk.Window {
         // Dialogs
         dialog_add = new Radio.StationDialog (this,_("Add"));
         dialog_edit = new Radio.StationDialog (this,_("Change"));
+        dialog_error = new Radio.ErrorDialog (this);
 
         Radio.MediaKeyListener.instance.init ();
 
