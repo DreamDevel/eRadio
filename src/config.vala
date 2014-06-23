@@ -19,7 +19,7 @@
 
 namespace Build {
     public const string DATADIR = "/usr/share";
-    public const string PKG_DATADIR = "";
+    public const string PKG_DATADIR = "/usr/share/eradio";
     public const string PLUGIN_DIR = "";
     public const string GETTEXT_PACKAGE = "eradio";
     public const string RELEASE_NAME = "eRadio";

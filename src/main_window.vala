@@ -45,10 +45,16 @@ public class Radio.MainWindow : Gtk.Window {
     private int view_index = 0; // Change between welcome view (0) & list view (1)
     private string no_station_str;
     private Notify.Notification? notification;
+    private Gdk.Pixbuf notify_icon;
 
     public MainWindow () {
 
         no_station_str = _("No Station");
+        try {
+            notify_icon = new Gdk.Pixbuf.from_file(Radio.App.instance.build_pkg_data_dir + "/notify.png");
+        } catch (GLib.Error error) {
+            stderr.printf(error.message);
+        }
 
         var application = (Radio.App) GLib.Application.get_default();
         this.set_title (application.program_name);
@@ -279,9 +285,10 @@ public class Radio.MainWindow : Gtk.Window {
         Radio.App.playing_station = station;
 
         if (notification == null) {
-            notification = new Notify.Notification (station.name,"Station Changed","eradio");
+            notification = new Notify.Notification (station.name,"Radio Station Changed",null);
+            notification.set_icon_from_pixbuf(notify_icon);
         } else {
-            notification.update (station.name,"Station Changed","eradio");
+            notification.update (station.name,"Radio Station Changed",null);
         }
 
         try {
