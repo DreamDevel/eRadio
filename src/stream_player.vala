@@ -38,9 +38,13 @@ public class Radio.StreamPlayer : GLib.Object {
                 GLib.Error error;
                 string debug;
                 message.parse_error(out error,out debug);
-                stdout.printf("Error Occurred %s \n",error.message);
-                pipeline.set_state(State.NULL);
-                playback_error(error);
+
+                if(error.message != "Cancelled") {
+                    stdout.printf("Error Occurred %s \n",error.message);
+                    pipeline.set_state(State.NULL);
+                    playback_error(error);
+                }
+
                 break;
 
             case Gst.MessageType.EOS:
