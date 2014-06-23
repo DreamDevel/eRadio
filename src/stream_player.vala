@@ -29,6 +29,7 @@ public class Radio.StreamPlayer : GLib.Object {
 
     public signal void volume_changed (double volume_value);
     public signal void play_status_changed(string status);
+    public signal void playback_error(GLib.Error error);
 
     private bool busCallback(Gst.Bus bus, Gst.Message message) {
         switch(message.type) {
@@ -37,8 +38,9 @@ public class Radio.StreamPlayer : GLib.Object {
                 GLib.Error error;
                 string debug;
                 message.parse_error(out error,out debug);
-                stdout.printf("Error Ocured %s \n",error.message);
+                stdout.printf("Error Occurred %s \n",error.message);
                 pipeline.set_state(State.NULL);
+                playback_error(error);
                 break;
 
             case Gst.MessageType.EOS:

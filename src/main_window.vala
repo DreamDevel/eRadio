@@ -36,6 +36,7 @@ public class Radio.MainWindow : Gtk.Window {
     private Gtk.ScrolledWindow      scroll_view;
     private Radio.StationDialog     dialog_add;
     private Radio.StationDialog     dialog_edit;
+    public static Radio.ErrorDialog dialog_error;
 
     // Views
     private Radio.StationList       list_view;
@@ -44,6 +45,10 @@ public class Radio.MainWindow : Gtk.Window {
     private int view_index = 0; // Change between welcome view (0) & list view (1)
     private string no_station_str;
     private Notify.Notification? notification;
+
+    construct {
+        dialog_error = new Radio.ErrorDialog ();
+    }
 
     public MainWindow () {
 
@@ -237,6 +242,11 @@ public class Radio.MainWindow : Gtk.Window {
             if (index == 0) {
                 dialog_add.show();
             }
+        });
+
+        Radio.App.player.playback_error.connect ( (error) => {
+            stop_playback ();
+            dialog_error.show (error.message);
         });
     }
 
