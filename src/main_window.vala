@@ -252,6 +252,7 @@ public class Radio.MainWindow : Gtk.Window {
         Radio.App.player.playback_error.connect ( (error) => {
             stop_playback ();
             dialog_error.show (error.message);
+            list_view.remove_play_icon ();
         });
     }
 
@@ -283,6 +284,7 @@ public class Radio.MainWindow : Gtk.Window {
         tlb_play_button.set_icon_widget( icon );
         player.add(station.url);
         player.play();
+        list_view.set_play_icon(station.id);
 
         Radio.App.playing_station = station;
 

@@ -29,19 +29,31 @@ public class Radio.StationList : Gtk.TreeView {
 
     public int context_menu_row_id;
 
+    private Gtk.TreeViewColumn column_play_icon;
     private Gtk.TreeViewColumn column_title;
     private Gtk.TreeViewColumn column_genre;
     private Gtk.TreeViewColumn column_url;
 
+    private Gtk.TreeIter? iter_play_icon;
+
     public StationList () throws Radio.Error {
-        this.list_source = new Gtk.ListStore (4,typeof(string),typeof(string),typeof(string),typeof(int));
+        // Station,Genre,Url,ID,Icon
+        this.list_source = new Gtk.ListStore (5,typeof(string),typeof(string),typeof(string),typeof(int),typeof(string));
         this.set_model(this.list_source);
         this.set_rules_hint(true);
 
-        var cell = new Gtk.CellRendererText ();
-        this.insert_column_with_attributes (-1, _("Station"), cell, "text", 0);
-        this.insert_column_with_attributes (-1, _("Genre"), cell, "text", 1);
-        this.insert_column_with_attributes (-1, _("Url"), cell, "text", 2);
+        var cell_text_renderer = new Gtk.CellRendererText ();
+        var cell_pixbuf_renderer = new Gtk.CellRendererPixbuf ();
+
+        var icon_column = new Gtk.TreeViewColumn ();
+        icon_column.set_title (" ");
+        icon_column.pack_start(cell_pixbuf_renderer,false);
+        icon_column.add_attribute(cell_pixbuf_renderer,"icon-name",4);
+        this.append_column(icon_column);
+
+        this.insert_column_with_attributes (-1, _("Station"), cell_text_renderer, "text", 0);
+        this.insert_column_with_attributes (-1, _("Genre"), cell_text_renderer, "text", 1);
+        this.insert_column_with_attributes (-1, _("Url"), cell_text_renderer, "text", 2);
 
         var columns = this.get_columns ();
         foreach(Gtk.TreeViewColumn column in columns) {
@@ -49,13 +61,16 @@ public class Radio.StationList : Gtk.TreeView {
             column.set_sizing(Gtk.TreeViewColumnSizing.FIXED);
         }
 
-        column_title = columns.nth_data(0);
-        column_genre = columns.nth_data(1);
-        column_url   = columns.nth_data(2);
+        column_play_icon = icon_column;
+        column_title = columns.nth_data(1);
+        column_genre = columns.nth_data(2);
+        column_url   = columns.nth_data(3);
 
         column_title.set_fixed_width(Radio.App.settings.title_column_width);
         column_genre.set_fixed_width(Radio.App.settings.genre_column_width);
 
+        column_play_icon.resizable = false;
+        column_play_icon.set_min_width(30);
         column_title.set_min_width (140);
         column_genre.set_min_width (100);
 
@@ -95,6 +110,9 @@ public class Radio.StationList : Gtk.TreeView {
         menu_item_remove.activate.connect(this.remove_clicked);
         column_title.notify.connect(this.title_column_resized);
         column_genre.notify.connect(this.genre_column_resized);
+
+        //list_source.set_value(get_iterator(2),4,"eradio");
+
     }
 
     public new void add (string name,string url,string genre) {
@@ -206,10 +224,41 @@ public class Radio.StationList : Gtk.TreeView {
         }
         return false;
     }
+
+
+    public void set_play_icon (int station_id) {
+
+        if (station_id >= 0) {
+            var iterator = this.get_iterator (station_id);
+            this.set_play_icon_by_iter (iterator);
+        }
+    }
+
+    private void set_play_icon_by_iter (Gtk.TreeIter? iterator) {
+        if (iterator != null) {
+            this.remove_play_icon ();
+            list_source.set_value(iterator,4,"audio-volume-high-panel");
+            this.iter_play_icon = iterator;
+        }
+    }
+
+    public void remove_play_icon () {
+        if (this.iter_play_icon != null && list_source.iter_is_valid(this.iter_play_icon)) {
+            list_source.set_value(this.iter_play_icon,4,"");
+            this.iter_play_icon = null;
+        }
+    }
     // -------------- TreeView & ListStore Methods ------------ //
 
 
     private void reload_list () {
+        // Save Station ID Before Clear List
+        int station_id_icon = -1;
+        if (this.iter_play_icon != null) {
+            GLib.Value station_id_val;
+            list_source.get_value(this.iter_play_icon,3, out station_id_val);
+            station_id_icon = station_id_val.get_int ();
+        }
         this.clear_list ();
 
         Gee.ArrayList<Radio.Station> stations;
@@ -219,6 +268,7 @@ public class Radio.StationList : Gtk.TreeView {
             foreach (Radio.Station station in stations) {
                 this.add_row (station);
             }
+            this.set_play_icon (station_id_icon);
 
         } catch (Radio.Error e) {
             stderr.printf(e.message);
@@ -236,6 +286,33 @@ public class Radio.StationList : Gtk.TreeView {
 
     private void clear_list () {
         list_source.clear ();
+    }
+
+    /* Find iterator for specified station id */
+    private Gtk.TreeIter? get_iterator (int station_id) {
+
+        Gtk.TreeIter iter;
+        bool iter_exist = this.model.get_iter_first (out iter);
+        bool iter_found = false;
+
+        while (iter_exist) {
+            GLib.Value val;
+            list_source.get_value(iter,3,out val);
+            int id = val.get_int ();
+
+            if (station_id == id) {
+                iter_found = true;
+                break;
+            }
+
+            iter_exist = this.model.iter_next (ref iter);
+        }
+
+        if(iter_found)
+            return iter;
+        else
+            return null;
+
     }
 
 
