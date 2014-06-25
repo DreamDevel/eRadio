@@ -23,7 +23,6 @@ public class Radio.ErrorDialog : Gtk.Dialog {
 
     public ErrorDialog (Gtk.Window parent) {
 
-        this.title = "Error Occured";
         this.set_modal (true);
         this.transient_for = parent;
         this.width_request = 300;

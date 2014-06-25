@@ -61,6 +61,7 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/settings.vala
     src/media_key_listener.vala
     src/mpris.vala
+    src/PlaybackStatus.vala
 PACKAGES
     ${PROJECT_DEPS}
 )

@@ -32,6 +32,7 @@ class Radio.App : Granite.Application {
     public static Radio.Settings settings;
     public static Radio.App instance;
 
+    public static Radio.PlaybackStatus playback_status {get;set;default=Radio.PlaybackStatus.STOPPED;}
     public static Radio.Station? playing_station;
 
     private Radio.MPRIS mpris;
@@ -57,7 +58,7 @@ class Radio.App : Granite.Application {
         bug_url = "https://bugs.launchpad.net/eradio/+filebug";
         translate_url = "https://translations.launchpad.net/eradio";
         about_authors = {"George Sofianos <georgesofianosgr@gmail.com>",null};
-        //help_url = "";
+        help_url = "https://answers.launchpad.net/eradio";
         about_artists = {"George Sofianos <georgesofianosgr@gmail.com>", null};
         about_documenters = { "George Sofianos <georgesofianosgr@gmail.com>",
                                       null };
@@ -78,6 +79,7 @@ class Radio.App : Granite.Application {
 
     public override void activate () {
         if (main_window == null) {
+            Radio.MediaKeyListener.instance.init ();
             main_window = new Radio.MainWindow ();
             mpris = new Radio.MPRIS ();
             mpris.initialize ();

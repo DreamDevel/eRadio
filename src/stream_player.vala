@@ -24,8 +24,8 @@ public class Radio.StreamPlayer : GLib.Object {
 
     private Gst.Element pipeline;
     private Gst.Bus bus;
-    public bool playing {get;private set;}
-    public bool initialized {get;set;}
+
+    public bool has_url {get;set;}
 
     public signal void volume_changed (double volume_value);
     public signal void play_status_changed(string status);
@@ -43,6 +43,7 @@ public class Radio.StreamPlayer : GLib.Object {
                     stdout.printf("Error Occurred %s \n",error.message);
                     pipeline.set_state(State.NULL);
                     playback_error(error);
+                    this.has_url = false;
                 }
 
                 break;
@@ -59,13 +60,11 @@ public class Radio.StreamPlayer : GLib.Object {
         pipeline = Gst.ElementFactory.make ("playbin2","play");
         bus = pipeline.get_bus();
         bus.add_watch (busCallback);
-        playing  = false;
     }
 
     public void add (string uri) {
 
-        if (!this.initialized)
-            this.initialized = true;
+        this.has_url = true;
 
         pipeline.set_state(State.READY);
         pipeline.set_property("uri",uri);
@@ -86,7 +85,6 @@ public class Radio.StreamPlayer : GLib.Object {
     public void play() {
         if(pipeline != null) {
             pipeline.set_state(State.PLAYING);
-            playing = true;
             play_status_changed("playing");
         }
     }
@@ -94,7 +92,6 @@ public class Radio.StreamPlayer : GLib.Object {
     public void pause() {
         if(pipeline != null) {
             pipeline.set_state(State.PAUSED);
-            playing = false;
             play_status_changed("paused");
         }
 
@@ -103,8 +100,8 @@ public class Radio.StreamPlayer : GLib.Object {
     public void stop() {
         if(pipeline != null) {
             pipeline.set_state(State.NULL);
-            playing = false;
             play_status_changed("stopped");
+            this.has_url = false;
         }
     }
 }

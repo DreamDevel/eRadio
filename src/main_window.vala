@@ -42,14 +42,12 @@ public class Radio.MainWindow : Gtk.Window {
     private Radio.StationList       list_view;
     private Granite.Widgets.Welcome welcome_view;
 
-    private int view_index = 0; // Change between welcome view (0) & list view (1)
-    private string no_station_str;
+    private int view_index = 0;
     private Notify.Notification? notification;
     private Gdk.Pixbuf notify_icon;
 
     public MainWindow () {
 
-        no_station_str = _("No Station");
         var settings = Radio.App.settings;
         try {
             notify_icon = new Gdk.Pixbuf.from_file(Radio.App.instance.build_pkg_data_dir + "/notify.png");
@@ -57,14 +55,29 @@ public class Radio.MainWindow : Gtk.Window {
             stderr.printf(error.message);
         }
 
-        var application = (Radio.App) GLib.Application.get_default();
-        this.set_title (application.program_name);
+        this.set_title (Radio.App.instance.program_name);
         this.set_size_request (500, 250);
         this.set_default_size(settings.window_width,settings.window_height);
-        this.set_application (application);
+        this.set_application (Radio.App.instance);
         this.set_position (Gtk.WindowPosition.CENTER);
         this.icon_name = "eradio";
         this.resizable = true;
+
+        this.build_toolbar ();
+        this.build_views ();
+        this.build_dialogs ();
+        this.connect_ui_signals ();
+
+        this.show_all();
+
+        // Set Default view
+        this.change_view(this.view_index);
+        this.stop ();
+    }
+
+    /* --------------- Build UI ---------------- */
+
+    private void build_toolbar () {
 
         toolbar = new Gtk.Toolbar ();
 
@@ -87,7 +100,6 @@ public class Radio.MainWindow : Gtk.Window {
 
         tlb_station_item = new Gtk.ToolItem ();
         tlb_station_label = new Gtk.Label(null);
-        tlb_station_label.set_markup(@"<b>$no_station_str</b>");
         tlb_station_label.ellipsize = Pango.EllipsizeMode.END;
         tlb_station_item.set_expand (true);
         tlb_station_item.add (tlb_station_label);
@@ -96,9 +108,7 @@ public class Radio.MainWindow : Gtk.Window {
         var menu = new Gtk.Menu ();
         menu_item_add = new Gtk.MenuItem.with_label (_("Add New Station"));
         menu.append(menu_item_add);
-        // Commented out until online search feature is implemented
-        //menu.append(new Gtk.MenuItem.with_label ("Search Online Stations"));
-        app_menu = application.create_appmenu (menu);
+        app_menu = Radio.App.instance.create_appmenu (menu);
 
         toolbar.add (tlb_prev_button);
         toolbar.add (tlb_play_button);
@@ -108,20 +118,15 @@ public class Radio.MainWindow : Gtk.Window {
         toolbar.add (tlb_station_item);
         toolbar.add (app_menu);
         toolbar.get_style_context ().add_class ("primary-toolbar");
+    }
 
+    private void build_views () {
+
+        var wl_add_image = new Gtk.Image.from_icon_name("document-new",Gtk.IconSize.DND);
+        wl_add_image.set_pixel_size(128);
 
         welcome_view = new Granite.Widgets.Welcome ("eRadio",_("Add a station to begin listening"));
-        var wl_add_image = new Gtk.Image.from_icon_name("document-new",Gtk.IconSize.DND);
-        // Commented out until online search feature is implemented
-        //var wl_search_image = new Gtk.Image.from_icon_name("system-search",Gtk.IconSize.DND);
-
-        wl_add_image.set_pixel_size(128);
-        // Commented out until online search feature is implemented
-        //wl_search_image.set_pixel_size(128);
-
         welcome_view.append_with_image (wl_add_image,_("Add"),_("Add a new station."));
-        // Commented out until online search feature is implemented
-        //welcome_view.append_with_image (wl_search_image,"Search","Search stations online.");
 
         // Note : With StationList creation we initialize the local db
         try {
@@ -151,97 +156,32 @@ public class Radio.MainWindow : Gtk.Window {
         */
         view_box.pack_start (welcome_view);
         view_box.pack_start (scroll_view);
-
         this.add(main_box);
-        this.show_all();
+    }
 
-        // Set Default view
-        this.change_view(this.view_index);
+    private void build_dialogs () {
 
-        // Dialogs
         dialog_add = new Radio.StationDialog (this,_("Add"));
         dialog_edit = new Radio.StationDialog (this,_("Change"));
         dialog_error = new Radio.ErrorDialog (this);
-
-        Radio.MediaKeyListener.instance.init ();
-
-        this.connect_ui_signals ();
     }
 
     private void connect_ui_signals () {
 
-        tlb_play_button.clicked.connect(this.play_pause_clicked);
-        tlb_next_button.clicked.connect(this.next_clicked);
-        tlb_prev_button.clicked.connect(this.prev_clicked);
-
-        menu_item_add.activate.connect( () => {
-            dialog_add.show();
-        });
-
-        dialog_add.button_clicked.connect ( () => {
-            list_view.add (dialog_add.entry_name.text,
-                           dialog_add.entry_url.text,
-                           dialog_add.entry_genre.text);
-            if(view_index == 0 && list_view.count () > 0)
-                change_view(1);
-        });
-
-        dialog_edit.button_clicked.connect ( () => {
-
-            var station = new Radio.Station (list_view.context_menu_row_id,
-                                            dialog_edit.entry_name.text,
-                                            dialog_edit.entry_url.text,
-                                            dialog_edit.entry_genre.text);
-
-            // Stop playback if playing station url changed or change name on change
-            if (Radio.App.playing_station != null && station.id == Radio.App.playing_station.id) {
-
-                if(station.url != Radio.App.playing_station.url && Radio.App.player.playing)
-                    this.stop_playback ();
-                else if(station.name != Radio.App.playing_station.name)
-                    tlb_station_label.set_markup(@"<b>$(station.name)</b>");
-            }
-
-            list_view.update(station);
-            Radio.App.playing_station = station;
-        });
+        tlb_play_button.clicked.connect (this.play_pause_clicked);
+        tlb_next_button.clicked.connect (this.next_clicked);
+        tlb_prev_button.clicked.connect (this.prev_clicked);
+        dialog_add.button_clicked.connect (this.dialog_add_success);
+        dialog_edit.button_clicked.connect (this.dialog_edit_success);
+        list_view.edit_station.connect (this.dialog_edit_open);
+        list_view.activated.connect(this.change_station);
+        list_view.delete_station.connect (this.station_deleted);
+        menu_item_add.activate.connect( () => {dialog_add.show();});
 
         volume_scale.value_changed.connect( (slider) => {
             var volume_value = slider.get_value();
-            Radio.App.player.set_volume(volume_value);
-            Radio.App.settings.volume = volume_value;
+            this.set_volume (volume_value);
         });
-
-        list_view.edit_station.connect( (station_id) => {
-            try {
-                var station = list_view.get_station(station_id);
-                dialog_edit.entry_name.set_text(station.name);
-                dialog_edit.entry_genre.text = station.genre;
-                dialog_edit.entry_url.text = station.url;
-                dialog_edit.show(false);
-
-            } catch (Radio.Error error) {
-                stderr.printf(error.message);
-                var application = (Radio.App) GLib.Application.get_default();
-                application.quit();
-            }
-        });
-
-        list_view.delete_station.connect ( (station_id) => {
-            if(view_index == 1 && list_view.count () == 0)
-                change_view(0);
-
-            // Stop playback
-            if (Radio.App.playing_station != null && Radio.App.playing_station.id == station_id &&
-                Radio.App.player.playing) {
-
-                    this.stop_playback ();
-            }
-
-            Radio.App.playing_station = null;
-        });
-
-        list_view.activated.connect(this.change_station);
 
         welcome_view.activated.connect ( (index) => {
             if (index == 0) {
@@ -250,16 +190,17 @@ public class Radio.MainWindow : Gtk.Window {
         });
 
         Radio.App.player.playback_error.connect ( (error) => {
-            stop_playback ();
+            this.stop ();
             dialog_error.show (error.message);
-            list_view.remove_play_icon ();
+        });
+
+        list_view.database_error.connect( (e) => {
+            stderr.printf (e.message);
+            Radio.App.instance.quit ();
         });
     }
 
-    /*
-        view-0 : welcome-view
-        view-1 : list-view
-    */
+    /* Change between welcome view (0) & list view (1) */
     public void change_view (int view_index) {
 
         if (view_index == 0) {
@@ -275,124 +216,210 @@ public class Radio.MainWindow : Gtk.Window {
         this.view_index = view_index;
     }
 
-    public void change_station (Radio.Station station) {
-        tlb_station_label.set_markup(@"<b>$(station.name)</b>");
-        var icon = new Gtk.Image.from_icon_name("media-playback-pause",Gtk.IconSize.LARGE_TOOLBAR);
-        icon.show();
+    /* --------------- Playback Actions ------------- */
 
-        var player = Radio.App.player;
-        tlb_play_button.set_icon_widget( icon );
-        player.add(station.url);
-        player.play();
-        list_view.set_play_icon(station.id);
+    public void change_station (Radio.Station station) {
 
         Radio.App.playing_station = station;
+        Radio.App.player.add (station.url);
+        this.play ();
+
+        this.new_notification (station.name,"Radio Station Changed");
+    }
+
+    public void play () {
+
+        Radio.App.playback_status = Radio.PlaybackStatus.PLAYING;
+        Radio.App.player.play ();
+        this.update_ui ();
+    }
+
+    public void pause () {
+
+        Radio.App.playback_status = Radio.PlaybackStatus.PAUSED;
+        Radio.App.player.pause ();
+        this.update_ui ();
+    }
+
+    public void stop () {
+
+        Radio.App.playback_status = Radio.PlaybackStatus.STOPPED;
+        Radio.App.playing_station = null;
+        Radio.App.player.stop ();
+        this.update_ui ();
+    }
+
+    public void next () {
+
+        if(Radio.App.playback_status != Radio.PlaybackStatus.STOPPED) {
+            if (this.list_view.select_next (Radio.App.playing_station.id))
+                this.list_view.row_double_clicked ();
+        }
+    }
+
+    public void previous () {
+
+        if(Radio.App.playback_status != Radio.PlaybackStatus.STOPPED) {
+            if (this.list_view.select_previous (Radio.App.playing_station.id))
+                this.list_view.row_double_clicked ();
+        }
+    }
+
+    public void set_volume (double volume_value,bool update_slider=false) {
+        Radio.App.player.set_volume(volume_value);
+        Radio.App.settings.volume = volume_value;
+    }
+
+    public void new_notification (string title, string subtitle, Gdk.Pixbuf? icon=null) {
 
         if (notification == null) {
-            notification = new Notify.Notification (station.name,"Radio Station Changed",null);
-            notification.set_icon_from_pixbuf(notify_icon);
+            notification = new Notify.Notification (title,subtitle,null);
+            if (icon != null)
+                notification.set_icon_from_pixbuf (icon);
+            else
+                notification.set_icon_from_pixbuf (notify_icon);
         } else {
-            notification.update (station.name,"Radio Station Changed",null);
+            notification.update (title,subtitle,null);
         }
 
         try {
-            if(!this.is_active)
+            if (!this.is_active)
                 notification.show ();
         } catch (GLib.Error e) {
             stderr.printf("Could not show notification : %s",e.message);
         }
+    }
+
+    public void update_ui () {
+
+        var play_icon_name = "media-playback-start";
+        var pause_icon_name = "media-playback-pause";
+        var no_station_label = _("No Station Selected");
+        Gtk.Image play_pause_icon;
+
+
+        if (Radio.App.playback_status == Radio.PlaybackStatus.PLAYING) {
+            // Change Toolbar Label
+            tlb_station_label.set_markup(@"<b>$(Radio.App.playing_station.name)</b>");
+
+            // Update Play/Pause Button Icon
+            play_pause_icon = new Gtk.Image.from_icon_name(pause_icon_name,Gtk.IconSize.LARGE_TOOLBAR);
+
+            // Update playing icon
+            list_view.set_play_icon (Radio.App.playing_station.id);
+
+        } else if (Radio.App.playback_status == Radio.PlaybackStatus.PAUSED) {
+            // Change Toolbar Label
+            tlb_station_label.set_markup(@"<b>$(Radio.App.playing_station.name)</b> (Paused)");
+
+            // Update Play/Pause Button Icon
+            play_pause_icon = new Gtk.Image.from_icon_name(play_icon_name,Gtk.IconSize.LARGE_TOOLBAR);
+
+
+        } else {
+            // Change Toolbar Label
+            tlb_station_label.set_markup(@"<b>$no_station_label</b>");
+
+            // Update Play/Pause Button Icon
+            play_pause_icon = new Gtk.Image.from_icon_name(play_icon_name,Gtk.IconSize.LARGE_TOOLBAR);
+
+            // Update playing icon
+            list_view.remove_play_icon ();
+        }
+
+        // Set play/pause icon
+        tlb_play_button.set_icon_widget( play_pause_icon );
+        play_pause_icon.show();
 
     }
 
-    public void stop_playback () {
-        this.play_pause_clicked ();
-        Radio.App.player.stop ();
-        Radio.App.player.initialized = false;
-        tlb_station_label.set_markup(@"<b>$no_station_str</b>");
+    /* ----------------- Dialog Operations ------------------- */
+
+    private void dialog_add_success () {
+
+        list_view.add (dialog_add.entry_name.text,
+                       dialog_add.entry_url.text,
+                       dialog_add.entry_genre.text);
+
+        if(view_index == 0 && list_view.count () > 0)
+            change_view(1);
     }
 
+    private void dialog_edit_open (int station_id) {
 
-    /* ---------------- Widgets Events ---------------- */
+        try {
+            var station = list_view.get_station(station_id);
+            dialog_edit.entry_name.set_text(station.name);
+            dialog_edit.entry_genre.text = station.genre;
+            dialog_edit.entry_url.text = station.url;
+            dialog_edit.show(false);
+
+        } catch (Radio.Error error) {
+            stderr.printf(error.message);
+            var application = (Radio.App) GLib.Application.get_default();
+            application.quit();
+        }
+    }
+
+    private void dialog_edit_success () {
+
+        var station = new Radio.Station (list_view.context_menu_row_id,
+                                        dialog_edit.entry_name.text,
+                                        dialog_edit.entry_url.text,
+                                        dialog_edit.entry_genre.text);
+
+        list_view.update(station);
+
+        // If currently playing change && url changed , update playback
+        if (Radio.App.playback_status == Radio.PlaybackStatus.PLAYING &&
+            station.id == Radio.App.playing_station.id &&
+            station.url != Radio.App.playing_station.url) {
+
+            this.change_station(station);
+        }
+    }
+
+    /* ---------------- Button Singal Handlers ---------------- */
 
 
     public void play_pause_clicked () {
 
-        var player = Radio.App.player;
-        var icon_name = "";
+        if (Radio.App.player.has_url) {
 
-        if (player.initialized) {
-
-            if (player.playing) {
-                player.pause ();
-                icon_name = "media-playback-start";
-            } else {
-                player.play ();
-                icon_name = "media-playback-pause";
-            }
-
-            // Update icon
-            var icon = new Gtk.Image.from_icon_name(icon_name,Gtk.IconSize.LARGE_TOOLBAR);
-            icon.show();
-            tlb_play_button.set_icon_widget( icon );
+            if (Radio.App.playback_status == Radio.PlaybackStatus.PLAYING)
+                this.pause ();
+            else
+                this.play ();
         }
     }
 
     public void prev_clicked () {
 
-        Gtk.TreeIter iter;
-        Gtk.TreeModel model;
-
-        // Get Selection object
-        var tree_selection = list_view.get_selection ();
-
-        if (tree_selection == null) {
-            stderr.printf ("Could not get TreeSelection");
-
-        } else {
-            if (tree_selection.get_selected (out model,out iter)) {
-                bool previous_iter_exists = model.iter_previous (ref iter);
-
-                // If we reach last entry go to first
-                //if(!next_iter_exists)
-                //  model.get_iter_first(out iter);
-
-                if (previous_iter_exists) {
-                    // Select next
-                    tree_selection.select_iter (iter);
-                    list_view.row_double_clicked();
-                }
-            }
-        }
+        this.previous ();
     }
 
     public void next_clicked() {
 
-        Gtk.TreeIter iter;
-        Gtk.TreeModel model;
+        this.next ();
+    }
 
-        // Get Selection object
-        var tree_selection = list_view.get_selection();
+    /* -------------- Other Signal Handlers -------------- */
 
-        if (tree_selection == null) {
-            stderr.printf ("Could not get TreeSelection");
+    private void station_deleted (int station_id) {
 
-        } else {
-            if (tree_selection.get_selected (out model,out iter)) {
-                bool next_iter_exists = model.iter_next (ref iter);
+        if(view_index == 1 && list_view.count () == 0)
+            change_view(0);
 
-                // If we reach last entry go to first
-                // Commented Out Until Implement iter_last for previous clicked - TODO
-                /*if(!next_iter_exists)
-                    model.get_iter_first(out iter);*/
+        // Stop playback
+        if ( (Radio.App.playback_status == Radio.PlaybackStatus.PLAYING ||
+              Radio.App.playback_status == Radio.PlaybackStatus.PAUSED ) &&
+            Radio.App.playing_station.id == station_id) {
 
-                if (next_iter_exists) {
-                    tree_selection.select_iter (iter);
-                    list_view.row_double_clicked ();
-                }
-            }
-
+                this.stop ();
         }
     }
+
+
 
     /* Check for window resize and save new size to settings */
     public override bool configure_event (Gdk.EventConfigure event) {

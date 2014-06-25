@@ -190,11 +190,11 @@ public class MprisPlayer : GLib.Object {
 
     public string PlaybackStatus {
         owned get {
-            if(Radio.App.player.playing)
+            if(Radio.App.playback_status == Radio.PlaybackStatus.PLAYING)
                 return "Playing";
-            else if(!Radio.App.player.playing && !Radio.App.player.initialized)
+            else if(Radio.App.playback_status == Radio.PlaybackStatus.STOPPED)
                 return "Stopped";
-            else if(!Radio.App.player.playing)
+            else if(Radio.App.playback_status == Radio.PlaybackStatus.PAUSED)
                 return "Paused";
             else
                 return "Stopped";
@@ -270,8 +270,7 @@ public class MprisPlayer : GLib.Object {
 
     public void Pause() {
 
-        if(Radio.App.player.playing)
-            Radio.App.main_window.play_pause_clicked ();
+        Radio.App.main_window.pause ();
     }
 
     public void PlayPause() {
@@ -281,13 +280,12 @@ public class MprisPlayer : GLib.Object {
 
     public void Stop() {
 
-        Radio.App.main_window.stop_playback ();
+        Radio.App.main_window.stop ();
     }
 
     public void Play() {
 
-        if(!Radio.App.player.playing)
-            Radio.App.main_window.play_pause_clicked ();
+        Radio.App.main_window.play ();
     }
 
     public void OpenUri(string Uri) {

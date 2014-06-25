@@ -21,22 +21,36 @@ public class Radio.StationList : Gtk.TreeView {
 
     private Gtk.ListStore   list_source;
     private Radio.Stations  stations_db;
+
     private Gtk.Menu        context_menu;
-
-    public signal void activated(Radio.Station station);
-    public signal void edit_station(int station_id);
-    public signal void delete_station (int station_id);
-
+    private Gtk.MenuItem    menu_item_edit;
+    private Gtk.MenuItem    menu_item_remove;
     public int context_menu_row_id;
 
     private Gtk.TreeViewColumn column_play_icon;
     private Gtk.TreeViewColumn column_title;
     private Gtk.TreeViewColumn column_genre;
     private Gtk.TreeViewColumn column_url;
-
     private Gtk.TreeIter? iter_play_icon;
 
+    public signal void activated(Radio.Station station);
+    public signal void edit_station(int station_id);
+    public signal void delete_station (int station_id);
+    public signal void database_error (Radio.Error error);
+
+
+    /* -------------- Initialize Stations List ------------- */
+
     public StationList () throws Radio.Error {
+
+        this.build_ui ();
+        this.init_db ();
+        this.connect_signals ();
+        this.reload_list ();
+    }
+
+    private void build_ui () {
+
         // Station,Genre,Url,ID,Icon
         this.list_source = new Gtk.ListStore (5,typeof(string),typeof(string),typeof(string),typeof(int),typeof(string));
         this.set_model(this.list_source);
@@ -77,12 +91,15 @@ public class Radio.StationList : Gtk.TreeView {
         this.row_activated.connect (this.row_double_clicked);
         this.button_release_event.connect (this.open_context_menu);
 
-        context_menu = new Gtk.Menu ();
-        var menu_item_edit = new Gtk.MenuItem.with_label (_("Edit"));
-        var menu_item_remove = new Gtk.MenuItem.with_label (_("Remove"));
-        context_menu.add (menu_item_edit);
-        context_menu.add (menu_item_remove);
-        context_menu.show_all ();
+        this.context_menu = new Gtk.Menu ();
+        this.menu_item_edit = new Gtk.MenuItem.with_label (_("Edit"));
+        this.menu_item_remove = new Gtk.MenuItem.with_label (_("Remove"));
+        this.context_menu.add (this.menu_item_edit);
+        this.context_menu.add (this.menu_item_remove);
+        this.context_menu.show_all ();
+    }
+
+    private void init_db () throws Radio.Error{
 
         var home_dir = File.new_for_path (Environment.get_home_dir ());
         var radio_dir = home_dir.get_child(".local").get_child("share").get_child("eradio");
@@ -101,18 +118,30 @@ public class Radio.StationList : Gtk.TreeView {
         try {
             this.stations_db = new Radio.Stations.with_db_file (db_file.get_path());
         } catch (Radio.Error e) {
-            throw e;
+            this.database_error(e);
         }
+    }
 
-        this.reload_list ();
+    private void connect_signals () {
 
-        menu_item_edit.activate.connect(this.edit_clicked);
-        menu_item_remove.activate.connect(this.remove_clicked);
-        column_title.notify.connect(this.title_column_resized);
-        column_genre.notify.connect(this.genre_column_resized);
+        this.menu_item_edit.activate.connect(this.edit_clicked);
+        this.menu_item_remove.activate.connect(this.remove_clicked);
+        this.column_title.notify.connect(this.title_column_resized);
+        this.column_genre.notify.connect(this.genre_column_resized);
+    }
 
-        //list_source.set_value(get_iterator(2),4,"eradio");
 
+    /* -------------- Stations Operations ---------- */
+
+    public Radio.Station get_station (int station_id) throws Radio.Error {
+        var filters = new Gee.HashMap<string,string> ();
+        filters["id"] = @"$station_id";
+        try {
+            var station = stations_db.get (filters);
+            return station[0];
+        } catch (Radio.Error error) {
+            throw error;
+        }
     }
 
     public new void add (string name,string url,string genre) {
@@ -133,15 +162,16 @@ public class Radio.StationList : Gtk.TreeView {
             }
     }
 
-    public Radio.Station get_station (int station_id) throws Radio.Error {
-        var filters = new Gee.HashMap<string,string> ();
-        filters["id"] = @"$station_id";
+    public void delete (int station_id) {
+
         try {
-            var station = stations_db.get (filters);
-            return station[0];
+            stations_db.delete (station_id);
+            this.delete_station (station_id);
+            this.reload_list ();
         } catch (Radio.Error error) {
-            throw error;
+            stderr.printf(error.message);
         }
+
     }
 
     public int count () {
@@ -156,7 +186,10 @@ public class Radio.StationList : Gtk.TreeView {
         return num_stations;
     }
 
-    // Seted this as public so we can simulate station selection from window
+
+    /* ----------------- Signal Handlers -------------- */
+
+    // Set this as public so we can simulate station selection from window
     public void row_double_clicked() {
 
         Gtk.TreeIter iter;
@@ -199,13 +232,7 @@ public class Radio.StationList : Gtk.TreeView {
     }
 
     private void remove_clicked () {
-        try {
-            stations_db.delete (context_menu_row_id);
-            this.delete_station (context_menu_row_id);
-            this.reload_list ();
-        } catch (Radio.Error error) {
-            stderr.printf(error.message);
-        }
+        this.delete (context_menu_row_id);
     }
 
     private bool open_context_menu (Gdk.EventButton event) {
@@ -225,6 +252,7 @@ public class Radio.StationList : Gtk.TreeView {
         return false;
     }
 
+    /* -------------- TreeView & ListStore Methods ------------ */
 
     public void set_play_icon (int station_id) {
 
@@ -248,8 +276,39 @@ public class Radio.StationList : Gtk.TreeView {
             this.iter_play_icon = null;
         }
     }
-    // -------------- TreeView & ListStore Methods ------------ //
 
+    public bool select (int station_id) {
+        var iter = this.get_iterator (station_id);
+        if (iter != null) {
+            var tree_selection = this.get_selection ();
+            tree_selection.select_iter (iter);
+            return true;
+        }
+
+        return false;
+    }
+
+    public bool select_previous (int station_id) {
+        var iter = this.get_previous_iterator (station_id);
+        if (iter != null) {
+            var tree_selection = this.get_selection ();
+            tree_selection.select_iter (iter);
+            return true;
+        }
+
+        return false;
+    }
+
+    public bool select_next (int station_id) {
+        var iter = this.get_next_iterator (station_id);
+        if (iter != null) {
+            var tree_selection = this.get_selection ();
+            tree_selection.select_iter (iter);
+            return true;
+        }
+
+        return false;
+    }
 
     private void reload_list () {
         // Save Station ID Before Clear List
@@ -285,6 +344,7 @@ public class Radio.StationList : Gtk.TreeView {
     }
 
     private void clear_list () {
+
         list_source.clear ();
     }
 
@@ -296,6 +356,7 @@ public class Radio.StationList : Gtk.TreeView {
         bool iter_found = false;
 
         while (iter_exist) {
+
             GLib.Value val;
             list_source.get_value(iter,3,out val);
             int id = val.get_int ();
@@ -308,11 +369,36 @@ public class Radio.StationList : Gtk.TreeView {
             iter_exist = this.model.iter_next (ref iter);
         }
 
-        if(iter_found)
+        if (iter_found)
             return iter;
         else
             return null;
+    }
 
+    /* Find the next iterator of the specified station id */
+    private Gtk.TreeIter? get_next_iterator (int station_id) {
+
+        var iter = this.get_iterator (station_id);
+
+        if (iter != null) {
+            if (this.model.iter_next (ref iter))
+                return iter;
+        }
+
+        return null;
+    }
+
+    /* Find the previous iterator of the specified station id */
+    private Gtk.TreeIter? get_previous_iterator (int station_id) {
+
+        var iter = this.get_iterator (station_id);
+
+        if (iter != null) {
+            if (this.model.iter_previous (ref iter))
+                return iter;
+        }
+
+        return null;
     }
 
 
