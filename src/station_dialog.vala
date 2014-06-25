@@ -57,9 +57,6 @@ public class Radio.StationDialog : Gtk.Dialog {
         entry_genre.placeholder_text = _("enter station genre");
         entry_url.placeholder_text = _("enter station url");
 
-        entry_name.max_length = 20;
-        entry_genre.max_length = 14;
-
         var grid = new Gtk.Grid ();
         grid.set_halign (Gtk.Align.CENTER);
         grid.column_spacing = 20;

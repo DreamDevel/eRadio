@@ -39,6 +39,11 @@ public class Radio.StationList : Gtk.TreeView {
         this.insert_column_with_attributes (-1, _("Genre"), cell, "text", 1);
         this.insert_column_with_attributes (-1, _("Url"), cell, "text", 2);
 
+        var columns = this.get_columns ();
+        foreach(Gtk.TreeViewColumn column in columns) {
+            column.resizable = true;
+        }
+
         this.get_column (0).set_min_width (140);
         this.get_column (1).set_min_width (100);
 
@@ -185,7 +190,7 @@ public class Radio.StationList : Gtk.TreeView {
                 context_menu_row_id = (int) val;
             }
         }
-        return true;
+        return false;
     }
     // -------------- TreeView & ListStore Methods ------------ //
 

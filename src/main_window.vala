@@ -62,7 +62,7 @@ public class Radio.MainWindow : Gtk.Window {
         this.set_application (application);
         this.set_position (Gtk.WindowPosition.CENTER);
         this.icon_name = "eradio";
-        this.resizable = false;
+        this.resizable = true;
 
         toolbar = new Gtk.Toolbar ();
 
