@@ -50,6 +50,7 @@ public class Radio.MainWindow : Gtk.Window {
     public MainWindow () {
 
         no_station_str = _("No Station");
+        var settings = Radio.App.settings;
         try {
             notify_icon = new Gdk.Pixbuf.from_file(Radio.App.instance.build_pkg_data_dir + "/notify.png");
         } catch (GLib.Error error) {
@@ -59,6 +60,7 @@ public class Radio.MainWindow : Gtk.Window {
         var application = (Radio.App) GLib.Application.get_default();
         this.set_title (application.program_name);
         this.set_size_request (500, 250);
+        this.set_default_size(settings.window_width,settings.window_height);
         this.set_application (application);
         this.set_position (Gtk.WindowPosition.CENTER);
         this.icon_name = "eradio";
@@ -388,6 +390,18 @@ public class Radio.MainWindow : Gtk.Window {
             }
 
         }
+    }
+
+    /* Check for window resize and save new size to settings */
+    public override bool configure_event (Gdk.EventConfigure event) {
+
+        var settings = Radio.App.settings;
+
+        if (settings.window_width != event.width)
+            settings.window_width = event.width;
+        if (settings.window_height != event.height)
+            settings.window_height = event.height;
+        return base.configure_event (event);
     }
 
 

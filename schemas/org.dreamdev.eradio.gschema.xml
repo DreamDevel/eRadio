@@ -7,5 +7,37 @@
                 Last volume value
             </description>
         </key>
+
+        <key name="title-column-width" type="i">
+            <default>140</default>
+            <summary>Title column width</summary>
+            <description>
+                The width of the title column
+            </description>
+        </key>
+
+        <key name="genre-column-width" type="i">
+            <default>100</default>
+            <summary>Genre column width</summary>
+            <description>
+                The width of the genre column
+            </description>
+        </key>
+
+        <key name="window-width" type="i">
+            <default>500</default>
+            <summary>Window width</summary>
+            <description>
+                The width of the window
+            </description>
+        </key>
+
+        <key name="window-height" type="i">
+            <default>250</default>
+            <summary>Window height</summary>
+            <description>
+                The height of the window
+            </description>
+        </key>
     </schema>
 </schemalist>

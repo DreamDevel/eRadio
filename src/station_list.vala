@@ -29,6 +29,10 @@ public class Radio.StationList : Gtk.TreeView {
 
     public int context_menu_row_id;
 
+    private Gtk.TreeViewColumn column_title;
+    private Gtk.TreeViewColumn column_genre;
+    private Gtk.TreeViewColumn column_url;
+
     public StationList () throws Radio.Error {
         this.list_source = new Gtk.ListStore (4,typeof(string),typeof(string),typeof(string),typeof(int));
         this.set_model(this.list_source);
@@ -42,10 +46,18 @@ public class Radio.StationList : Gtk.TreeView {
         var columns = this.get_columns ();
         foreach(Gtk.TreeViewColumn column in columns) {
             column.resizable = true;
+            column.set_sizing(Gtk.TreeViewColumnSizing.FIXED);
         }
 
-        this.get_column (0).set_min_width (140);
-        this.get_column (1).set_min_width (100);
+        column_title = columns.nth_data(0);
+        column_genre = columns.nth_data(1);
+        column_url   = columns.nth_data(2);
+
+        column_title.set_fixed_width(Radio.App.settings.title_column_width);
+        column_genre.set_fixed_width(Radio.App.settings.genre_column_width);
+
+        column_title.set_min_width (140);
+        column_genre.set_min_width (100);
 
         this.row_activated.connect (this.row_double_clicked);
         this.button_release_event.connect (this.open_context_menu);
@@ -81,6 +93,8 @@ public class Radio.StationList : Gtk.TreeView {
 
         menu_item_edit.activate.connect(this.edit_clicked);
         menu_item_remove.activate.connect(this.remove_clicked);
+        column_title.notify.connect(this.title_column_resized);
+        column_genre.notify.connect(this.genre_column_resized);
     }
 
     public new void add (string name,string url,string genre) {
@@ -222,6 +236,22 @@ public class Radio.StationList : Gtk.TreeView {
 
     private void clear_list () {
         list_source.clear ();
+    }
+
+
+    private void title_column_resized (GLib.ParamSpec param) {
+
+        if (param.get_name () == "width") {
+            Radio.App.settings.title_column_width = column_title.width;
+        }
+    }
+
+
+    private void genre_column_resized (GLib.ParamSpec param) {
+
+        if (param.get_name () == "width") {
+            Radio.App.settings.genre_column_width = column_genre.width;
+        }
     }
 
 }

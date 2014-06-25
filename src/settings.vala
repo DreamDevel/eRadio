@@ -19,6 +19,11 @@
 
 public class Radio.Settings : Granite.Services.Settings {
     public double volume {get;set;}
+    public int window_width {get;set;}
+    public int window_height {get;set;}
+    public int title_column_width {get;set;}
+    public int genre_column_width {get;set;}
+
 
     public Settings () {
         base("org.dreamdev.eradio.settings");
