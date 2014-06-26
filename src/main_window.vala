@@ -38,6 +38,7 @@ public class Radio.MainWindow : Gtk.Window {
     private Gtk.ScrolledWindow      scroll_view;
     private Radio.StationDialog     dialog_add;
     private Radio.StationDialog     dialog_edit;
+    private Radio.ExtractDialog     dialog_extract;
     public static Radio.ErrorDialog dialog_error;
 
     // Views
@@ -75,6 +76,9 @@ public class Radio.MainWindow : Gtk.Window {
         // Set Default view
         this.change_view(this.view_index);
         this.stop ();
+
+        // Temporary workout, until move database out of TreeView
+        Radio.App.database = this.list_view.stations_db;
     }
 
     /* --------------- Build UI ---------------- */
@@ -170,6 +174,7 @@ public class Radio.MainWindow : Gtk.Window {
         dialog_add = new Radio.StationDialog (this,_("Add"));
         dialog_edit = new Radio.StationDialog (this,_("Change"));
         dialog_error = new Radio.ErrorDialog (this);
+        dialog_extract = new ExtractDialog (this);
     }
 
     private void connect_ui_signals () {
@@ -184,6 +189,7 @@ public class Radio.MainWindow : Gtk.Window {
         list_view.delete_station.connect (this.station_deleted);
         menu_item_add.activate.connect( () => {dialog_add.show();});
         menu_item_import.activate.connect (this.import_package);
+        menu_item_export.activate.connect ( ()=>{dialog_extract.show();} );
 
         volume_scale.value_changed.connect( (slider) => {
             var volume_value = slider.get_value();
@@ -231,7 +237,7 @@ public class Radio.MainWindow : Gtk.Window {
         Radio.App.player.add (station.url);
         this.play ();
 
-        this.new_notification (station.name,"Radio Station Changed");
+        this.new_notification (station.name,_("Radio Station Changed"));
     }
 
     public void play () {
@@ -317,7 +323,8 @@ public class Radio.MainWindow : Gtk.Window {
 
         } else if (Radio.App.playback_status == Radio.PlaybackStatus.PAUSED) {
             // Change Toolbar Label
-            tlb_station_label.set_markup(@"<b>$(Radio.App.playing_station.name)</b> (Paused)");
+            var paused_str = _("Paused");
+            tlb_station_label.set_markup(@"<b>$(Radio.App.playing_station.name)</b> ($paused_str)");
 
             // Update Play/Pause Button Icon
             play_pause_icon = new Gtk.Image.from_icon_name(play_icon_name,Gtk.IconSize.LARGE_TOOLBAR);
@@ -390,8 +397,14 @@ public class Radio.MainWindow : Gtk.Window {
 
     private void import_package () {
 
-        var file_chooser_import = new Gtk.FileChooserDialog ("Import Radio Stations Package",
-            null,Gtk.FileChooserAction.OPEN, "_Cancel",Gtk.ResponseType.CANCEL,"_Open",Gtk.ResponseType.ACCEPT);
+        var file_chooser_import = new Gtk.FileChooserDialog (_("Import Radio Stations Package"),
+            null,Gtk.FileChooserAction.OPEN, _("Cancel"),Gtk.ResponseType.CANCEL, _("Open"),Gtk.ResponseType.ACCEPT);
+
+        file_chooser_import.set_current_folder (Environment.get_home_dir () + "/Documents");
+        var file_filter = new Gtk.FileFilter ();
+        file_filter.set_filter_name (_("eRadio Package"));
+        file_filter.add_pattern ("*.erpkg");
+        file_chooser_import.add_filter(file_filter);
 
         var response_type = file_chooser_import.run ();
 
@@ -400,6 +413,10 @@ public class Radio.MainWindow : Gtk.Window {
             try {
                 var stations = Radio.PackageManager.parse(file_chooser_import.get_filename ());
                 list_view.add_array (stations);
+
+                if(view_index == 0 && list_view.count () > 0)
+                    change_view(1);
+
             } catch (Radio.Error error) {
                 file_chooser_import.close ();
                 dialog_error.show (error.message);

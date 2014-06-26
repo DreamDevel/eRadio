@@ -20,6 +20,8 @@
  public class Radio.PackageManager : GLib.Object {
 
     private static Json.Parser parser;
+    private static Json.Builder builder;
+    private static double pkg_version {get;set;default=1.0;}
 
     public static Radio.Station[] parse (string path) throws Radio.Error{
 
@@ -39,7 +41,7 @@
         var obj = root.get_object();
 
         // Check if object is valid
-        if(obj.has_member ("pkg_version") && obj.has_member ("pkg_name") && obj.has_member ("stations")) {
+        if(obj.has_member ("pkg_version") && obj.has_member ("stations")) {
             /* DEBUG
             stdout.printf ("Pkg Version : %.1f\n",obj.get_double_member("pkg_version"));
             stdout.printf ("Pkg Name : %s\n\n",obj.get_string_member("pkg_name"));*/
@@ -67,7 +69,46 @@
         return stations_array;
     }
 
-    public static void extract (List<Radio.Station> stations) {
+    public static void extract (Gee.ArrayList<Radio.Station> stations,string file_path) throws GLib.Error {
+
+        if(builder == null)
+            builder = new Json.Builder ();
+        else
+            builder.reset ();
+
+        builder.begin_object ();
+        builder.set_member_name ("pkg_version");
+        builder.add_double_value (pkg_version);
+        builder.set_member_name ("stations");
+        builder.begin_array ();
+
+        foreach (Radio.Station station in stations) {
+            builder.begin_object ();
+
+            builder.set_member_name ("Name");
+            builder.add_string_value (station.name);
+            builder.set_member_name ("Genre");
+            builder.add_string_value (station.genre);
+            builder.set_member_name ("Url");
+            builder.add_string_value (station.url);
+
+            builder.end_object ();
+        }
+
+        builder.end_array ();
+        builder.end_object ();
+
+        Json.Generator generator = new Json.Generator ();
+        Json.Node root = builder.get_root ();
+        generator.set_root (root);
+
+        //string str = generator.to_data (null);
+        //stdout.printf(str);
+        try {
+            generator.to_file(file_path);
+        } catch (GLib.Error error) {
+            throw error;
+        }
 
     }
  }

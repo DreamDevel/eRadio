@@ -64,6 +64,8 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/mpris.vala
     src/PlaybackStatus.vala
     src/package_manager.vala
+    src/station_selection_list.vala
+    src/extract_dialog.vala
 PACKAGES
     ${PROJECT_DEPS}
 )

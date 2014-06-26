@@ -20,7 +20,7 @@
 public class Radio.StationList : Gtk.TreeView {
 
     private Gtk.ListStore   list_source;
-    private Radio.Stations  stations_db;
+    public  Radio.Stations  stations_db;
 
     private Gtk.Menu        context_menu;
     private Gtk.MenuItem    menu_item_edit;
