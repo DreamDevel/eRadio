@@ -11,7 +11,7 @@ Build-Depends: cmake (>= 2.8),
                libsqlite3-dev,
                libgee-dev,
                libnotify-dev,
-               json-glib-dev
+               libjson-glib-dev
 Standards-Version: 3.9.3
 
 Package: eradio
