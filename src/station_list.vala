@@ -153,6 +153,20 @@ public class Radio.StationList : Gtk.TreeView {
             }
     }
 
+    public void add_array (Radio.Station[] stations) {
+
+        foreach (Radio.Station station in stations) {
+
+            try {
+                    stations_db.add (station.name,station.url,station.genre);
+            } catch (Radio.Error error) {
+                    stderr.printf (error.message);
+            }
+        }
+
+        this.reload_list ();
+    }
+
     public void update (Radio.Station station) {
         try {
                 stations_db.update (station);

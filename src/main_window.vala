@@ -32,6 +32,8 @@ public class Radio.MainWindow : Gtk.Window {
     private Gtk.Label       tlb_station_label;
     private Gtk.Scale       volume_scale;
     private Gtk.MenuItem    menu_item_add;
+    private Gtk.MenuItem    menu_item_import;
+    private Gtk.MenuItem    menu_item_export;
     private Granite.Widgets.AppMenu app_menu;
     private Gtk.ScrolledWindow      scroll_view;
     private Radio.StationDialog     dialog_add;
@@ -107,7 +109,11 @@ public class Radio.MainWindow : Gtk.Window {
 
         var menu = new Gtk.Menu ();
         menu_item_add = new Gtk.MenuItem.with_label (_("Add New Station"));
+        menu_item_import = new Gtk.MenuItem.with_label (_("Import Stations"));
+        menu_item_export = new Gtk.MenuItem.with_label (_("Export Stations"));
         menu.append(menu_item_add);
+        menu.append(menu_item_import);
+        menu.append(menu_item_export);
         app_menu = Radio.App.instance.create_appmenu (menu);
 
         toolbar.add (tlb_prev_button);
@@ -177,6 +183,7 @@ public class Radio.MainWindow : Gtk.Window {
         list_view.activated.connect(this.change_station);
         list_view.delete_station.connect (this.station_deleted);
         menu_item_add.activate.connect( () => {dialog_add.show();});
+        menu_item_import.activate.connect (this.import_package);
 
         volume_scale.value_changed.connect( (slider) => {
             var volume_value = slider.get_value();
@@ -378,6 +385,30 @@ public class Radio.MainWindow : Gtk.Window {
             this.change_station(station);
         }
     }
+
+    /* -------------------- Station Packages ------------------ */
+
+    private void import_package () {
+
+        var file_chooser_import = new Gtk.FileChooserDialog ("Import Radio Stations Package",
+            null,Gtk.FileChooserAction.OPEN, "_Cancel",Gtk.ResponseType.CANCEL,"_Open",Gtk.ResponseType.ACCEPT);
+
+        var response_type = file_chooser_import.run ();
+
+        if ( response_type == Gtk.ResponseType.ACCEPT) {
+
+            try {
+                var stations = Radio.PackageManager.parse(file_chooser_import.get_filename ());
+                list_view.add_array (stations);
+            } catch (Radio.Error error) {
+                file_chooser_import.close ();
+                dialog_error.show (error.message);
+            }
+        }
+
+        file_chooser_import.destroy ();
+    }
+
 
     /* ---------------- Button Singal Handlers ---------------- */
 

@@ -33,6 +33,7 @@ set (PROJECT_DEPS
     sqlite3
     gee-1.0
     libnotify
+    json-glib-1.0
 )
 
 pkg_check_modules(DEPS REQUIRED ${PROJECT_DEPS})
@@ -62,6 +63,7 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/media_key_listener.vala
     src/mpris.vala
     src/PlaybackStatus.vala
+    src/package_manager.vala
 PACKAGES
     ${PROJECT_DEPS}
 )
