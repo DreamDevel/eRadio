@@ -17,7 +17,7 @@
         </key>
 
         <key name="genre-column-width" type="i">
-            <default>100</default>
+            <default>160</default>
             <summary>Genre column width</summary>
             <description>
                 The width of the genre column
@@ -25,7 +25,7 @@
         </key>
 
         <key name="window-width" type="i">
-            <default>500</default>
+            <default>580</default>
             <summary>Window width</summary>
             <description>
                 The width of the window
@@ -33,7 +33,7 @@
         </key>
 
         <key name="window-height" type="i">
-            <default>250</default>
+            <default>320</default>
             <summary>Window height</summary>
             <description>
                 The height of the window
