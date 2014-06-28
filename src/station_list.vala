@@ -83,6 +83,9 @@ public class Radio.StationList : Gtk.TreeView {
         column_title.set_fixed_width(Radio.App.settings.title_column_width);
         column_genre.set_fixed_width(Radio.App.settings.genre_column_width);
 
+        column_title.set_sort_column_id(0);
+        column_genre.set_sort_column_id(1);
+
         column_play_icon.resizable = false;
         column_play_icon.set_min_width(30);
         column_title.set_min_width (140);
