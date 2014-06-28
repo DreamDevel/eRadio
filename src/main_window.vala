@@ -135,8 +135,12 @@ public class Radio.MainWindow : Gtk.Window {
         var wl_add_image = new Gtk.Image.from_icon_name("document-new",Gtk.IconSize.DND);
         wl_add_image.set_pixel_size(128);
 
+        var wl_import_image = new Gtk.Image.from_icon_name("document-import",Gtk.IconSize.DND);
+        wl_import_image.set_pixel_size(128);
+
         welcome_view = new Granite.Widgets.Welcome ("eRadio",_("Add a station to begin listening"));
         welcome_view.append_with_image (wl_add_image,_("Add"),_("Add a new station."));
+        welcome_view.append_with_image (wl_import_image,_("Import"),_("Import stations from eradio package."));
 
         // Note : With StationList creation we initialize the local db
         try {
@@ -199,6 +203,8 @@ public class Radio.MainWindow : Gtk.Window {
         welcome_view.activated.connect ( (index) => {
             if (index == 0) {
                 dialog_add.show();
+            } else if (index == 1) {
+                this.import_package ();
             }
         });
 
