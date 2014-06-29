@@ -34,6 +34,7 @@ set (PROJECT_DEPS
     gee-1.0
     libnotify
     json-glib-1.0
+    libsoup-2.4
 )
 
 pkg_check_modules(DEPS REQUIRED ${PROJECT_DEPS})
@@ -66,6 +67,7 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/package_manager.vala
     src/station_selection_list.vala
     src/extract_dialog.vala
+    src/m3u_decoder.vala
 PACKAGES
     ${PROJECT_DEPS}
 )

@@ -15,6 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  *  Authored by: George Sofianos <georgesofianosgr@gmail.com>
+ *               Fotini Skoti <fotini.skoti@gmail.com>
  */
 
 using Gst;
@@ -62,12 +63,26 @@ public class Radio.StreamPlayer : GLib.Object {
         bus.add_watch (busCallback);
     }
 
-    public void add (string uri) {
+    public void add (string uri) throws Radio.Error{
+
+        string final_uri = uri;
+
+        if ( uri.index_of (".m3u",uri.length-4) != -1 ) {
+            var list = M3UDecoder.parse (uri);
+
+            if ( list != null ){
+                //temporary ignoring all links beside the first
+                final_uri = list[1];
+            }
+            else {
+                throw new Radio.Error.GENERAL ("Could not decode m3u file, wrong url or corrupted file");
+            }
+        }
 
         this.has_url = true;
 
-        pipeline.set_state(State.READY);
-        pipeline.set_property("uri",uri);
+        pipeline.set_state (State.READY);
+        pipeline.set_property ("uri",final_uri);
 
     }
 
