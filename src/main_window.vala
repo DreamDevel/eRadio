@@ -178,7 +178,8 @@ public class Radio.MainWindow : Gtk.Window {
         dialog_add = new Radio.StationDialog (this,_("Add"));
         dialog_edit = new Radio.StationDialog (this,_("Change"));
         dialog_error = new Radio.ErrorDialog (this);
-        dialog_extract = new ExtractDialog (this);
+        dialog_extract = new Radio.ExtractDialog (this);
+        Radio.App.progress_dialog = new Radio.ProgressDialog (this);
     }
 
     private void connect_ui_signals () {

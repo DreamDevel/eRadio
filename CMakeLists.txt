@@ -68,6 +68,7 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/station_selection_list.vala
     src/extract_dialog.vala
     src/m3u_decoder.vala
+    src/progress_dialog.vala
 PACKAGES
     ${PROJECT_DEPS}
 )
