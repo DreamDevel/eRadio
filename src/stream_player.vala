@@ -66,17 +66,18 @@ public class Radio.StreamPlayer : GLib.Object {
     public void add (string uri) throws Radio.Error{
 
         string final_uri = uri;
+        var content_type = this.get_content_type (uri);
 
-        if ( uri.index_of (".m3u",uri.length-4) != -1 ) {
+        // Check content type to decode
+        if ( content_type == "audio/x-mpegurl" || content_type == "audio/mpegurl" ) {
             var list = M3UDecoder.parse (uri);
-
-            if ( list != null ){
-                //temporary ignoring all links beside the first
+            // Temporary ignoring all links beside the first
+            if ( list != null )
                 final_uri = list[1];
-            }
-            else {
+            else
                 throw new Radio.Error.GENERAL ("Could not decode m3u file, wrong url or corrupted file");
-            }
+        } else if ( content_type == "audio/x-scpls" || content_type == "application/pls+xml") {
+            throw new Radio.Error.GENERAL ("PLS types are not yet supported");
         }
 
         this.has_url = true;
@@ -118,5 +119,31 @@ public class Radio.StreamPlayer : GLib.Object {
             play_status_changed("stopped");
             this.has_url = false;
         }
+    }
+
+    private string? get_content_type (string url) {
+
+        Soup.SessionSync session = new Soup.SessionSync ();
+        session.timeout = 2;
+        Soup.Message msg = new Soup.Message ("GET", url);
+
+        string content_type = "";
+        msg.got_headers.connect( ()=>{
+
+            content_type = msg.response_headers.get_content_type (null);
+            session.cancel_message (msg,Soup.Status.CANCELLED);
+        });
+
+        session.send_message (msg);
+
+        // Note: status code returns 1, possibly because we cancel request, so we check length
+        if (content_type.length == 0) {
+            stderr.printf("Could not get content type\n");
+            return null;
+        }
+
+        return content_type;
+
+
     }
 }
