@@ -73,11 +73,18 @@ public class Radio.StreamPlayer : GLib.Object {
             var list = M3UDecoder.parse (uri);
             // Temporary ignoring all links beside the first
             if ( list != null )
-                final_uri = list[1];
+                final_uri = list[0];
             else
                 throw new Radio.Error.GENERAL ("Could not decode m3u file, wrong url or corrupted file");
-        } else if ( content_type == "audio/x-scpls" || content_type == "application/pls+xml") {
-            throw new Radio.Error.GENERAL ("PLS types are not yet supported");
+        } 
+        else if ( content_type == "audio/x-scpls" || content_type == "application/pls+xml") {
+            var list = PLSDecoder.parse (uri);
+            // Temporary ignoring all links beside the first
+            if ( list != null )
+                final_uri = list[0];
+            else
+                throw new Radio.Error.GENERAL ("Could not decode pls file, wrong url or corrupted file");
+                
         }
 
         this.has_url = true;
