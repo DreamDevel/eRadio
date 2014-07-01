@@ -70,7 +70,6 @@ public class Radio.StreamPlayer : GLib.Object {
 
         if (final_uri.index_of("http") == 0){
             content_type = this.get_content_type (uri);
-            stdout.printf (content_type + "\n");
         }
 
         // Check content type to decode
@@ -94,10 +93,8 @@ public class Radio.StreamPlayer : GLib.Object {
         else if ( content_type == "video/x-ms-wmv" || content_type == "video/x-ms-wvx" || content_type == "video/x-ms-asf" || content_type == "video/x-ms-asx" || content_type == "audio/x-ms-wax" || uri.last_index_of (".asx",uri.length - 4) != -1) {
             var list = ASXDecoder.parse (uri);
             // Temporary ignoring all links beside the first
-            if ( list != null ){
+            if ( list != null )
                 final_uri = list[0];
-                stdout.printf(final_uri + "\n");
-            }
             else
                 throw new Radio.Error.GENERAL ("Could not decode asx file, wrong url or corrupted file");
         }
