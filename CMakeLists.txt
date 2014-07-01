@@ -35,6 +35,7 @@ set (PROJECT_DEPS
     libnotify
     json-glib-1.0
     libsoup-2.4
+    libxml-2.0
 )
 
 pkg_check_modules(DEPS REQUIRED ${PROJECT_DEPS})
@@ -70,6 +71,7 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/m3u_decoder.vala
     src/progress_dialog.vala
     src/pls_decoder.vala
+    src/asx_decoder.vala
 PACKAGES
     ${PROJECT_DEPS}
 )
