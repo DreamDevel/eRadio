@@ -410,7 +410,8 @@ public class Radio.MainWindow : Gtk.Window {
 
         var file_chooser_import = new Gtk.FileChooserDialog (_("Import Radio Stations Package"),
             null,Gtk.FileChooserAction.OPEN, _("Cancel"),Gtk.ResponseType.CANCEL, _("Open"),Gtk.ResponseType.ACCEPT);
-
+        file_chooser_import.transient_for = this;
+        file_chooser_import.destroy_with_parent = true;
         file_chooser_import.set_current_folder (Environment.get_home_dir () + "/Documents");
         var file_filter = new Gtk.FileFilter ();
         file_filter.set_filter_name (_("eRadio Package"));

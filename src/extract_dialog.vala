@@ -20,11 +20,13 @@
  public class Radio.ExtractDialog : Gtk.Dialog {
 
     Radio.StationSelectionList list;
+    private Gtk.Window parent_window;
 
     public ExtractDialog (Gtk.Window parent) {
 
         int window_width;
         int window_height;
+        parent_window = parent;
         parent.get_size(out window_width,out window_height);
 
         list = new Radio.StationSelectionList ();
@@ -49,10 +51,11 @@
         this.hide();
 
         this.response.connect ( (id)=>{
-            if (id == 1)
-                extract_selected ();
 
             this.hide();
+
+            if (id == 1)
+                extract_selected ();
         } );
 
     }
@@ -65,6 +68,8 @@
             var file_chooser_export = new Gtk.FileChooserDialog (_("Export Radio Stations"),
                 null,Gtk.FileChooserAction.SAVE, _("Cancel"),Gtk.ResponseType.CANCEL,_("Export"),Gtk.ResponseType.ACCEPT);
 
+            file_chooser_export.transient_for = parent_window;
+            file_chooser_export.destroy_with_parent = true;
             file_chooser_export.set_current_folder (Environment.get_home_dir () + "/Documents");
             var file_filter = new Gtk.FileFilter ();
             file_filter.set_filter_name (_("eRadio Package"));
