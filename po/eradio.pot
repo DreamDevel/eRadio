@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-17 10:38+0300\n"
+"POT-Creation-Date: 2014-07-02 13:30+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,28 +17,91 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../src/main_window.vala:49
-msgid "No Station"
-msgstr ""
-
-#: ../src/main_window.vala:87
+#: ../src/main_window.vala:115
 msgid "Add New Station"
 msgstr ""
 
-#: ../src/main_window.vala:103
+#: ../src/main_window.vala:116
+msgid "Import Stations"
+msgstr ""
+
+#: ../src/main_window.vala:117
+msgid "Export Stations"
+msgstr ""
+
+#: ../src/main_window.vala:141
 msgid "Add a station to begin listening"
 msgstr ""
 
-#: ../src/main_window.vala:112 ../src/main_window.vala:152
+#: ../src/main_window.vala:142 ../src/main_window.vala:178
 msgid "Add"
 msgstr ""
 
-#: ../src/main_window.vala:112
+#: ../src/main_window.vala:142
 msgid "Add a new station."
 msgstr ""
 
-#: ../src/main_window.vala:153
+#: ../src/main_window.vala:143
+msgid "Import"
+msgstr ""
+
+#: ../src/main_window.vala:143
+msgid "Import stations from eradio package."
+msgstr ""
+
+#: ../src/main_window.vala:179
 msgid "Change"
+msgstr ""
+
+#: ../src/main_window.vala:247
+msgid "Radio Station Changed"
+msgstr ""
+
+#: ../src/main_window.vala:321
+msgid "No Station Selected"
+msgstr ""
+
+#: ../src/main_window.vala:337
+msgid "Paused"
+msgstr ""
+
+#: ../src/main_window.vala:411
+msgid "Import Radio Stations Package"
+msgstr ""
+
+#: ../src/main_window.vala:412 ../src/extract_dialog.vala:48
+#: ../src/extract_dialog.vala:69 ../src/station_dialog.vala:73
+msgid "Cancel"
+msgstr ""
+
+#: ../src/main_window.vala:412
+msgid "Open"
+msgstr ""
+
+#: ../src/main_window.vala:417 ../src/extract_dialog.vala:75
+msgid "eRadio Package"
+msgstr ""
+
+#: ../src/station_selection_list.vala:41 ../src/station_list.vala:68
+msgid "Station"
+msgstr ""
+
+#: ../src/station_selection_list.vala:42 ../src/station_dialog.vala:49
+#: ../src/station_list.vala:69
+msgid "Genre"
+msgstr ""
+
+#: ../src/station_selection_list.vala:43 ../src/station_dialog.vala:50
+#: ../src/station_list.vala:70
+msgid "Url"
+msgstr ""
+
+#: ../src/extract_dialog.vala:48 ../src/extract_dialog.vala:69
+msgid "Export"
+msgstr ""
+
+#: ../src/extract_dialog.vala:68
+msgid "Export Radio Stations"
 msgstr ""
 
 #: ../src/radio.vala:26
@@ -57,14 +120,6 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
-#: ../src/station_dialog.vala:49 ../src/station_list.vala:38
-msgid "Genre"
-msgstr ""
-
-#: ../src/station_dialog.vala:50 ../src/station_list.vala:39
-msgid "Url"
-msgstr ""
-
 #: ../src/station_dialog.vala:56
 msgid "enter station name"
 msgstr ""
@@ -77,18 +132,14 @@ msgstr ""
 msgid "enter station url"
 msgstr ""
 
-#: ../src/station_dialog.vala:76
-msgid "Cancel"
+#: ../src/error_dialog.vala:38
+msgid "Ok"
 msgstr ""
 
-#: ../src/station_list.vala:37
-msgid "Station"
-msgstr ""
-
-#: ../src/station_list.vala:48
+#: ../src/station_list.vala:98
 msgid "Edit"
 msgstr ""
 
-#: ../src/station_list.vala:49
+#: ../src/station_list.vala:99
 msgid "Remove"
 msgstr ""
