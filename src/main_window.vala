@@ -93,6 +93,10 @@ public class Radio.MainWindow : Gtk.Window {
         tlb_next_button = new Gtk.ToolButton (new Gtk.Image.from_icon_name("media-skip-forward",Gtk.IconSize.LARGE_TOOLBAR),"");
 
 
+        tlb_prev_button.set_sensitive (false);
+        tlb_play_button.set_sensitive (false);
+        tlb_next_button.set_sensitive (false);
+
         // ToolItem to give some space
         tlb_space_left = new Gtk.ToolItem ();
         tlb_space_left.width_request = 20;
@@ -319,6 +323,7 @@ public class Radio.MainWindow : Gtk.Window {
         var play_icon_name = "media-playback-start";
         var pause_icon_name = "media-playback-pause";
         var no_station_label = _("No Station Selected");
+        var controls_enabled = true;
         Gtk.Image play_pause_icon;
 
 
@@ -350,6 +355,18 @@ public class Radio.MainWindow : Gtk.Window {
 
             // Update playing icon
             list_view.remove_play_icon ();
+
+            controls_enabled = false;
+        }
+
+        if (controls_enabled) {
+            tlb_prev_button.set_sensitive (true);
+            tlb_play_button.set_sensitive (true);
+            tlb_next_button.set_sensitive (true);
+        } else {
+            tlb_prev_button.set_sensitive (false);
+            tlb_play_button.set_sensitive (false);
+            tlb_next_button.set_sensitive (false);
         }
 
         // Set play/pause icon
