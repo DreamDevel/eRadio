@@ -66,7 +66,11 @@ public class Radio.StreamPlayer : GLib.Object {
     public void add (string uri) throws Radio.Error{
 
         string final_uri = uri;
-        var content_type = this.get_content_type (uri);
+        string content_type = "";
+
+        if (final_uri.index_of("http") == 0){
+            content_type = this.get_content_type (uri);
+        }
 
         // Check content type to decode
         if ( content_type == "audio/x-mpegurl" || content_type == "audio/mpegurl" ) {
@@ -85,6 +89,14 @@ public class Radio.StreamPlayer : GLib.Object {
             else
                 throw new Radio.Error.GENERAL ("Could not decode pls file, wrong url or corrupted file");
                 
+        }
+        else if ( content_type == "video/x-ms-wmv" || content_type == "video/x-ms-wvx" || content_type == "video/x-ms-asf" || content_type == "video/x-ms-asx" || content_type == "audio/x-ms-wax" || uri.last_index_of (".asx",uri.length - 4) != -1) {
+            var list = ASXDecoder.parse (uri);
+            // Temporary ignoring all links beside the first
+            if ( list != null )
+                final_uri = list[0];
+            else
+                throw new Radio.Error.GENERAL ("Could not decode asx file, wrong url or corrupted file");
         }
 
         this.has_url = true;

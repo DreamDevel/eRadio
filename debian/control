@@ -12,7 +12,8 @@ Build-Depends: cmake (>= 2.8),
                libgee-dev,
                libnotify-dev,
                libjson-glib-dev,
-               libsoup2.4-dev
+               libsoup2.4-dev,
+               libxml2-dev
 Standards-Version: 3.9.3
 
 Package: eradio
