@@ -93,9 +93,17 @@ public class Radio.Stations {
         }
     }
 
-    public Gee.ArrayList<Radio.Station> get_all () throws Radio.Error {
+    public Gee.ArrayList<Radio.Station> get_all (bool sort = true,bool ascending = true) throws Radio.Error {
 
         string query = "SELECT * FROM Stations";
+
+        if (sort) {
+            if (ascending)
+                query += " ORDER BY LOWER(Name) ASC";
+            else
+                query += " ORDER BY LOWER(Name) DESC";
+        }
+
         Gee.ArrayList<Radio.Station> result;
         try {
             result = select (query);
