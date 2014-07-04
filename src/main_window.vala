@@ -303,9 +303,9 @@ public class Radio.MainWindow : Gtk.Window {
         if (notification == null) {
             notification = new Notify.Notification (title,subtitle,null);
             if (icon != null)
-                notification.set_icon_from_pixbuf (icon);
+                notification.set_image_from_pixbuf (icon);
             else
-                notification.set_icon_from_pixbuf (notify_icon);
+                notification.set_image_from_pixbuf (notify_icon);
         } else {
             notification.update (title,subtitle,null);
         }
