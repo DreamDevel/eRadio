@@ -1,9 +1,9 @@
-eradio (1.1) precise; urgency=low
+eradio (1.2) precise; urgency=low
 
-  * Media keys support.
-  * Sound indicator integration.
-  * Display errors in some occasions.
-  * Display notifications when window is not visible.
-  * Russian language support
+  * Import/Export eRadio packages
+  * Changes to UI
+  * Finnish language support
+  * M3U, PLS, ASX Support
+  * Bug Fixes
 
- -- George Sofianos <georgesofianosgr@gmail.com>  Sat, 23 Jun 2014 14:52:39 -0500
+ -- George Sofianos <georgesofianosgr@gmail.com>  Sat, 6 Jul 2014 11:56:39 -0500
