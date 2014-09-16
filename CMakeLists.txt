@@ -36,6 +36,7 @@ set (PROJECT_DEPS
     json-glib-1.0
     libsoup-2.4
     libxml-2.0
+    sqlheavy-0.1
 )
 
 pkg_check_modules(DEPS REQUIRED ${PROJECT_DEPS})
@@ -56,7 +57,6 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/main_window.vala
     src/stream_player.vala
     src/station_list.vala
-    src/stations.vala
     src/station.vala
     src/error.vala
     src/station_dialog.vala
@@ -72,6 +72,8 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/progress_dialog.vala
     src/pls_decoder.vala
     src/asx_decoder.vala
+    src/genre.vala
+    src/database.vala
 PACKAGES
     ${PROJECT_DEPS}
 )

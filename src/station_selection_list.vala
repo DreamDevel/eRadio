@@ -15,6 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  *  Authored by: George Sofianos <georgesofianosgr@gmail.com>
+ *               Fotini Skoti <fotini.skoti@gmail.com>
  */
 
 public class Radio.StationSelectionList : Gtk.TreeView {
@@ -91,6 +92,7 @@ public class Radio.StationSelectionList : Gtk.TreeView {
 
             // Get stations from database
             foreach (int id in selected_stations_ids) {
+                /*replaced
                 var filter = new Gee.HashMap<string,string> ();
                 filter["id"] = @"$id";
                 try {
@@ -101,7 +103,11 @@ public class Radio.StationSelectionList : Gtk.TreeView {
                 } catch (Radio.Error error) {
                     stderr.printf(error.message);
                     return null;
-                }
+                }*/
+                var result = Radio.App.database.get_station_by_id (id);
+                if (result != null)
+                    selected_stations.add (result);
+
             }
         }
 
@@ -114,9 +120,22 @@ public class Radio.StationSelectionList : Gtk.TreeView {
 
     private void add_row (Radio.Station station) {
         Gtk.TreeIter iter;
+
+        string genre_text = "";
+        int arraylist_size = station.genres.size;
+
+        for (int i=0; i<arraylist_size; i++) {
+            genre_text = genre_text+station.genres [i];
+            if (i != arraylist_size - 1)
+                genre_text = genre_text + ", ";
+        }
+
         list_source.append(out iter);
         list_source.set_value(iter,0,station.name);
-        list_source.set_value(iter,1,station.genre);
+        if (genre_text != "")
+            list_source.set_value(iter,1,genre_text);
+        else
+            list_source.set_value(iter,1,"Unknown");
         list_source.set_value(iter,2,station.url);
         list_source.set_value(iter,3,station.id);
     }

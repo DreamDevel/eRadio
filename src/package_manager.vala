@@ -15,6 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  *  Authored by: George Sofianos <georgesofianosgr@gmail.com>
+ *               Fotini Skoti <fotini.skoti@gmail.com>
  */
 
  public class Radio.PackageManager : GLib.Object {
@@ -57,7 +58,17 @@
                 var name = station_object.get_string_member ("Name");
                 var genre = station_object.get_string_member ("Genre");
                 var url = station_object.get_string_member ("Url");
-                var station = new Radio.Station (-1,name,url,genre);
+
+                // TODO Implement erpkg v2
+                string[] strs = genre.split (",");
+                var genres = new Gee.ArrayList<string> ();
+
+                foreach (string str in strs) {
+
+                    genres.add (str.strip());
+                }
+
+                var station = new Radio.Station (-1,name,url,genres);
 
                 stations_array[i] = station;
             }
@@ -85,10 +96,19 @@
         foreach (Radio.Station station in stations) {
             builder.begin_object ();
 
+            string genre = "";
+            var arraylist_size = station.genres.size;
+
+            for (int i=0; i<arraylist_size; i++) {
+                genre = genre + station.genres[i];
+                if (i != arraylist_size - 1)
+                    genre = genre + ", ";
+            }
+
             builder.set_member_name ("Name");
             builder.add_string_value (station.name);
             builder.set_member_name ("Genre");
-            builder.add_string_value (station.genre);
+            builder.add_string_value (genre);
             builder.set_member_name ("Url");
             builder.add_string_value (station.url);
 

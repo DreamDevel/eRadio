@@ -15,6 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  *  Authored by: George Sofianos <georgesofianosgr@gmail.com>
+ *               Fotini Skoti <fotini.skoti@gmail.com>
  */
 
 public class Radio.StationDialog : Gtk.Dialog {
@@ -110,7 +111,7 @@ public class Radio.StationDialog : Gtk.Dialog {
 
     private void control_button2_sensitivity () {
 
-        if (entry_name.text.length > 0 && entry_genre.text.length > 0 && entry_url.text.length > 0 ) {
+        if (entry_name.text.length > 0 && entry_url.text.length > 0 ) {
             button2.set_sensitive (true);
         }
         else
