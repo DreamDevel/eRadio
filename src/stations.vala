@@ -62,8 +62,8 @@ public class Radio.Stations {
     }
 
     public void update (Radio.Station station) throws Radio.Error {
-
-        string query = @"UPDATE Stations SET Name=? , URL=? , Genre=? WHERE ID=?";
+        // TODO fix genre for db v2
+        /*string query = @"UPDATE Stations SET Name=? , URL=? , Genre=? WHERE ID=?";
 
         Sqlite.Statement stmt;
         var query_status = db.prepare_v2 (query,query.length,out stmt);
@@ -78,7 +78,7 @@ public class Radio.Stations {
                 "Couldn't Update Entry: Error Code %d \nError Message: %s\n".printf(db.errcode (),db.errmsg ()));
         }
 
-        stmt.step ();
+        stmt.step ();*/
     }
 
     public void delete (int id) throws Radio.Error {
@@ -174,7 +174,7 @@ public class Radio.Stations {
 
     private Gee.ArrayList<Radio.Station> select (string query) throws Radio.Error {
 
-        Sqlite.Statement stmt;
+        /*Sqlite.Statement stmt;
         var query_status = db.prepare_v2 (query,query.length,out stmt);
 
         if (query_status != Sqlite.OK) {
@@ -225,6 +225,9 @@ public class Radio.Stations {
             }
         } while (rc == Sqlite.ROW);
 
-        return stations_list;
+        return stations_list;*/
+
+        //temp
+        return new Gee.ArrayList<Radio.Station> ();
     }
 }

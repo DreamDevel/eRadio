@@ -15,6 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  *  Authored by: George Sofianos <georgesofianosgr@gmail.com>
+ *               Fotini Skoti <fotini.skoti@gmail.com>
  */
 
  public class Radio.ExtractDialog : Gtk.Dialog {
@@ -100,14 +101,8 @@
 
         // Update list
         this.list.clear ();
-        try {
-            var stations = Radio.App.database.get_all ();
-
-            this.list.add_stations (stations);
-
-        } catch (Radio.Error error) {
-            stderr.printf(error.message);
-        }
+        var stations = Radio.App.database.get_all_stations ();
+        this.list.add_stations (stations);
 
         base.show ();
     }

@@ -13,7 +13,8 @@ Build-Depends: cmake (>= 2.8),
                libnotify-dev,
                libjson-glib-dev,
                libsoup2.4-dev,
-               libxml2-dev
+               libxml2-dev,
+               libsqlheavy0.1-dev
 Standards-Version: 3.9.3
 
 Package: eradio

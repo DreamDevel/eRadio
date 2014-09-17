@@ -15,12 +15,12 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  *  Authored by: George Sofianos <georgesofianosgr@gmail.com>
+ *               Fotini Skoti <fotini.skoti@gmail.com>
  */
 
 public class Radio.StationList : Gtk.TreeView {
 
     private Gtk.ListStore   list_source;
-    public  Radio.Stations  stations_db;
 
     private Gtk.Menu        context_menu;
     private Gtk.MenuItem    menu_item_edit;
@@ -44,7 +44,6 @@ public class Radio.StationList : Gtk.TreeView {
     public StationList () throws Radio.Error {
 
         this.build_ui ();
-        this.init_db ();
         this.connect_signals ();
         this.reload_list ();
     }
@@ -102,29 +101,6 @@ public class Radio.StationList : Gtk.TreeView {
         this.context_menu.show_all ();
     }
 
-    private void init_db () throws Radio.Error{
-
-        var home_dir = File.new_for_path (Environment.get_home_dir ());
-        var radio_dir = home_dir.get_child(".local").get_child("share").get_child("eradio");
-        var db_file = radio_dir.get_child("stations.db");
-
-        // Create ~/.local/share/eradio path
-        if (! radio_dir.query_exists ()) {
-            try {
-                radio_dir.make_directory_with_parents();
-            } catch (GLib.Error error) {
-                stderr.printf(error.message);
-            }
-
-        }
-
-        try {
-            this.stations_db = new Radio.Stations.with_db_file (db_file.get_path());
-        } catch (Radio.Error e) {
-            this.database_error(e);
-        }
-    }
-
     private void connect_signals () {
 
         this.menu_item_edit.activate.connect(this.edit_clicked);
@@ -136,71 +112,32 @@ public class Radio.StationList : Gtk.TreeView {
 
     /* -------------- Stations Operations ---------- */
 
-    public Radio.Station get_station (int station_id) throws Radio.Error {
-        var filters = new Gee.HashMap<string,string> ();
-        filters["id"] = @"$station_id";
-        try {
-            var station = stations_db.get (filters);
-            return station[0];
-        } catch (Radio.Error error) {
-            throw error;
-        }
-    }
+    public new void add (string name, Gee.ArrayList <string> genres, string url) {
 
-    public new void add (string name,string url,string genre) {
-        try {
-                stations_db.add (name,url,genre);
-                this.reload_list ();
-            } catch (Radio.Error error) {
-                stderr.printf (error.message);
-            }
+        Radio.App.database.new_station (name, genres, url);
+        this.reload_list ();
     }
 
     public void add_array (Radio.Station[] stations) {
 
         foreach (Radio.Station station in stations) {
-
-            try {
-                    stations_db.add (station.name,station.url,station.genre);
-            } catch (Radio.Error error) {
-                    stderr.printf (error.message);
-            }
+             Radio.App.database.new_station (station.name, station.genres, station.url);
         }
 
         this.reload_list ();
     }
 
     public void update (Radio.Station station) {
-        try {
-                stations_db.update (station);
-                this.reload_list ();
-            } catch (Radio.Error error) {
-                stderr.printf (error.message);
-            }
+
+        Radio.App.database.update_station_details (station.id, station.name, station.genres, station.url);
+        this.reload_list ();
     }
 
     public void delete (int station_id) {
 
-        try {
-            stations_db.delete (station_id);
-            this.delete_station (station_id);
-            this.reload_list ();
-        } catch (Radio.Error error) {
-            stderr.printf(error.message);
-        }
-
-    }
-
-    public int count () {
-
-        var num_stations = 0;
-        try {
-            num_stations = stations_db.count ();
-        } catch (Radio.Error e) {
-            stderr.printf (e.message);
-        }
-
-        return num_stations;
+        Radio.App.database.remove_station (station_id);
+        this.reload_list ();
+        this.delete_station (station_id);
     }
 
 
@@ -214,33 +151,22 @@ public class Radio.StationList : Gtk.TreeView {
 
         var tree_selection = this.get_selection();
 
-        if(tree_selection == null) {
+        if (tree_selection == null) {
             stderr.printf("Could not get TreeSelection");
-        } else {
+        }
+        else {
             // Get selection id
             GLib.Value val;
             tree_selection.get_selected(out model,out iter);
             model.get_value(iter,3,out val);
 
             // Get station object
-            var filters = new Gee.HashMap<string,string>();
-            filters["id"] = "%d".printf(val.get_int());
-            Gee.ArrayList<Radio.Station> station_list;
+            var station = Radio.App.database.get_station_by_id (val.get_int ());
 
-            try {
-                station_list = stations_db.get(filters);
-
-                if (station_list.size == 1) {
-                    Station station = station_list[0];
-                    this.activated (station);
-                }
-                else {
-                    throw new Radio.Error.GENERAL (
-                        "Model returned more or less values than one - Possible Duplicate Entry or wrong entry request");
-                }
-            } catch (Radio.Error e) {
-                stderr.printf(e.message);
-            }
+            if (station != null)
+                this.activated (station);
+            else
+                stderr.printf ("Model returned more or less values than one - Possible Duplicate Entry or wrong entry request");
         }
     }
 
@@ -328,6 +254,7 @@ public class Radio.StationList : Gtk.TreeView {
     }
 
     private void reload_list () {
+
         // Save Station ID Before Clear List
         int station_id_icon = -1;
         if (this.iter_play_icon != null) {
@@ -337,25 +264,36 @@ public class Radio.StationList : Gtk.TreeView {
         }
         this.clear_list ();
 
-        Gee.ArrayList<Radio.Station> stations;
-        try {
-            stations = stations_db.get_all ();
+        Gee.ArrayList<Radio.Station>? stations;
+        stations = Radio.App.database.get_all_stations ();
 
+        if (stations != null) {
             foreach (Radio.Station station in stations) {
                 this.add_row (station);
             }
             this.set_play_icon (station_id_icon);
-
-        } catch (Radio.Error e) {
-            stderr.printf(e.message);
         }
     }
 
     private void add_row (Radio.Station station) {
+
+        string genre_text = "";
+        int arraylist_size = station.genres.size;
+
+        for (int i=0; i<arraylist_size; i++) {
+            genre_text = genre_text+station.genres [i];
+            if (i != arraylist_size - 1)
+                genre_text = genre_text + ", ";
+        }
+
         Gtk.TreeIter iter;
         list_source.append(out iter);
         list_source.set_value(iter,0,station.name);
-        list_source.set_value(iter,1,station.genre);
+        //For empty genre display unknown
+        if (genre_text != "")
+            list_source.set_value(iter,1,genre_text);
+        else
+            list_source.set_value(iter,1,"Unknown");
         list_source.set_value(iter,2,station.url);
         list_source.set_value(iter,3,station.id);
     }

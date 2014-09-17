@@ -15,6 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  *  Authored by: George Sofianos <georgesofianosgr@gmail.com>
+ *               Fotini Skoti <fotini.skoti@gmail.com>
  */
 
 class Radio.App : Granite.Application {
@@ -31,7 +32,8 @@ class Radio.App : Granite.Application {
     public static Radio.StreamPlayer player;
     public static Radio.Settings settings;
     public static Radio.App instance;
-    public static Radio.Stations database;
+    public static Radio.Database database;
+
     public static Radio.ProgressDialog progress_dialog;
 
     public static Radio.PlaybackStatus playback_status {get;set;default=Radio.PlaybackStatus.STOPPED;}
@@ -71,12 +73,36 @@ class Radio.App : Granite.Application {
         playing_station = null;
 
         Notify.init (this.program_name);
+        init_db ();
     }
 
     public App () {
         this.set_flags (ApplicationFlags.FLAGS_NONE);
         instance = this;
 
+    }
+
+    private void init_db () {
+
+        var home_dir = File.new_for_path (Environment.get_home_dir ());
+        var radio_dir = home_dir.get_child(".local").get_child("share").get_child("eradio");
+        var db_file = radio_dir.get_child("stationsv2.db");
+
+        // Create ~/.local/share/eradio path
+        if (! radio_dir.query_exists ()) {
+            try {
+                radio_dir.make_directory_with_parents();
+            } catch (GLib.Error error) {
+                stderr.printf(error.message);
+            }
+
+        }
+
+        try {
+            database = new Radio.Database.with_db_file (db_file.get_path());
+        } catch (Radio.Error e) {
+            stderr.printf(e.message);
+        }
     }
 
     public override void activate () {

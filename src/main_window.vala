@@ -15,6 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  *  Authored by: George Sofianos <georgesofianosgr@gmail.com>
+ *               Fotini Skoti <fotini.skoti@gmail.com>
  */
 
 public class Radio.MainWindow : Gtk.Window {
@@ -76,9 +77,6 @@ public class Radio.MainWindow : Gtk.Window {
         // Set Default view
         this.change_view(this.view_index);
         this.stop ();
-
-        // Temporary workout, until move database out of TreeView
-        Radio.App.database = this.list_view.stations_db;
     }
 
     /* --------------- Build UI ---------------- */
@@ -155,7 +153,7 @@ public class Radio.MainWindow : Gtk.Window {
         }
 
         // In case db has stations show list else welcome view
-        if(list_view.count () > 0 )
+        if(Radio.App.database.count_stations () > 0 )
             this.view_index = 1;
 
         scroll_view = new Gtk.ScrolledWindow (null, null);
@@ -379,37 +377,60 @@ public class Radio.MainWindow : Gtk.Window {
 
     private void dialog_add_success () {
 
-        list_view.add (dialog_add.entry_name.text,
-                       dialog_add.entry_url.text,
-                       dialog_add.entry_genre.text);
+        string genres_text = dialog_add.entry_genre.text;
+        string[] genres    = genres_text.split (",");
+        var genres_list = new Gee.ArrayList <string> ();
 
-        if(view_index == 0 && list_view.count () > 0)
+            foreach (string iter in genres) {
+                iter = iter.strip ();
+                if (iter != "")
+                    genres_list.add (iter);
+            }
+
+        list_view.add (dialog_add.entry_name.text.strip (),
+                       genres_list,
+                       dialog_add.entry_url.text.strip ());
+
+        if(view_index == 0 && Radio.App.database.count_stations () > 0)
             change_view(1);
     }
 
     private void dialog_edit_open (int station_id) {
 
-        try {
-            var station = list_view.get_station(station_id);
+            var station = Radio.App.database.get_station_by_id (station_id);
+
+            string genre_text = "";
+            int arraylist_size = station.genres.size;
+
+            //Create a string with genre names
+            for (int i=0; i<arraylist_size; i++) {
+                genre_text = genre_text+station.genres[i];
+                if (i != arraylist_size - 1)
+                    genre_text = genre_text + ", ";
+            }
+
             dialog_edit.entry_name.set_text(station.name);
-            dialog_edit.entry_genre.text = station.genre;
+            dialog_edit.entry_genre.text = genre_text;
             dialog_edit.entry_url.text = station.url;
             dialog_edit.show(false);
-
-        } catch (Radio.Error error) {
-            stderr.printf(error.message);
-            var application = (Radio.App) GLib.Application.get_default();
-            application.quit();
-        }
     }
 
     private void dialog_edit_success () {
 
-        var station = new Radio.Station (list_view.context_menu_row_id,
-                                        dialog_edit.entry_name.text,
-                                        dialog_edit.entry_url.text,
-                                        dialog_edit.entry_genre.text);
+        string genres_text = dialog_edit.entry_genre.text;
+        string[] genres    = genres_text.split (",");
+        var genres_list = new Gee.ArrayList <string> ();
 
+        foreach (string iter in genres) {
+                iter = iter.strip ();
+                if (iter != "")
+                    genres_list.add (iter.strip ());
+        }
+
+        var station = new Radio.Station (list_view.context_menu_row_id,
+                                        dialog_edit.entry_name.text.strip (),
+                                        dialog_edit.entry_url.text.strip (),
+                                        genres_list);
         list_view.update(station);
 
         // If currently playing change && url changed , update playback
@@ -443,7 +464,7 @@ public class Radio.MainWindow : Gtk.Window {
                 var stations = Radio.PackageManager.parse(file_chooser_import.get_filename ());
                 list_view.add_array (stations);
 
-                if(view_index == 0 && list_view.count () > 0)
+                if(view_index == 0 && Radio.App.database.count_stations () > 0)
                     change_view(1);
 
             } catch (Radio.Error error) {
@@ -484,7 +505,7 @@ public class Radio.MainWindow : Gtk.Window {
 
     private void station_deleted (int station_id) {
 
-        if(view_index == 1 && list_view.count () == 0)
+        if(view_index == 1 && Radio.App.database.count_stations () == 0)
             change_view(0);
 
         // Stop playback
