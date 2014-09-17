@@ -59,7 +59,6 @@
                 var genre = station_object.get_string_member ("Genre");
                 var url = station_object.get_string_member ("Url");
 
-                // TODO Implement erpkg v2
                 string[] strs = genre.split (",");
                 var genres = new Gee.ArrayList<string> ();
 

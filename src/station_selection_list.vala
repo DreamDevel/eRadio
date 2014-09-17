@@ -92,18 +92,6 @@ public class Radio.StationSelectionList : Gtk.TreeView {
 
             // Get stations from database
             foreach (int id in selected_stations_ids) {
-                /*replaced
-                var filter = new Gee.HashMap<string,string> ();
-                filter["id"] = @"$id";
-                try {
-                    var result = Radio.App.database.get (filter);
-                    if (result.size == 1) {
-                        selected_stations.add (result.get (0) );
-                    }
-                } catch (Radio.Error error) {
-                    stderr.printf(error.message);
-                    return null;
-                }*/
                 var result = Radio.App.database.get_station_by_id (id);
                 if (result != null)
                     selected_stations.add (result);
