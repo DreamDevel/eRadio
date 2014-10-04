@@ -18,13 +18,13 @@
  */
 
 namespace Build {
-    public const string DATADIR = "/usr/share";
-    public const string PKG_DATADIR = "/usr/share/eradio";
+    public const string DATADIR = "/usr/local/share";
+    public const string PKG_DATADIR = "/usr/local/share/eradio";
     public const string PLUGIN_DIR = "";
     public const string GETTEXT_PACKAGE = "eradio";
     public const string RELEASE_NAME = "eRadio";
     public const string VERSION = "1.2";
     public const string VERSION_INFO = "";
-    public const string CMAKE_INSTALL_PREFIX = "/usr";
+    public const string CMAKE_INSTALL_PREFIX = "/usr/local";
     public const string ICON_DIR = "";
 }
