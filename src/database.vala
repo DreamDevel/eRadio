@@ -47,7 +47,6 @@
     }
 
     public void new_station (string name, Gee.ArrayList <string> genres, string url) {
-        int flag = 0;
 
         try {
             add_station (name, url);
@@ -65,31 +64,20 @@
                     "Couldn't Select Entry: Error Code %d \nError Message: %s\n".printf (e.code,e.message));
             }
 
-            if (station_id != null) {
-                foreach (string genre_name in genres) {
+            foreach (string genre_name in genres) {
+                int genre_id;
+                var genre = get_genre_by_name (genre_name);
 
-                    if (get_genre_by_name (genre_name) == null) {
-                        add_genre (genre_name);
-                        var genre_id   = get_genre_by_name (genre_name).id;
-                        link_genre (station_id, genre_id);
-                    }
-                    else {
-
-                        var linked_genres = get_linked_genres (station_id);
-                        foreach ( string genre in linked_genres){
-                            if (genre == genre_name){
-                                flag = 1;
-                                break;
-                            }
-                        }
-
-                        if (flag == 0) {
-                            var genre_id   = get_genre_by_name (genre_name).id;
-                            link_genre (station_id, genre_id);
-                        }
-                    }
+                if (genre == null){
+                    add_genre (genre_name);   
+                    genre_id   = get_genre_by_name (genre_name).id; 
+                } else {
+                    genre_id = genre.id;
                 }
+
+                link_genre (station_id, genre_id);             
             }
+            
         }
         catch (Radio.Error e) {
             stderr.printf (e.message);
@@ -99,54 +87,63 @@
 
     public void update_station_details (int id, string name, Gee.ArrayList<string> genres, string url) {
 
-        int flag;
+            bool genre_linked;
 
-        try {
-            if (get_station_by_id (id) != null) {
-
+            try {
                 update_station (id, name, url);
-                var existing_genres = get_linked_genres (id);
+                var linked_genres = get_linked_genres (id);
 
-                foreach (string new_genre in genres) {
+                foreach (string new_genre_name in genres) {
 
-                    flag = 0;
-                    foreach (string old_genre in existing_genres) {
+                    genre_linked = false;
+                    foreach (string old_genre_name in linked_genres) {
 
-                        if (new_genre == old_genre){
-                            flag = 1;
+                        if (new_genre_name == old_genre_name){
+                            genre_linked = true;
                             break;
                         }
                     }
 
-                    if (flag == 0) {
-                        add_genre (new_genre);
-                        link_genre (id, get_genre_by_name (new_genre).id);
+                    if (!genre_linked) {   
+                        var genre = get_genre_by_name (new_genre_name);
+                        int genre_id;
+
+                        if (genre == null) {
+                            add_genre (new_genre_name);
+                            genre_id = get_genre_by_name (new_genre_name).id;
+                        } else {
+                            genre_id = genre.id;
+                        }
+
+                        link_genre (id, genre_id);
                     }
                 }
 
-                foreach (string old_genre in existing_genres) {
-                    flag = 0;
+                bool old_genre_exists;
+                foreach (string old_genre_name in linked_genres) {
+            
+                    old_genre_exists = false;
 
-                    foreach (string new_genre in genres) {
-                        if (new_genre == old_genre){
+                    foreach (string new_genre_name in genres) {
 
-                            flag = 1;
-                             break;
-                        }
-                    }
+                        if (new_genre_name == old_genre_name){
+                            old_genre_exists = true;
+                            break;
+                         }
+                     }
 
-                    if (flag == 0) {
-                        var genre = get_genre_by_name (old_genre);
+                     if (!old_genre_exists) {
+                        var genre = get_genre_by_name (old_genre_name);
                         unlink_genre (id, genre.id);
+
                         if (count_genre_entries_by_id (genre.id) == 0)
                             delete_genre (genre.id);
-                    }
+                     }
                 }
             }
-        }
-        catch (Radio.Error e) {
-            stderr.printf (e.message);
-        }
+            catch (Radio.Error e) {
+                stderr.printf (e.message);
+            }
     }
 
     public void remove_station (int id) {
@@ -394,7 +391,7 @@
 
         try{
             SQLHeavy.Query query = db.prepare ("""SELECT Genres.name FROM Genres,StationsGenres WHERE StationsGenres.genre_id = Genres.id
-                                                AND StationsGenres.station_id = :id;""");
+                                                AND StationsGenres.station_id = :id ORDER BY Genres.name ASC;""");
             query.set_int (":id",id);
 
             for (SQLHeavy.QueryResult results = query.execute (); !results.finished; results.next ()) {
