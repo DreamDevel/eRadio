@@ -15,16 +15,36 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  *  Authored by: George Sofianos <georgesofianosgr@gmail.com>
+ *
  */
 
-namespace Build {
-    public const string DATADIR = "/usr/share";
-    public const string PKG_DATADIR = "/usr/share/eradio";
-    public const string PLUGIN_DIR = "";
-    public const string GETTEXT_PACKAGE = "eradio";
-    public const string RELEASE_NAME = "eRadio";
-    public const string VERSION = "1.2";
-    public const string VERSION_INFO = "";
-    public const string CMAKE_INSTALL_PREFIX = "/usr";
-    public const string ICON_DIR = "";
+
+public class Radio.Dialogs.AddStationDialog : Radio.Dialogs.StationDialog {
+
+    public AddStationDialog () {
+        base ();
+    }
+
+    public AddStationDialog.with_parent (Gtk.Window parent_window) {
+        base.with_parent (parent_window);
+    }
+
+    protected override string get_action_button_name () {
+        return "Add Station";
+    }
+
+    protected override void handle_action_button_click () {
+        var name = name_entry.text.strip ();
+        var url = url_entry.text.strip ();
+        var genres = genres_treeview.treeview.get_genres_in_array ();
+
+        Radio.App.database.create_new_station (name, genres, url);
+        this.hide ();
+    }
+
+    public override void show () {
+        clear_content ();
+        base.show ();
+    }
+
 }

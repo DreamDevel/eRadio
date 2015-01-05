@@ -20,6 +20,7 @@
 
 class Radio.App : Granite.Application {
 
+    // TODO remove these, never used it
     /**
      * Translatable launcher (.desktop) strings to be added to template (.pot) file.
      * These strings should reflect any changes in these launcher keys in .desktop file
@@ -28,16 +29,19 @@ class Radio.App : Granite.Application {
     public const string GENERIC = N_("Radio");
     public const string KEYWORDS = N_("Radio;Audio;Player;Media;Songs;");
 
-    public static Radio.MainWindow main_window {get;private set;default = null;}
+    public static Radio.Windows.MainWindow main_window {get;private set;default = null;}
     public static Radio.StreamPlayer player;
     public static Radio.Settings settings;
     public static Radio.App instance;
-    public static Radio.Database database;
+    public static Radio.Core.Database database;
 
+    public static Radio.Dialogs.AddStationDialog add_dialog;
+    public static Radio.Dialogs.EditStationDialog edit_dialog;
+    public static Radio.Dialogs.ErrorDialog error_dialog;
     public static Radio.ProgressDialog progress_dialog;
 
     public static Radio.PlaybackStatus playback_status {get;set;default=Radio.PlaybackStatus.STOPPED;}
-    public static Radio.Station? playing_station;
+    public static Radio.Models.Station? playing_station;
 
     private Radio.MPRIS mpris;
 
@@ -66,23 +70,56 @@ class Radio.App : Granite.Application {
         about_artists = {"George Sofianos <georgesofianosgr@gmail.com>", null};
         about_documenters = { "George Sofianos <georgesofianosgr@gmail.com>",
                                       null };
-
         about_license_type = Gtk.License.GPL_3_0;
-        player = new Radio.StreamPlayer ();
-        settings = new Radio.Settings ();
-        playing_station = null;
 
-        Notify.init (this.program_name);
-        init_db ();
+        this.set_flags (ApplicationFlags.FLAGS_NONE);
+
+        playing_station = null; // TODO remove
+
     }
 
     public App () {
-        this.set_flags (ApplicationFlags.FLAGS_NONE);
         instance = this;
+    }
+
+    public override void activate () {
+        initialize ();
 
     }
 
-    private void init_db () {
+    public void initialize () {
+        create_core_objects ();
+        create_user_interface ();
+
+    }
+
+    private void create_core_objects () {
+        player = new Radio.StreamPlayer ();
+        settings = new Radio.Settings ();
+        mpris = new Radio.MPRIS ();
+
+        initialize_database ();
+        Radio.MediaKeyListener.instance.init ();
+        mpris.initialize ();
+        Notify.init (this.program_name);
+    }
+
+    private void create_user_interface () {
+        create_window ();
+        create_dialogs ();
+    }
+
+    private void create_window () {
+        main_window = new  Radio.Windows.MainWindow ();
+    }
+
+    private void create_dialogs () {
+        add_dialog = new Radio.Dialogs.AddStationDialog.with_parent (main_window);
+        edit_dialog = new Radio.Dialogs.EditStationDialog.with_parent (main_window);
+        error_dialog = new Radio.Dialogs.ErrorDialog.with_parent (main_window);
+    }
+
+    private void initialize_database () {
 
         var home_dir = File.new_for_path (Environment.get_home_dir ());
         var radio_dir = home_dir.get_child(".local").get_child("share").get_child("eradio");
@@ -99,18 +136,10 @@ class Radio.App : Granite.Application {
         }
 
         try {
-            database = new Radio.Database.with_db_file (db_file.get_path());
+            database = new Radio.Core.Database ();
+            database.connect_to_database_file (db_file.get_path());
         } catch (Radio.Error e) {
             stderr.printf(e.message);
-        }
-    }
-
-    public override void activate () {
-        if (main_window == null) {
-            Radio.MediaKeyListener.instance.init ();
-            main_window = new Radio.MainWindow ();
-            mpris = new Radio.MPRIS ();
-            mpris.initialize ();
         }
     }
 }

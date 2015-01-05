@@ -25,5 +25,8 @@ public errordomain Radio.Error {
     SQLITE_UPDATE_FAILED,
     SQLITE_SELECT_FAILED,
     SQLITE_DELETE_FAILED,
-    SQLITE_CREATE_FAILED
+    SQLITE_CREATE_FAILED,
+    DatabaseCreate,
+    DatabaseWrite,
+    DatabaseRead,
 }

@@ -15,16 +15,28 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  *  Authored by: George Sofianos <georgesofianosgr@gmail.com>
+ *
  */
 
-namespace Build {
-    public const string DATADIR = "/usr/share";
-    public const string PKG_DATADIR = "/usr/share/eradio";
-    public const string PLUGIN_DIR = "";
-    public const string GETTEXT_PACKAGE = "eradio";
-    public const string RELEASE_NAME = "eRadio";
-    public const string VERSION = "1.2";
-    public const string VERSION_INFO = "";
-    public const string CMAKE_INSTALL_PREFIX = "/usr";
-    public const string ICON_DIR = "";
+
+public class Radio.Widgets.StationsTreeViewScrollable : Gtk.ScrolledWindow {
+
+    public Radio.Widgets.StationsTreeView treeview;
+
+    public StationsTreeViewScrollable () {
+        build_interface ();
+    }
+
+    private void build_interface () {
+        create_treeview ();
+        append_treeview ();
+    }
+
+    private void create_treeview () {
+        treeview = new Radio.Widgets.StationsTreeView ();
+    }
+
+    private void append_treeview () {
+        add (treeview);
+    }
 }

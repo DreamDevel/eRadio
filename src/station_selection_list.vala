@@ -60,21 +60,21 @@ public class Radio.StationSelectionList : Gtk.TreeView {
         column_genre.set_min_width (100);
     }
 
-    public void add_stations (Gee.ArrayList<Radio.Station> stations) {
+    public void add_stations (Gee.ArrayList<Radio.Models.Station> stations) {
 
-        foreach (Radio.Station station in stations) {
+        foreach (Radio.Models.Station station in stations) {
             add_row (station);
         }
     }
 
-    public Gee.ArrayList<Radio.Station>? get_selected () {
+    public Gee.ArrayList<Radio.Models.Station>? get_selected () {
 
         // Get selected as TreePath
         var selection = this.get_selection ();
         var selected_paths = selection.get_selected_rows (null);
         var num_of_selected = selection.count_selected_rows ();
 
-        var selected_stations = new Gee.ArrayList<Radio.Station> ();
+        var selected_stations = new Gee.ArrayList<Radio.Models.Station> ();
         if (num_of_selected > 0) {
             var selected_stations_ids = new int[num_of_selected];
 
@@ -106,7 +106,7 @@ public class Radio.StationSelectionList : Gtk.TreeView {
         list_source.clear ();
     }
 
-    private void add_row (Radio.Station station) {
+    private void add_row (Radio.Models.Station station) {
         Gtk.TreeIter iter;
 
         string genre_text = "";

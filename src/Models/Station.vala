@@ -14,16 +14,21 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- *  Authored by: Fotini Skoti <fotini.skoti@gmail.com>
+ *  Authored by: George Sofianos <georgesofianosgr@gmail.com>
+ *               Fotini Skoti <fotini.skoti@gmail.com>
  */
 
- public class Radio.Genre {
+ public class Radio.Models.Station {
 
-    public int    id   {get;set;}
+    public int    id {get;set;}
     public string name {get;set;}
+    public string url {get;set;}
+    public Gee.ArrayList<string> genres {get;set;}
 
-    public Genre (int id,string name) {
-        this.id   = id;
+    public Station (int id, string name, string url, Gee.ArrayList<string> genres) {
+        this.id = id;
         this.name = name;
+        this.url = url;
+        this.genres = genres;
     }
 }

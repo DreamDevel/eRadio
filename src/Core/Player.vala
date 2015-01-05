@@ -20,8 +20,8 @@
 
 using Gst;
 
-
-public class Radio.StreamPlayer : GLib.Object {
+// TODO refactor
+public class Radio.Core.Player : GLib.Object {
 
     private Gst.Element pipeline;
     private Gst.Bus bus;
@@ -56,11 +56,11 @@ public class Radio.StreamPlayer : GLib.Object {
         return true;
     }
 
-    public StreamPlayer () {
+    public Player () {
 
-        /*pipeline = Gst.ElementFactory.make ("playbin2","play");
+        /*pipeline = Gst.ElementFactory.make ("playbin","play");
         bus = pipeline.get_bus();
-        bus.add_watch (busCallback);*/
+        bus.add_watch (busCallback,null);*/
     }
 
     public void add (string uri) throws Radio.Error{
@@ -80,7 +80,7 @@ public class Radio.StreamPlayer : GLib.Object {
                 final_uri = list[0];
             else
                 throw new Radio.Error.GENERAL ("Could not decode m3u file, wrong url or corrupted file");
-        } 
+        }
         else if ( content_type == "audio/x-scpls" || content_type == "application/pls+xml") {
             var list = PLSDecoder.parse (uri);
             // Temporary ignoring all links beside the first
@@ -88,7 +88,7 @@ public class Radio.StreamPlayer : GLib.Object {
                 final_uri = list[0];
             else
                 throw new Radio.Error.GENERAL ("Could not decode pls file, wrong url or corrupted file");
-                
+
         }
         else if ( content_type == "video/x-ms-wmv" || content_type == "video/x-ms-wvx" || content_type == "video/x-ms-asf" || content_type == "video/x-ms-asx" || content_type == "audio/x-ms-wax" || uri.last_index_of (".asx",uri.length - 4) != -1) {
             var list = ASXDecoder.parse (uri);

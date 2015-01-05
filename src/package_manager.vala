@@ -7,7 +7,7 @@
  *  (at your option) any later version.
  *
  *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  but WITHOUT ANY WARadio.Models.StationRadio.Models.StationANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
@@ -24,12 +24,12 @@
     private static Json.Builder builder;
     private static double pkg_version {get;set;default=1.0;}
 
-    public static Radio.Station[] parse (string path) throws Radio.Error{
+    public static Radio.Models.Station[] parse (string path) throws Radio.Error{
 
         if(parser == null)
             parser = new Json.Parser ();
 
-        Radio.Station[] stations_array = null;
+        Radio.Models.Station[] stations_array = null;
 
         try {
             parser.load_from_file (path);
@@ -50,7 +50,7 @@
             var stations = obj.get_array_member ("stations");
             var stations_length = stations.get_length();
 
-            stations_array = new Radio.Station[stations_length];
+            stations_array = new Radio.Models.Station[stations_length];
             for(var i = 0; i < stations_length; i++) {
 
                 var station_object = stations.get_object_element(i);
@@ -67,7 +67,7 @@
                     genres.add (str.strip());
                 }
 
-                var station = new Radio.Station (-1,name,url,genres);
+                var station = new Radio.Models.Station (-1,name,url,genres);
 
                 stations_array[i] = station;
             }
@@ -79,7 +79,7 @@
         return stations_array;
     }
 
-    public static void extract (Gee.ArrayList<Radio.Station> stations,string file_path) throws GLib.Error {
+    public static void extract (Gee.ArrayList<Radio.Models.Station> stations,string file_path) throws GLib.Error {
 
         if(builder == null)
             builder = new Json.Builder ();
@@ -92,7 +92,7 @@
         builder.set_member_name ("stations");
         builder.begin_array ();
 
-        foreach (Radio.Station station in stations) {
+        foreach (Radio.Models.Station station in stations) {
             builder.begin_object ();
 
             string genre = "";

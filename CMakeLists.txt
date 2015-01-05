@@ -27,11 +27,11 @@ add_schema ("schemas/org.dreamdev.eradio.gschema.xml")
 find_package(PkgConfig)
 
 set (PROJECT_DEPS
-    gstreamer-0.10
+    gstreamer-1.0
     gtk+-3.0
     granite
     sqlite3
-    gee-1.0
+    gee-0.8
     libnotify
     json-glib-1.0
     libsoup-2.4
@@ -54,10 +54,7 @@ vala_precompile(VALA_C ${EXEC_NAME}
     ${CONFIG_FILE_REL}
     src/main.vala
     src/radio.vala
-    src/main_window.vala
     src/stream_player.vala
-    src/station_list.vala
-    src/station.vala
     src/error.vala
     src/station_dialog.vala
     src/error_dialog.vala
@@ -72,8 +69,38 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/progress_dialog.vala
     src/pls_decoder.vala
     src/asx_decoder.vala
-    src/genre.vala
-    src/database.vala
+
+    src/Models/Genre.vala
+    src/Models/Station.vala
+
+    src/Core/Database.vala
+    src/Core/Player.vala
+    src/Core/DatabaseModels/GenreModel.vala
+    src/Core/DatabaseModels/StationModel.vala
+    src/Core/DatabaseModels/StationsGenresModel.vala
+
+    src/UserInterface/Menus/ApplicationMenu.vala
+    src/UserInterface/Menus/StationsTreeViewContextMenu.vala
+
+    src/UserInterface/Views/WelcomeView.vala
+    src/UserInterface/Views/StationsListView.vala
+
+    src/UserInterface/Widgets/TopToolbar.vala
+    src/UserInterface/Widgets/ViewStack.vala
+    src/UserInterface/Widgets/StationsListStore.vala
+    src/UserInterface/Widgets/GenresListStore.vala
+    src/UserInterface/Widgets/StationsTreeView.vala
+    src/UserInterface/Widgets/StationsTreeViewScrollable.vala
+    src/UserInterface/Widgets/GenresTreeView.vala
+    src/UserInterface/Widgets/GenresTreeViewScrollable.vala
+    src/UserInterface/Widgets/GenresTreeViewToolbar.vala
+
+    src/UserInterface/Dialogs/StationDialog.vala
+    src/UserInterface/Dialogs/AddStationDialog.vala
+    src/UserInterface/Dialogs/EditStationDialog.vala
+    src/UserInterface/Dialogs/ErrorDialog.vala
+
+    src/UserInterface/Windows/MainWindow.vala
 PACKAGES
     ${PROJECT_DEPS}
 )

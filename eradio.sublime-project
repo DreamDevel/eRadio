@@ -1,0 +1,42 @@
+{
+	"build_systems":
+	[
+		{
+			"cmd":
+			[
+				"bash",
+				"../tools/build_from_sublime"
+			],
+			"name": "Vala/Cmake",
+			"variants":
+			[
+				{
+					"cmd":
+					[
+						"pantheon-terminal --execute=${project_path:${folder}}/build/eradio"
+					],
+					"name": "Run",
+					"shell": true
+				}
+			],
+			"working_dir": "${project_path:${folder}}/build"
+		}
+	],
+	"folders":
+	[
+		{
+			"follow_symlinks": true,
+			"path": "."
+		}
+	],
+	"settings":
+	{
+		"rulers":
+		[
+			120
+		],
+		"tab_size": 4,
+		"translate_tabs_to_spaces": true,
+		"use_tab_stops": true
+	}
+}
