@@ -32,8 +32,13 @@ public class Radio.Widgets.TopToolbar : Gtk.Toolbar {
     private Gtk.Label       playback_label;
     private Gtk.Scale       volume_scale;
 
+    private Gtk.Image play_button_image_play;
+    private Gtk.Image play_button_image_pause;
+
     public TopToolbar () {
         build_interface ();
+        connect_handlers_to_internal_signals ();
+        connect_handlers_to_external_signals ();
     }
 
     private void build_interface () {
@@ -46,13 +51,15 @@ public class Radio.Widgets.TopToolbar : Gtk.Toolbar {
 
     private void create_playback_buttons () {
         var icon_size = Gtk.IconSize.LARGE_TOOLBAR;
-        var play_button_image = new Gtk.Image.from_icon_name("media-playback-start",icon_size);
+        play_button_image_play = new Gtk.Image.from_icon_name("media-playback-start",icon_size);
+        play_button_image_pause = new Gtk.Image.from_icon_name("media-playback-pause",icon_size);
         var previous_button_image = new Gtk.Image.from_icon_name("media-skip-backward",icon_size);
         var next_button_image = new Gtk.Image.from_icon_name("media-skip-forward",icon_size);
+        play_button_image_pause.show ();
 
-        this.play_button = new Gtk.ToolButton (play_button_image,"");
-        this.previous_button = new Gtk.ToolButton (previous_button_image,"");
-        this.next_button = new Gtk.ToolButton (next_button_image,"");
+        play_button = new Gtk.ToolButton (play_button_image_play,"");
+        previous_button = new Gtk.ToolButton (previous_button_image,"");
+        next_button = new Gtk.ToolButton (next_button_image,"");
 
         // By default we disable the buttons
         play_button.set_sensitive (false);
@@ -95,5 +102,104 @@ public class Radio.Widgets.TopToolbar : Gtk.Toolbar {
         add (volume_toolItem);
         add (label_toolItem);
         add (application_menu);
+    }
+
+    private void connect_handlers_to_internal_signals () {
+        play_button.clicked.connect (handle_play_button_clicked);
+    }
+
+    private void handle_play_button_clicked () {
+        switch (Radio.App.player.status) {
+
+            case PLAYER_STATUS.PLAYING:
+                Radio.App.player.stop ();
+                break;
+
+            case PLAYER_STATUS.PAUSED:
+            case PLAYER_STATUS.STOPPED:
+                var treeview =  Radio.App
+                                .main_window
+                                .view_stack
+                                .stations_list_view
+                                .stations_treeview
+                                .treeview;
+                var selected_station_id = treeview.get_selected_station_id ();
+                if (selected_station_id == -1) {
+                    // TODO Log internal error (possible bug)
+                    break;
+                }
+
+                var station = Radio.App.database.get_station_by_id (selected_station_id);
+                // TODO check error
+
+
+                if (Radio.App.player.station == null || station.id != Radio.App.player.station.id) {
+                    Radio.App.player.add (station);
+                }
+
+                Radio.App.player.play ();
+                break;
+            default:
+                assert_not_reached ();
+        }
+    }
+
+
+    private void connect_handlers_to_external_signals () {
+        // Get Treeview selection and connect to change
+        Radio.App.instance
+        .ui_build_finished.connect ( () => {
+            var treeview =  Radio.App
+                            .main_window
+                            .view_stack
+                            .stations_list_view
+                            .stations_treeview
+                            .treeview;
+
+            var treeview_selection = treeview
+                                     .get_selection ();
+
+            treeview_selection.changed.connect (handle_treeview_station_selected);
+        });
+
+        Radio.App.player.play_status_changed.connect (handle_player_status_changed);
+
+
+    }
+
+    private void handle_treeview_station_selected () {
+
+        // TODO Check if next is available to enable button
+        // TODO Check if prev is available to enable button
+    
+    }
+
+    private void handle_player_status_changed (PLAYER_STATUS status) {
+        switch (status) {
+            case PLAYER_STATUS.PLAYING :
+                    handle_player_status_playing ();
+                    play_button.set_sensitive (true);
+                break; 
+            case PLAYER_STATUS.PAUSED  :
+                handle_player_status_paused ();
+                break;
+            case PLAYER_STATUS.STOPPED :
+                handle_player_status_stopped ();
+                break;
+            default :
+                assert_not_reached ();
+        }
+    }
+
+    private void handle_player_status_playing () {
+        play_button.set_icon_widget (play_button_image_pause);
+    }
+
+    private void handle_player_status_paused () {
+        play_button.set_icon_widget (play_button_image_play);
+    }
+
+    private void handle_player_status_stopped () {
+        play_button.set_icon_widget (play_button_image_play);
     }
 }

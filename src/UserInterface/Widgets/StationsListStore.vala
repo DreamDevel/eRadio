@@ -148,4 +148,10 @@ public class Radio.Widgets.StationsListStore : Gtk.ListStore {
         return val.get_int ();
     }
 
+    public int get_station_id_for_iterator (Gtk.TreeIter iter) {
+        Value val;
+        get_value (iter,ID_COLUMN_ID,out val);
+        return val.get_int ();
+    }
+
 }

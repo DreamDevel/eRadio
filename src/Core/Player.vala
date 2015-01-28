@@ -23,16 +23,78 @@ using Gst;
 // TODO refactor
 public class Radio.Core.Player : GLib.Object {
 
-    private Gst.Element pipeline;
+    private Gst.Pipeline pipeline;
+    private Gst.Element  source;
+    private Gst.Element  converter;
+    private Gst.Element  sink;
     private Gst.Bus bus;
 
     public bool has_url {get;set;}
+    public PLAYER_STATUS status;
+    public Models.Station? station;
 
     public signal void volume_changed (double volume_value);
-    public signal void play_status_changed(string status);
+    public signal void play_status_changed(PLAYER_STATUS status);
     public signal void playback_error(GLib.Error error);
 
-    private bool busCallback(Gst.Bus bus, Gst.Message message) {
+    public Player () {
+        status = PLAYER_STATUS.STOPPED;
+
+        // Create GStreamer Elements
+        create_gstreamer_elements ();
+        link_gstreamer_elements ();
+
+
+        // Connect internal signals
+        connect_handlers_to_internal_signals ();
+        
+    }
+
+    // TODO throws critical error
+    private void create_gstreamer_elements () {
+        pipeline  = new Gst.Pipeline ("main-pipeline");
+        source    = Gst.ElementFactory.make ("uridecodebin","source");
+        converter = Gst.ElementFactory.make ("audioconvert","converter");
+        sink      = Gst.ElementFactory.make ("autoaudiosink","sink");
+        bus       = pipeline.get_bus();
+    }
+
+    // TODO throws critical error
+    private void link_gstreamer_elements () {
+        pipeline.add_many (source,converter,sink);
+
+        if (!converter.link (sink))
+            stdout.printf ("Error While linking convert with sink\n");
+    }
+
+    private void connect_handlers_to_internal_signals () {
+        source.pad_added.connect (handle_url_decoded);
+        bus.add_watch (Priority.DEFAULT,handle_bus_has_message);
+    }
+
+    private void handle_url_decoded (Gst.Element element, Gst.Pad pad) {
+        stdout.printf("- Padd Added\n");
+        // Here we can check the type of the media TODO
+        //if (!waiting_uri_decode)
+            //return;
+
+        //waiting_uri_decode = false;
+
+        if (pad.get_current_caps ().is_fixed ())
+            stdout.printf("- Caps is fixed\n");
+        else 
+            stdout.printf ("- Caps is not fixed \n");
+
+        //stdout.printf(pad.get_current_caps ().to_string () + "\n");
+        var struct_string = pad.get_current_caps ().to_string ();
+
+        if (struct_string.has_prefix ("audio"))
+            pad.link (converter.get_static_pad ("sink"));
+        else
+            stdout.printf ("- Stream is not an audio\n");
+    }
+
+    private bool handle_bus_has_message (Gst.Bus bus, Gst.Message message) {
         switch(message.type) {
 
             case Gst.MessageType.ERROR:
@@ -50,23 +112,21 @@ public class Radio.Core.Player : GLib.Object {
                 break;
 
             case Gst.MessageType.EOS:
+                stdout.printf ("DEBUG::End Of Stream Reached\n");
                 pipeline.set_state(State.NULL);
                 break;
         }
         return true;
     }
 
-    public Player () {
 
-        /*pipeline = Gst.ElementFactory.make ("playbin","play");
-        bus = pipeline.get_bus();
-        bus.add_watch (busCallback,null);*/
-    }
+    public void add (Radio.Models.Station station) throws Radio.Error{
 
-    public void add (string uri) throws Radio.Error{
-
-        string final_uri = uri;
+        string uri = station.url;
+        string final_uri = station.url;
         string content_type = "";
+
+        this.station = station;
 
         if (final_uri.index_of("http") == 0){
             content_type = this.get_content_type (uri);
@@ -102,8 +162,7 @@ public class Radio.Core.Player : GLib.Object {
         this.has_url = true;
 
         pipeline.set_state (State.READY);
-        pipeline.set_property ("uri",final_uri);
-
+        source.set ("uri",final_uri);
     }
 
     public void set_volume (double value) {
@@ -112,22 +171,23 @@ public class Radio.Core.Player : GLib.Object {
     }
 
     public double get_volume () {
-        var val = GLib.Value (typeof(double));
-        pipeline.get_property ("volume", ref val);
+        var val = pipeline.get_property ("volume");
         return (double)val;
     }
 
     public void play() {
         if(pipeline != null) {
             pipeline.set_state(State.PLAYING);
-            play_status_changed("playing");
+            status = PLAYER_STATUS.PLAYING;
+            play_status_changed(PLAYER_STATUS.PLAYING);
         }
     }
 
     public void pause() {
         if(pipeline != null) {
             pipeline.set_state(State.PAUSED);
-            play_status_changed("paused");
+            status = PLAYER_STATUS.PAUSED;
+            play_status_changed(PLAYER_STATUS.PAUSED);
         }
 
     }
@@ -135,11 +195,15 @@ public class Radio.Core.Player : GLib.Object {
     public void stop() {
         if(pipeline != null) {
             pipeline.set_state(State.NULL);
-            play_status_changed("stopped");
+            status = PLAYER_STATUS.STOPPED;
+            play_status_changed(PLAYER_STATUS.STOPPED);
             this.has_url = false;
+            station = null;
         }
     }
+    
 
+    // Do we really need content type ? Check if pad_added reports the same content
     private string? get_content_type (string url) {
 
         Soup.SessionSync session = new Soup.SessionSync ();

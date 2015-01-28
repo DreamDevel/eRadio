@@ -21,8 +21,8 @@
 public class Radio.Windows.MainWindow : Gtk.Window {
 
     private Gtk.Box         main_box;
-    private Radio.Widgets.TopToolbar toolbar;
-    private Radio.Widgets.ViewStack view_stack;
+    public Radio.Widgets.TopToolbar toolbar;
+    public Radio.Widgets.ViewStack view_stack;
 
     private Notify.Notification? notification;
     private Gdk.Pixbuf notify_icon;
@@ -78,7 +78,7 @@ public class Radio.Windows.MainWindow : Gtk.Window {
 
         Radio.App.playing_station = station;
         try {
-            Radio.App.player.add (station.url);
+            //Radio.App.player.add (station.url);
             this.play ();
             this.new_notification (station.name,_("Radio Station Changed"));
         } catch (Radio.Error error) {

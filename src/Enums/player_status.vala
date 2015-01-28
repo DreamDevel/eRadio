@@ -15,22 +15,24 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  *  Authored by: George Sofianos <georgesofianosgr@gmail.com>
- *
+ *               Fotini Skoti <fotini.skoti@gmail.com>
  */
 
+ public enum Radio.PLAYER_STATUS {
+    PLAYING,
+    PAUSED,
+    STOPPED;
 
-public class Radio.Views.StationsListView : Gtk.Bin {
-
-    public Radio.Widgets.StationsTreeViewScrollable stations_treeview;
-
-    public StationsListView () {
-        build_interface ();
+    public string to_string() {
+        switch (this) {
+            case PLAYING :
+                return "Playing";
+            case PAUSED  :
+                return "Paused";
+            case STOPPED :
+                return "Stopped";
+            default :
+                assert_not_reached();
+        }
     }
-
-    private void build_interface () {
-    	stations_treeview = new Radio.Widgets.StationsTreeViewScrollable ();
-        add (stations_treeview);
-        show_all ();
-    }
-
-}
+ }

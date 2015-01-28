@@ -21,8 +21,8 @@
 
 public class Radio.Widgets.ViewStack : Gtk.Stack {
 
-	private Radio.Views.WelcomeView welcome_view;
-	private Radio.Views.StationsListView stations_list_view;
+	public Radio.Views.WelcomeView welcome_view;
+    public Radio.Views.StationsListView stations_list_view;
 
     public ViewStack () {
         build_interface ();

@@ -30,10 +30,10 @@ class Radio.App : Granite.Application {
     public const string KEYWORDS = N_("Radio;Audio;Player;Media;Songs;");
 
     public static Radio.Windows.MainWindow main_window {get;private set;default = null;}
-    public static Radio.StreamPlayer player;
     public static Radio.Settings settings;
     public static Radio.App instance;
     public static Radio.Core.Database database;
+    public static Radio.Core.Player player;
 
     public static Radio.Dialogs.AddStationDialog add_dialog;
     public static Radio.Dialogs.EditStationDialog edit_dialog;
@@ -44,6 +44,8 @@ class Radio.App : Granite.Application {
     public static Radio.Models.Station? playing_station;
 
     private Radio.MPRIS mpris;
+
+    public signal void ui_build_finished ();
 
     construct {
         // Application info
@@ -94,7 +96,7 @@ class Radio.App : Granite.Application {
     }
 
     private void create_core_objects () {
-        player = new Radio.StreamPlayer ();
+        player = new Radio.Core.Player ();
         settings = new Radio.Settings ();
         mpris = new Radio.MPRIS ();
 
@@ -107,6 +109,7 @@ class Radio.App : Granite.Application {
     private void create_user_interface () {
         create_window ();
         create_dialogs ();
+        ui_build_finished ();
     }
 
     private void create_window () {

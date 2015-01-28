@@ -111,6 +111,9 @@ public class Radio.Widgets.StationsTreeView : Gtk.TreeView {
 
     private void connect_handlers_to_internal_signals () {
         button_release_event.connect (handle_button_release);
+        row_activated.connect (handle_row_activated);
+
+        var treeview_selection = get_selection ();
     }
 
     private bool handle_button_release (Gdk.EventButton event) {
@@ -118,6 +121,17 @@ public class Radio.Widgets.StationsTreeView : Gtk.TreeView {
             handle_right_click (event);
 
         return false;
+    }
+
+    private void handle_row_activated (Gtk.TreePath path, Gtk.TreeViewColumn column) {
+
+        stdout.printf ("Double Clicked\n");
+        // Get Station 
+        // Send it to play
+        var station_id = stations_liststore.get_station_id_for_path (path);
+        var station = Radio.App.database.get_station_by_id (station_id);
+        Radio.App.player.add (station);
+        Radio.App.player.play ();
     }
 
     private void handle_right_click (Gdk.EventButton event) {
@@ -138,6 +152,20 @@ public class Radio.Widgets.StationsTreeView : Gtk.TreeView {
         }
 
         return station;
+    }
+
+    public int get_selected_station_id () {
+
+        var selection = get_selection();
+        Gtk.TreeIter? selected_iter;
+
+        selection.get_selected (null,out selected_iter);
+
+        if (selected_iter == null)
+            return -1;
+
+        var station_id = stations_liststore.get_station_id_for_iterator (selected_iter);
+        return station_id;
     }
 
     private void open_context_menu_for_station (Radio.Models.Station station) {
