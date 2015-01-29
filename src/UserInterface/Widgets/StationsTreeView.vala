@@ -168,6 +168,32 @@ public class Radio.Widgets.StationsTreeView : Gtk.TreeView {
         return station_id;
     }
 
+    public int get_next_station_id () {
+        var selection = get_selection();
+        Gtk.TreeIter? selected_iter;
+
+        selection.get_selected (null,out selected_iter);
+
+        if (selected_iter == null || !stations_liststore.iter_next(ref selected_iter) )
+            return -1;
+
+        var station_id = stations_liststore.get_station_id_for_iterator (selected_iter);
+        return station_id;
+    }
+
+    public int get_previous_station_id () {
+        var selection = get_selection();
+        Gtk.TreeIter? selected_iter;
+
+        selection.get_selected (null,out selected_iter);
+
+        if (selected_iter == null || !stations_liststore.iter_previous(ref selected_iter) )
+            return -1;
+
+        var station_id = stations_liststore.get_station_id_for_iterator (selected_iter);
+        return station_id;
+    }
+
     private void open_context_menu_for_station (Radio.Models.Station station) {
         context_menu.popup_with_station (station);
     }

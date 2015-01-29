@@ -169,8 +169,30 @@ public class Radio.Widgets.TopToolbar : Gtk.Toolbar {
 
     private void handle_treeview_station_selected () {
 
-        // TODO Check if next is available to enable button
-        // TODO Check if prev is available to enable button
+        var treeview =  Radio.App
+                        .main_window
+                        .view_stack
+                        .stations_list_view
+                        .stations_treeview
+                        .treeview;
+        var station_id_current = treeview.get_selected_station_id ();
+        var station_id_next = treeview.get_next_station_id ();
+        var station_id_prev = treeview.get_previous_station_id ();
+
+        if (station_id_current != -1 && (Radio.App.player.status == PLAYER_STATUS.STOPPED ||
+            Radio.App.player.status == PLAYER_STATUS.PAUSED) )
+            play_button.set_sensitive (true);
+
+
+        if (station_id_next != -1)
+            next_button.set_sensitive (true);
+        else
+            next_button.set_sensitive (false);
+
+        if (station_id_prev != -1)
+            previous_button.set_sensitive (true);
+        else
+            previous_button.set_sensitive (false);
     
     }
 
@@ -179,12 +201,14 @@ public class Radio.Widgets.TopToolbar : Gtk.Toolbar {
             case PLAYER_STATUS.PLAYING :
                     handle_player_status_playing ();
                     play_button.set_sensitive (true);
+                    playback_label.set_markup ("<b>" + Radio.App.player.station.name + "</b>");
                 break; 
             case PLAYER_STATUS.PAUSED  :
                 handle_player_status_paused ();
                 break;
             case PLAYER_STATUS.STOPPED :
                 handle_player_status_stopped ();
+                playback_label.set_markup ("");
                 break;
             default :
                 assert_not_reached ();
