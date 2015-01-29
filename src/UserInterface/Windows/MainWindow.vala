@@ -21,7 +21,7 @@
 public class Radio.Windows.MainWindow : Gtk.Window {
 
     private Gtk.Box         main_box;
-    public Radio.Widgets.TopToolbar toolbar;
+    public Radio.Widgets.HeaderBar headerbar;
     public Radio.Widgets.ViewStack view_stack;
 
     private Notify.Notification? notification;
@@ -61,13 +61,13 @@ public class Radio.Windows.MainWindow : Gtk.Window {
     }
 
     private void create_child_widgets () {
-        toolbar = new Radio.Widgets.TopToolbar ();
+        headerbar = new Radio.Widgets.HeaderBar ();
         view_stack = new Radio.Widgets.ViewStack ();
         main_box = new Gtk.Box (Gtk.Orientation.VERTICAL,0);
     }
 
     private void append_child_widgets () {
-        main_box.pack_start (toolbar,false);
+        this.set_titlebar (headerbar);
         main_box.pack_start (view_stack);
         this.add(main_box);
     }

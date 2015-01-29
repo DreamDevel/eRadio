@@ -87,7 +87,7 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/UserInterface/Views/WelcomeView.vala
     src/UserInterface/Views/StationsListView.vala
 
-    src/UserInterface/Widgets/TopToolbar.vala
+    src/UserInterface/Widgets/HeaderBar.vala
     src/UserInterface/Widgets/ViewStack.vala
     src/UserInterface/Widgets/StationsListStore.vala
     src/UserInterface/Widgets/GenresListStore.vala

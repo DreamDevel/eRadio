@@ -20,33 +20,35 @@
 
 using Radio;
 
-public class Radio.Widgets.TopToolbar : Gtk.Toolbar {
+public class Radio.Widgets.HeaderBar : Gtk.HeaderBar {
 
     private Gtk.ToolButton  play_button;
     private Gtk.ToolButton  previous_button;
     private Gtk.ToolButton  next_button;
-    private Gtk.ToolItem    volume_toolItem;
     private Gtk.ToolItem    label_toolItem;
     private Granite.Widgets.AppMenu application_menu;
 
     private Gtk.Label       playback_label;
-    private Gtk.Scale       volume_scale;
 
     private Gtk.Image play_button_image_play;
     private Gtk.Image play_button_image_pause;
 
-    public TopToolbar () {
+    public HeaderBar () {
+        initialize ();
         build_interface ();
         connect_handlers_to_internal_signals ();
         connect_handlers_to_external_signals ();
     }
 
+    private void initialize () {
+        show_close_button = true;
+    }
+
     private void build_interface () {
         create_playback_buttons ();
-        create_volume_slider ();
         create_playback_label ();
         create_application_menu ();
-        append_toolbar_items ();
+        append_headerbar_items ();
     }
 
     private void create_playback_buttons () {
@@ -67,20 +69,6 @@ public class Radio.Widgets.TopToolbar : Gtk.Toolbar {
         next_button.set_sensitive (false);
     }
 
-    private void create_volume_slider () {
-        volume_scale = new Gtk.Scale.with_range (Gtk.Orientation.HORIZONTAL, 0, 1, 0.01);
-        volume_scale.width_request = 100;
-        volume_scale.draw_value = false;
-
-        volume_toolItem = new Gtk.ToolItem ();
-        volume_toolItem.add (volume_scale);
-        volume_toolItem.margin_left = 12;
-        volume_toolItem.margin_right = 12;
-
-        // TODO put it in other method ? Posibility to need try/catch because of the settings
-        volume_scale.set_value(Radio.App.settings.volume);
-    }
-
     private void create_playback_label () {
         playback_label = new Gtk.Label(null);
         playback_label.ellipsize = Pango.EllipsizeMode.END;
@@ -95,13 +83,12 @@ public class Radio.Widgets.TopToolbar : Gtk.Toolbar {
         application_menu = (new Radio.Menus.ApplicationMenu ()).get_as_granite_app_menu ();
     }
 
-    private void append_toolbar_items () {
-        add (previous_button);
-        add (play_button);
-        add (next_button);
-        add (volume_toolItem);
-        add (label_toolItem);
-        add (application_menu);
+    private void append_headerbar_items () {
+        pack_start (previous_button);
+        pack_start (play_button);
+        pack_start (next_button);
+        pack_end (application_menu);
+        set_custom_title (label_toolItem);
     }
 
     private void connect_handlers_to_internal_signals () {
