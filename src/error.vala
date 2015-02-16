@@ -19,13 +19,6 @@
 
 public errordomain Radio.Error {
     GENERAL,
-    SQLITE_GENERAL,
-    SQLITE_OPEN_DB_FAILED,
-    SQLITE_INSERT_FAILED,
-    SQLITE_UPDATE_FAILED,
-    SQLITE_SELECT_FAILED,
-    SQLITE_DELETE_FAILED,
-    SQLITE_CREATE_FAILED,
     DatabaseCreate,
     DatabaseWrite,
     DatabaseRead,
