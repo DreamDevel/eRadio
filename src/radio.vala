@@ -38,7 +38,6 @@ class Radio.App : Granite.Application {
     public static Radio.Dialogs.AddStationDialog add_dialog;
     public static Radio.Dialogs.EditStationDialog edit_dialog;
     public static Radio.Dialogs.ErrorDialog error_dialog;
-    public static Radio.ProgressDialog progress_dialog;
 
     public static Radio.PlaybackStatus playback_status {get;set;default=Radio.PlaybackStatus.STOPPED;}
     public static Radio.Models.Station? playing_station;

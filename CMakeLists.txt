@@ -54,19 +54,13 @@ vala_precompile(VALA_C ${EXEC_NAME}
     ${CONFIG_FILE_REL}
     src/main.vala
     src/radio.vala
-    src/stream_player.vala
     src/error.vala
-    src/station_dialog.vala
-    src/error_dialog.vala
     src/settings.vala
     src/media_key_listener.vala
     src/mpris.vala
     src/PlaybackStatus.vala
     src/package_manager.vala
-    src/station_selection_list.vala
-    src/extract_dialog.vala
     src/m3u_decoder.vala
-    src/progress_dialog.vala
     src/pls_decoder.vala
     src/asx_decoder.vala
 
