@@ -20,15 +20,6 @@
 
 class Radio.App : Granite.Application {
 
-    // TODO remove these, never used it
-    /**
-     * Translatable launcher (.desktop) strings to be added to template (.pot) file.
-     * These strings should reflect any changes in these launcher keys in .desktop file
-     */
-    public const string COMMENT = N_("Listen to radio stations");
-    public const string GENERIC = N_("Radio");
-    public const string KEYWORDS = N_("Radio;Audio;Player;Media;Songs;");
-
     public static Radio.Windows.MainWindow main_window {get;private set;default = null;}
     public static Radio.Settings settings;
     public static Radio.App instance;
