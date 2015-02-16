@@ -4,8 +4,7 @@
  ```
 Project is under development. Please report bugs or create pull requests after the version 2.0 is released. 
 ``` 
-
-![](http://i.imgur.com/sdgOr1s.png)
+<img src="http://i.imgur.com/sdgOr1s.png" alt="Screenshot of daily build, not final product" width=600>  
 *Screenshot of daily build, not final product.*
 
 Visit our webpage for more info : http://www.dreamdevel.com/apps/eradio
