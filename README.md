@@ -16,7 +16,7 @@ Visit our webpage for more info : http://www.dreamdevel.com/apps/eradio
 **For elementary OS Freya and other ubuntu based distributions** 
 
 ```
-sudo apt-get install valac libgtk-3-dev libgranite-dev libsqlite3-dev libgee-dev libnotify-dev libjson-glib-dev libsoup2.4-dev libxml2-dev libsqlheavy-dev make cmake
+Navigate to project's tools directory via terminal and run ./install-deps
 ```
 
 **Note for ubuntu based distributions**

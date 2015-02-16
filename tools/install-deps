@@ -1,0 +1,1 @@
+sudo apt-get install cmake valac libgstreamer1.0-dev libgtk-3-dev libgranite-dev libsqlite3-dev libgee-dev libnotify-dev libjson-glib-dev libsoup2.4-dev libxml2-dev libsqlheavy-dev
