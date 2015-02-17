@@ -77,7 +77,7 @@ public class Radio.Core.DatabaseModels.StationsGenresModel {
         return stations_list;
     }
 
-    public int count_entries_of_genre (int genre_id) {
+    public int count_entries_of_genre (int genre_id) throws Radio.Error {
         int number_of_genre_entries = 0;
         try{
             SQLHeavy.Query query = db.prepare ("SELECT COUNT(genre_id) FROM StationsGenres WHERE genre_id = :genre_id;");

@@ -238,4 +238,11 @@
         return number_of_stations;
     }
 
+    public int count_entries_of_genre_id (int genre_id) throws Radio.Error {
+        int number_of_entries = 0;
+        number_of_entries = stations_genres_model.count_entries_of_genre (genre_id);
+        return number_of_entries;
+    }
+
 }
+    
