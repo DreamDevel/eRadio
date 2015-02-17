@@ -42,7 +42,7 @@ public class Radio.Core.DatabaseModels.StationsGenresModel {
                                                 AND StationsGenres.station_id = :station_id;""");
             query.set_int (":station_id",station_id);
 
-            for (SQLHeavy.QueryResult results = query.execute (); !results.finished; results.next ()) { 
+            for (SQLHeavy.QueryResult results = query.execute (); !results.finished; results.next ()) {
                 genres_name.add (results.get ("name").get_string ());
                 var name = results.get ("name").get_string ();
             }
@@ -65,9 +65,9 @@ public class Radio.Core.DatabaseModels.StationsGenresModel {
                 string station_name = results.get ("name").get_string ();
                 string station_url  = results.get ("url").get_string ();
                 int  station_id     = (int) results.get ("id").get_int64 ();
-                
+
                 var station = new Radio.Models.Station (station_id, station_name, station_url);
-                stations_list.add (station);    
+                stations_list.add (station);
             }
         }
         catch (SQLHeavy.Error e) {
@@ -91,7 +91,7 @@ public class Radio.Core.DatabaseModels.StationsGenresModel {
         catch (SQLHeavy.Error e){
             throw new Radio.Error.DatabaseRead (
               "Couldn't Select Entry: Error Code %d \nError Message: %s\n".printf (e.code,e.message));
-        } 
+        }
         return number_of_genre_entries;
     }
 

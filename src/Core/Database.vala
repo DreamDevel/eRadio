@@ -89,23 +89,23 @@
     }
 
     private void add_not_existing_genres (Gee.ArrayList <string> genres) throws Radio.Error {
-        
+
         foreach (string genre_name in genres) {
             var genre = genre_model.select_by_name (genre_name);
 
-            if (genre!=null) 
+            if (genre!=null)
                 continue;
 
             genre_model.insert (genre_name);
-            var added_genre = genre_model.select_by_name (genre_name); 
-            this.genre_added (added_genre);         
+            var added_genre = genre_model.select_by_name (genre_name);
+            this.genre_added (added_genre);
         }
     }
 
     private void link_unlinked_genres (Gee.ArrayList <string> genres, int station_id) throws Radio.Error {
         bool genre_is_linked;
 
-        foreach (string genre_name in genres) {  
+        foreach (string genre_name in genres) {
             genre_is_linked = false;
             var linked_genres = stations_genres_model.select_genres_by_station_id (station_id);
 
@@ -114,31 +114,31 @@
                     genre_is_linked = true;
                     break;
                 }
-            }  
+            }
             if (!genre_is_linked) {
                 var genre_id   = genre_model.select_by_name (genre_name).id;
                 stations_genres_model.link (station_id, genre_id);
             }
-       }         
+       }
     }
 
     public void update_station (Radio.Models.Station station) throws Radio.Error {
         update_station_details (station.id, station.name, station.genres, station.url);
-    } 
+    }
 
     public void update_station_details (int id, string name, Gee.ArrayList<string> genres, string url) throws Radio.Error {
 
         var old_station = get_station_by_id (id);
         if (old_station == null)
             return;
-        
+
         station_model.update (id, name, url);
         add_not_existing_genres (genres);
         link_unlinked_genres (genres, id);
         unlink_unused_linked_genres (genres, id);
 
         var new_station = get_station_by_id (id);
-        this.station_updated (old_station,new_station);    
+        this.station_updated (old_station,new_station);
     }
 
     private void unlink_unused_linked_genres (Gee.ArrayList<string> new_genres, int station_id) throws Radio.Error {
@@ -173,9 +173,9 @@
         foreach (string genre_name in station_genres) {
             var genre = genre_model.select_by_name (genre_name);
             stations_genres_model.unlink (station_id, genre.id);
-            delete_genre_if_not_linked_with_any_stations (genre);       
+            delete_genre_if_not_linked_with_any_stations (genre);
         }
-        
+
         var station = get_station_by_id (station_id);
         station_model.remove (station_id);
         this.station_removed (station);
@@ -185,14 +185,14 @@
         if (stations_genres_model.count_entries_of_genre (genre.id) == 0) {
                 genre_model.remove (genre.id);
                 this.genre_removed (genre);
-        } 
+        }
     }
 
     public Gee.ArrayList<Radio.Models.Genre>? get_all_genres () throws Radio.Error {
         var genres_list = genre_model.select_all ();
         return genres_list;
     }
-    
+
     public Gee.ArrayList<Radio.Models.Station>? get_all_stations () throws Radio.Error {
         var stations_list = station_model.select_all ();
 
@@ -211,29 +211,34 @@
         foreach (Radio.Models.Station station in stations_list) {
              var genres_of_station = stations_genres_model.select_genres_by_station_id (station.id);
             station.genres = genres_of_station;
-        }   
-        return stations_list;     
+        }
+        return stations_list;
     }
 
     public Radio.Models.Station? get_station_by_id (int id) throws Radio.Error {
         var station = station_model.select_by_id (id);
         if (station!=null){
-            var station_genres  = stations_genres_model.select_genres_by_station_id (id); 
+            var station_genres  = stations_genres_model.select_genres_by_station_id (id);
             station.genres = station_genres;
         }
-        return station;                  
+        return station;
     }
 
-    private Radio.Models.Station? get_station_by_name (string station_name) throws Radio.Error {
+    public Radio.Models.Station? get_station_by_name (string station_name) throws Radio.Error {
         var station = station_model.select_by_name (station_name);
         if (station!=null) {
             var station_genres = stations_genres_model.select_genres_by_station_id (station.id);
             station.genres = station_genres;
         }
-        return station;                
+        return station;
     }
 
-    public int count_stations () throws Radio.Error {   
+    public Radio.Models.Genre? get_genre_by_name (string genre_name) throws Radio.Error {
+        var genre = genre_model.select_by_name (genre_name);
+        return genre;
+    }
+
+    public int count_stations () throws Radio.Error {
         var number_of_stations = station_model.count ();
         return number_of_stations;
     }
@@ -245,4 +250,4 @@
     }
 
 }
-    
+

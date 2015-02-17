@@ -38,7 +38,7 @@ public class Radio.Core.DatabaseModels.GenreModel {
 
             if (!results.finished) {
                 var name    = results.get ("name").get_string ();
-                genre = new Radio.Models.Genre (id,name);           
+                genre = new Radio.Models.Genre (id,name);
             }
         }
         catch (SQLHeavy.Error e){
@@ -57,7 +57,7 @@ public class Radio.Core.DatabaseModels.GenreModel {
 
             if (!results.finished) {
                 var id    = (int) results.get ("id").get_int64 ();
-                genre = new Radio.Models.Genre (id,name);           
+                genre = new Radio.Models.Genre (id,name);
             }
         }
         catch (SQLHeavy.Error e){

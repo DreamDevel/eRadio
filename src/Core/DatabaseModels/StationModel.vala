@@ -96,7 +96,7 @@ public class Radio.Core.DatabaseModels.StationModel {
                 string name = results.get ("name").get_string ();
                 string url  = results.get ("url").get_string ();
                 int  id     = (int) results.get ("id").get_int64 ();
-               
+
                 var station = new Radio.Models.Station (id, name, url);
                 stations_list.add (station);
             }
