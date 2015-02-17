@@ -77,402 +77,165 @@
         }
     }
 
-    // dimiourgeis ton radiofoniko sta8mo
     public void create_new_station (string name, Gee.ArrayList <string> genres, string url) throws Radio.Error {
-        int flag = 0;
 
-        try {
-            station_model.insert (name, url);
-            var station_id = station_model.select_last_id ();
-            stdout.printf("Station ID: " + @"$station_id" + "\n");
-            // add genres_list
-                // insert genre entries
-                    // insert genre - check if genre exist
-                // link genres with station
-            //call signal
-            foreach (string genre_name in genres) {
+        station_model.insert (name, url);
+        var station_id = station_model.select_last_id ();
 
-                if (get_genre_by_name (genre_name) == null) { // (does_genre_exist)
-                    genre_model.insert (genre_name);
-                    //link genre with station
-                    var added_genre = get_genre_by_name (genre_name);
-                    stations_genres_model.link (station_id, added_genre.id);
+        add_not_existing_genres (genres);
+        link_unlinked_genres (genres,station_id);
 
-                    this.genre_added (added_genre);
-                }
-                else { 
-                    // Check if genre is already linked
-                    var linked_genres = get_linked_genres (station_id);
-                    foreach ( string genre in linked_genres){
-                        if (genre == genre_name){
-                            flag = 1;
-                            break;
-                        }
-                    }
-
-                    // Link unlinked genre
-                    if (flag == 0) {
-                        var genre_id   = get_genre_by_name (genre_name).id;
-                        stations_genres_model.link (station_id, genre_id);
-                    }
-                }
-            }
-            this.station_added (this.get_station_by_id (station_id));
-        }
-        catch (Radio.Error e) {
-            stderr.printf (e.message);
-        }
-
+        this.station_added (this.get_station_by_id (station_id));
     }
 
-    // Stis 2 epomenes kaneis update ton sta8mo
-    // #todo Needs to throw DatabaseWrite Error
-    public void update_station (Radio.Models.Station station) {
-        update_station_details (station.id,station.name,station.genres,station.url);
-    }
+    private void add_not_existing_genres (Gee.ArrayList <string> genres) throws Radio.Error {
+        
+        foreach (string genre_name in genres) {
+            var genre = genre_model.select_by_name (genre_name);
 
-    // #todo : Needs to throw DatabaseWrite Error
-    // #cleancode : Too long method, create new submethods ?
-    public void update_station_details (int id, string name, Gee.ArrayList<string> genres, string url) {
+            if (genre!=null) 
+                continue;
 
-        int flag;
-
-        try {
-            var old_station = get_station_by_id (id);
-            if ( old_station != null) {
-
-                station_model.update (id, name, url);
-                var existing_genres = get_linked_genres (id);
-
-                foreach (string new_genre in genres) {
-
-                    flag = 0;
-                    foreach (string old_genre in existing_genres) {
-
-                        if (new_genre == old_genre){
-                            flag = 1;
-                            break;
-                        }
-                    }
-
-                    if (flag == 0) {
-                        genre_model.insert (new_genre);
-                        var added_genre = get_genre_by_name (new_genre);
-                        stations_genres_model.link (id, added_genre.id);
-                        this.genre_added (added_genre);
-
-                    }
-                }
-
-                foreach (string old_genre in existing_genres) {
-                    flag = 0;
-
-                    foreach (string new_genre in genres) {
-                        if (new_genre == old_genre){
-
-                            flag = 1;
-                             break;
-                        }
-                    }
-
-                    if (flag == 0) {
-                        var genre = get_genre_by_name (old_genre);
-                        stations_genres_model.unlink (id, genre.id);
-                        if (count_genre_entries_by_id (genre.id) == 0) {
-                            genre_model.remove (genre.id);
-                            this.genre_removed (genre);
-                        }
-                    }
-                }
-
-                var new_station = get_station_by_id (id);
-                this.station_updated (old_station,new_station);
-
-            }
-        }
-        catch (Radio.Error e) {
-            stderr.printf (e.message);
+            genre_model.insert (genre_name);
+            var added_genre = genre_model.select_by_name (genre_name); 
+            this.genre_added (added_genre);         
         }
     }
 
-    // Diagrafeis ton sta8mo
-    // #todo : Needs to throw DatabaseWrite error
-    // #cleancode : Too many nested things, Maybe create more submethods ?
-    public void remove_station (int id) {
-        try {
-            var station = get_station_by_id (id);
-            if (station != null) {
+    private void link_unlinked_genres (Gee.ArrayList <string> genres, int station_id) throws Radio.Error {
+        bool genre_is_linked;
 
-                var genres = get_linked_genres (id);
+        foreach (string genre_name in genres) {  
+            genre_is_linked = false;
+            var linked_genres = stations_genres_model.select_genres_by_station_id (station_id);
 
-                foreach (string genre in genres) {
-                    var genre_id = get_genre_by_name (genre).id;
-                    stations_genres_model.unlink (id, genre_id);
-
-                    if (count_genre_entries_by_id (genre_id) == 0) {
-
-                        var removed_genre = this.get_genre_by_id (genre_id);
-                        genre_model.remove (genre_id);
-                        this.genre_removed (removed_genre);
-                    }
+            foreach (string linked_genre in linked_genres) {
+                if (genre_name == linked_genre) {
+                    genre_is_linked = true;
+                    break;
                 }
-                station_model.remove (id);
-                this.station_removed (station);
+            }  
+            if (!genre_is_linked) {
+                var genre_id   = genre_model.select_by_name (genre_name).id;
+                stations_genres_model.link (station_id, genre_id);
             }
-        }
-        catch (Radio.Error e) {
-            stderr.printf (e.message);
-        }
+       }         
     }
 
-    // #todo : Do not return NULL it's against #cleancode, prefer throwing DatabaseRead error
-    public Gee.ArrayList<Radio.Models.Station>? get_all_stations () {
+    public void update_station (Radio.Models.Station station) throws Radio.Error {
+        update_station_details (station.id, station.name, station.genres, station.url);
+    } 
 
-        var stations_list = new Gee.ArrayList<Radio.Models.Station> ();
+    public void update_station_details (int id, string name, Gee.ArrayList<string> genres, string url) throws Radio.Error {
 
-        try {
-            SQLHeavy.Query query = db.prepare ("SELECT * FROM `Stations`;");
+        var old_station = get_station_by_id (id);
+        if (old_station == null)
+            return;
+        
+        station_model.update (id, name, url);
+        add_not_existing_genres (genres);
+        link_unlinked_genres (genres, id);
+        unlink_unused_linked_genres (genres, id);
 
-            for (SQLHeavy.QueryResult results = query.execute (); !results.finished; results.next ()) {
-
-                string name = results.get ("name").get_string ();
-                string url  = results.get ("url").get_string ();
-                int  id     = (int) results.get ("id").get_int64 ();
-
-                try {
-                    var genres  = get_linked_genres (id);
-                    var station = new Radio.Models.Station (id, name, url, genres);
-                    stations_list.add (station);
-                }
-                catch (Radio.Error e) {
-                    stderr.printf (e.message);
-                    return null;
-                }
-            }
-            return stations_list;
-        }
-        catch (SQLHeavy.Error e) {
-            stderr.printf (e.message);
-        }
-
-        return null;
+        var new_station = get_station_by_id (id);
+        this.station_updated (old_station,new_station);    
     }
 
-    // #todo : Throw DatabaseRead error
-    // #cleancode : It is not easy to understand the whole proccess, maybe submethods ?
-    public Gee.ArrayList<Radio.Models.Station> get_stations_by_genre (int id) {
+    private void unlink_unused_linked_genres (Gee.ArrayList<string> new_genres, int station_id) throws Radio.Error {
 
-        var stations_list = new Gee.ArrayList<Radio.Models.Station> ();
+        bool genre_is_used;
+        var old_linked_genres = stations_genres_model.select_genres_by_station_id (station_id);
 
-        try {
-            SQLHeavy.Query query = db.prepare ("""SELECT Stations.* FROM Stations, StationsGenres
-                WHERE Stations.id = StationsGenres.station_id AND StationsGenres.genre_id = :id;""");
-            query.set_int (":id",id);
+        foreach (string old_genre in old_linked_genres) {
+             genre_is_used = false;
+             foreach (string new_genre in new_genres) {
+                 if (old_genre == new_genre){
+                    genre_is_used = true;
+                    break;
+                 }
+             }
+             if (!genre_is_used) {
+                 var genre = genre_model.select_by_name (old_genre);
+                 stations_genres_model.unlink (station_id, genre.id);
+                 delete_genre_if_not_linked_with_any_stations (genre);
+             }
+         }
+    }
 
-            for (SQLHeavy.QueryResult results = query.execute (); !results.finished; results.next ()) {
+    public void remove_station (int station_id) throws Radio.Error {
 
-                string station_name = results.get ("name").get_string ();
-                string station_url  = results.get ("url").get_string ();
-                int  station_id     = (int) results.get ("id").get_int64 ();
-
-                try {
-                    var genres  = get_linked_genres (station_id);
-                    var station = new Radio.Models.Station (station_id, station_name, station_url, genres);
-                    stations_list.add (station);
-                }
-                catch (Radio.Error e) {
-                    stderr.printf (e.message);
-                }
-            }
+        if (!station_model.station_exists (station_id)) {
+            throw new Radio.Error.DatabaseWrite (
+              "Couldn't remove stations because it doesn't exist, id: $station_id");
         }
-        catch (SQLHeavy.Error e) {
-            stderr.printf (e.message);
+        var station_genres = stations_genres_model.select_genres_by_station_id (station_id);
+
+        foreach (string genre_name in station_genres) {
+            var genre = genre_model.select_by_name (genre_name);
+            stations_genres_model.unlink (station_id, genre.id);
+            delete_genre_if_not_linked_with_any_stations (genre);       
+        }
+        
+        var station = get_station_by_id (station_id);
+        station_model.remove (station_id);
+        this.station_removed (station);
+    }
+
+    private void delete_genre_if_not_linked_with_any_stations (Radio.Models.Genre genre) throws Radio.Error {
+        if (stations_genres_model.count_entries_of_genre (genre.id) == 0) {
+                genre_model.remove (genre.id);
+                this.genre_removed (genre);
+        } 
+    }
+
+    public Gee.ArrayList<Radio.Models.Genre>? get_all_genres () throws Radio.Error {
+        var genres_list = genre_model.select_all ();
+        return genres_list;
+    }
+    
+    public Gee.ArrayList<Radio.Models.Station>? get_all_stations () throws Radio.Error {
+        var stations_list = station_model.select_all ();
+
+        if (stations_list.size!=0) {
+            foreach (Radio.Models.Station station in stations_list) {
+                var genres  = stations_genres_model.select_genres_by_station_id (station.id);
+                station.genres = genres;
+            }
         }
         return stations_list;
     }
 
-    // #todo : Throw DatabaseRead error, Do not return NULL
-    // #cleancode : Seems that it needs some cleaning to be more readable
-    public Gee.ArrayList<Radio.Models.Genre>? get_all_genres () {
+    public Gee.ArrayList<Radio.Models.Station> get_stations_by_genre_id (int id) throws Radio.Error {
+        var stations_list = stations_genres_model.select_stations_by_genre_id (id);
 
-        var genres_list = new Gee.ArrayList<Radio.Models.Genre> ();
-
-        try {
-            SQLHeavy.Query query = db.prepare ("SELECT * FROM `Genres`;");
-
-            for (SQLHeavy.QueryResult results = query.execute (); !results.finished; results.next ()) {
-                string name = results.get ("name").get_string ();
-                int  id   = (int) results.get ("id").get_int64 ();
-
-                var genre = new Radio.Models.Genre (id, name);
-                genres_list.add (genre);
-            }
-        }
-        catch (SQLHeavy.Error e) {
-            stderr.printf(e.message);
-        }
-
-        if (genres_list.size == 0)
-            return null;
-        return genres_list;
+        foreach (Radio.Models.Station station in stations_list) {
+             var genres_of_station = stations_genres_model.select_genres_by_station_id (station.id);
+            station.genres = genres_of_station;
+        }   
+        return stations_list;     
     }
 
-    // #todo : Do not return NULL
-    public Radio.Models.Genre get_genre_by_id (int id) {
-        try {
-            SQLHeavy.Query query = db.prepare ("SELECT * FROM `Genres` WHERE `id` = :id;");
-            query.set_int (":id", id);
-
-            SQLHeavy.QueryResult results = query.execute ();
-            if (!results.finished) {
-
-                string genre_name = results.get ("name").get_string ();
-                int  genre_id     = (int) results.get ("id").get_int64 ();
-
-                var genre = new Radio.Models.Genre (genre_id, genre_name);
-                return genre;
-            }
+    public Radio.Models.Station? get_station_by_id (int id) throws Radio.Error {
+        var station = station_model.select_by_id (id);
+        if (station!=null){
+            var station_genres  = stations_genres_model.select_genres_by_station_id (id); 
+            station.genres = station_genres;
         }
-        catch (SQLHeavy.Error e) {
-            throw new Radio.Error.DatabaseRead (
-                "Couldn't Select Entry: Error Code %d \nError Message: %s\n".printf (e.code,e.message));
-        }
-        return null;
+        return station;                  
     }
 
-    // #todo : Throw DatabaseRead error, Do not return NULL
-    public Radio.Models.Station? get_station_by_id (int id) {
-
-        try {
-            SQLHeavy.Query query = db.prepare ("SELECT * FROM `Stations` WHERE `id` = :id;");
-            query.set_int (":id", id);
-
-            SQLHeavy.QueryResult results = query.execute ();
-            if (!results.finished) {
-
-                string station_name = results.get ("name").get_string ();
-                string station_url  = results.get ("url").get_string ();
-
-                try {
-                    var genres  = get_linked_genres (id);
-                    var station = new Radio.Models.Station (id, station_name, station_url, genres);
-                    return station;
-                }
-                catch (Radio.Error e) {
-                    stderr.printf (e.message);
-                }
-            }
+    private Radio.Models.Station? get_station_by_name (string station_name) throws Radio.Error {
+        var station = station_model.select_by_name (station_name);
+        if (station!=null) {
+            var station_genres = stations_genres_model.select_genres_by_station_id (station.id);
+            station.genres = station_genres;
         }
-        catch (SQLHeavy.Error e) {
-            stderr.printf (e.message);
-        }
-        return null;
+        return station;                
     }
 
-    // #todo : Throw DatabaseRead error, Do not return NULL
-    public int? count_genre_entries_by_id (int id) {
-        try{
-            SQLHeavy.Query query = db.prepare ("SELECT COUNT(genre_id) FROM StationsGenres WHERE genre_id = :id;");
-            query.set_int (":id",id);
-
-            SQLHeavy.QueryResult results = query.execute ();
-            if (!results.finished) {
-                return results.fetch_int (0);
-            }
-        }
-        catch (SQLHeavy.Error e) {
-            stderr.printf (e.message);
-        }
-        return null;
-    }
-
-    // #todo : Throw DatabaseRead error instead of printing
-    public int count_stations () {
-
-        var num_stations = 0;
-        try {
-            SQLHeavy.QueryResult results = db.execute ("SELECT COUNT(id) FROM Stations");
-            if (!results.finished) {
-                num_stations = results.fetch_int (0);
-            }
-        }
-        catch (SQLHeavy.Error e) {
-            stderr.printf (e.message);
-        }
-        return num_stations;
-    }
-
-    // #todo : Throw DatabaseRead error, Do not return NULL
-    private Radio.Models.Station? get_station_by_name (string name) throws Radio.Error {
-
-        try {
-            SQLHeavy.Query query = db.prepare ("SELECT * FROM `Stations` WHERE `name` = :name;");
-            query.set_string (":name", name);
-            SQLHeavy.QueryResult results = query.execute ();
-
-            if (!results.finished) {
-                var station_id   = (int) results.get ("id").get_int64 ();
-                var station_name = results.get ("name").get_string ();
-                var station_url  = results.get ("url").get_string ();
-
-                try {
-                    var station_genres = get_linked_genres (station_id);
-                    var station = new Radio.Models.Station (station_id, station_name, station_url, station_genres);
-                    return station;
-                }
-                catch (Radio.Error e) {
-                    stderr.printf (e.message);
-                }
-            }
-        }
-        catch (SQLHeavy.Error e){
-            throw new Radio.Error.SQLITE_SELECT_FAILED (
-              "Couldn't Select Entry: Error Code %d \nError Message: %s\n".printf (e.code,e.message));
-        }
-        return null;
-    }
-
-    // #todo :  Do not return NULL
-    public Radio.Models.Genre? get_genre_by_name (string name) throws Radio.Error {
-
-        try {
-            SQLHeavy.Query query = db.prepare ("SELECT * FROM `Genres` WHERE `name` = :name;");
-            query.set_string (":name", name);
-            SQLHeavy.QueryResult results = query.execute ();
-
-            if (!results.finished) {
-                var id    = (int) results.get ("id").get_int64 ();
-                var genre = new Radio.Models.Genre (id,name);
-                return genre;
-            }
-        }
-        catch (SQLHeavy.Error e){
-            throw new Radio.Error.DatabaseRead (
-              "Couldn't Select Entry: Error Code %d \nError Message: %s\n".printf (e.code,e.message));
-        }
-        return null;
-    }
-
-    //return genres which are linked to given station
-    private Gee.ArrayList<string> get_linked_genres (int id) throws Radio.Error {
-
-        var genres_name = new Gee.ArrayList<string> ();
-
-        try{
-            SQLHeavy.Query query = db.prepare ("""SELECT Genres.name FROM Genres,StationsGenres WHERE StationsGenres.genre_id = Genres.id
-                                                AND StationsGenres.station_id = :id;""");
-            query.set_int (":id",id);
-
-            for (SQLHeavy.QueryResult results = query.execute (); !results.finished; results.next ()) {
-                genres_name.add (results.get ("name").get_string ());
-            }
-        }
-        catch (SQLHeavy.Error e) {
-            throw new Radio.Error.DatabaseRead (
-              "Couldn't Select Entry: Error Code %d \nError Message: %s\n".printf (e.code,e.message));
-        }
-
-        return genres_name;
+    public int count_stations () throws Radio.Error {   
+        var number_of_stations = station_model.count ();
+        return number_of_stations;
     }
 
 }

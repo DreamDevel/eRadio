@@ -25,7 +25,7 @@
     public string url {get;set;}
     public Gee.ArrayList<string> genres {get;set;}
 
-    public Station (int id, string name, string url, Gee.ArrayList<string> genres) {
+    public Station (int id, string name, string url, Gee.ArrayList<string>? genres=null) {
         this.id = id;
         this.name = name;
         this.url = url;
