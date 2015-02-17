@@ -19,9 +19,10 @@
  */
 
 
-public class Radio.Views.StationsListView : Gtk.Bin {
+public class Radio.Views.StationsListView : Gtk.Paned {
 
     public Radio.Widgets.StationsTreeViewScrollable stations_treeview;
+    public Radio.Widgets.SideBar sidebar;
 
     public StationsListView () {
         build_interface ();
@@ -29,7 +30,9 @@ public class Radio.Views.StationsListView : Gtk.Bin {
 
     private void build_interface () {
     	stations_treeview = new Radio.Widgets.StationsTreeViewScrollable ();
-        add (stations_treeview);
+        sidebar = new Widgets.SideBar();
+        add1 (sidebar);
+        add2 (stations_treeview);
         show_all ();
     }
 
