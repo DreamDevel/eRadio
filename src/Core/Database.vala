@@ -168,6 +168,7 @@
             throw new Radio.Error.DatabaseWrite (
               "Couldn't remove stations because it doesn't exist, id: $station_id");
         }
+        var station = get_station_by_id (station_id);
         var station_genres = stations_genres_model.select_genres_by_station_id (station_id);
 
         foreach (string genre_name in station_genres) {
@@ -176,7 +177,6 @@
             delete_genre_if_not_linked_with_any_stations (genre);
         }
 
-        var station = get_station_by_id (station_id);
         station_model.remove (station_id);
         this.station_removed (station);
     }
