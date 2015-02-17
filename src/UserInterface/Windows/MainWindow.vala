@@ -189,5 +189,15 @@ public class Radio.Windows.MainWindow : Gtk.Window {
         return base.configure_event (event);
     }
 
+    // Don't close application while playing
+    public override bool delete_event (Gdk.EventAny event) {
+        if (App.player.status == PLAYER_STATUS.PLAYING) {
+            hide ();
+            return true;
+        }
+
+        return false;
+    }
+
 
 }
