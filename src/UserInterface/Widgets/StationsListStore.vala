@@ -27,6 +27,9 @@ public class Radio.Widgets.StationsListStore : Gtk.ListStore {
     const int ID_COLUMN_ID = 3;
     const int ICON_COLUMN_ID = 4;
 
+    public ListStoreFilterType current_filter_type = ListStoreFilterType.NONE;
+    public string current_filter_argument = "";
+
     public StationsListStore () {
 
         set_column_types (new Type[] {
@@ -55,8 +58,16 @@ public class Radio.Widgets.StationsListStore : Gtk.ListStore {
     }
 
     private void handle_station_added (Radio.Models.Station station) {
-        stdout.printf("StationsListStore Handling Station Added\n");
-        add_station_entry (station);
+        if (current_filter_type == ListStoreFilterType.GENRE) {
+            foreach (var genre_name in station.genres) {
+                if (genre_name == current_filter_argument) {
+                    add_station_entry (station);
+                    break;
+                }
+            }
+        } else if (current_filter_type == Radio.ListStoreFilterType.NONE) {
+            add_station_entry (station);
+        }
     }
 
     private void add_station_entry (Radio.Models.Station station) {
@@ -99,8 +110,6 @@ public class Radio.Widgets.StationsListStore : Gtk.ListStore {
     }
 
     private void handle_station_updated (Radio.Models.Station old_station, Radio.Models.Station new_station) {
-        stdout.printf("StationsListStore Handling Station Updated\n");
-
         var iterator = get_iterator_for_station_id (new_station.id);
         set_value (iterator,TITLE_COLUMN_ID,new_station.name);
         set_value (iterator,URL_COLUMN_ID,new_station.url);
@@ -154,4 +163,25 @@ public class Radio.Widgets.StationsListStore : Gtk.ListStore {
         return val.get_int ();
     }
 
+    public void apply_filter (ListStoreFilterType filter_type,string filter_argument) {
+        if (filter_type == current_filter_type && filter_argument == current_filter_argument) {
+            return;
+        } else if (filter_type == ListStoreFilterType.NONE) {
+            clear ();
+            load_stations_from_database ();
+
+        } else if (filter_type == ListStoreFilterType.GENRE) {
+            clear ();
+            var genre = App.database.get_genre_by_name (filter_argument);
+            var stations = App.database.get_stations_by_genre_id (genre.id);
+
+            foreach (var station in stations) {
+                add_station_entry (station);
+            }
+
+        }
+
+        current_filter_type = filter_type;
+        current_filter_argument = filter_argument;
+    }
 }

@@ -27,7 +27,7 @@ public class Radio.Widgets.StationsTreeView : Gtk.TreeView {
 	private Gtk.TreeViewColumn url_column;
 	private Gtk.CellRendererText cell_text_renderer;
 	private Gtk.CellRendererPixbuf cell_pixbuf_renderer;
-	private Radio.Widgets.StationsListStore stations_liststore;
+	public Radio.Widgets.StationsListStore stations_liststore;
 
     private Radio.Menus.StationsTreeViewContextMenu context_menu;
 
@@ -155,13 +155,12 @@ public class Radio.Widgets.StationsTreeView : Gtk.TreeView {
     }
 
     public int get_selected_station_id () {
-
         var selection = get_selection();
         Gtk.TreeIter? selected_iter;
 
-        selection.get_selected (null,out selected_iter);
+         var selection_exists = selection.get_selected (null,out selected_iter);
 
-        if (selected_iter == null)
+        if (!selection_exists)
             return -1;
 
         var station_id = stations_liststore.get_station_id_for_iterator (selected_iter);
@@ -172,9 +171,9 @@ public class Radio.Widgets.StationsTreeView : Gtk.TreeView {
         var selection = get_selection();
         Gtk.TreeIter? selected_iter;
 
-        selection.get_selected (null,out selected_iter);
+        var selection_exists = selection.get_selected (null,out selected_iter);
 
-        if (selected_iter == null || !stations_liststore.iter_next(ref selected_iter) )
+        if (!selection_exists || !stations_liststore.iter_next(ref selected_iter) )
             return -1;
 
         var station_id = stations_liststore.get_station_id_for_iterator (selected_iter);
@@ -185,9 +184,9 @@ public class Radio.Widgets.StationsTreeView : Gtk.TreeView {
         var selection = get_selection();
         Gtk.TreeIter? selected_iter;
 
-        selection.get_selected (null,out selected_iter);
+        var selection_exists = selection.get_selected (null,out selected_iter);
 
-        if (selected_iter == null || !stations_liststore.iter_previous(ref selected_iter) )
+        if (!selection_exists || !stations_liststore.iter_previous(ref selected_iter) )
             return -1;
 
         var station_id = stations_liststore.get_station_id_for_iterator (selected_iter);

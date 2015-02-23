@@ -18,12 +18,11 @@
  *
  */
 
- using Gee;
-
+using Gee;
 
 public class Radio.Widgets.SideBar : Granite.Widgets.SourceList {
 
-    public Granite.Widgets.SourceList.ExpandableItem genre_list_item;
+    public Widgets.SideBarExpandableItem genre_list_item;
     public Granite.Widgets.SourceList.Item all_stations_item;
 
     private HashMap <int,Granite.Widgets.SourceList.Item> genre_list_items;
@@ -35,16 +34,27 @@ public class Radio.Widgets.SideBar : Granite.Widgets.SourceList {
     }
 
     private void build_interface () {
-        width_request = 150;
+        set_properties ();
+        create_items ();
+        append_items ();
+    }
 
-        genre_list_item = new Granite.Widgets.SourceList.ExpandableItem ("Genres");
+    private void set_properties () {
+        width_request = 150;
+    }
+
+    private void create_items () {
+        genre_list_items = new HashMap <int,Granite.Widgets.SourceList.Item> ();
+
+        genre_list_item = new Widgets.SideBarExpandableItem ("Genres");
         genre_list_item.expanded = true;
 
         var stations_number = Radio.App.database.count_stations ();
         all_stations_item = new Granite.Widgets.SourceList.Item ("All Stations");
         all_stations_item.badge = @"$stations_number";
+    }
 
-        genre_list_items = new HashMap <int,Granite.Widgets.SourceList.Item> ();
+    private void append_items () {
         root.add (all_stations_item);
         root.add (genre_list_item);
     }
@@ -66,7 +76,7 @@ public class Radio.Widgets.SideBar : Granite.Widgets.SourceList {
     }
 
     private void handle_genre_added (Radio.Models.Genre genre) {
-        add_genre (genre,0); // station added handler will increase the badge
+        add_genre (genre,0); // Note: station added handler will increase the badge
     }
 
     private void handle_genre_removed (Radio.Models.Genre genre) {
@@ -154,6 +164,19 @@ public class Radio.Widgets.SideBar : Granite.Widgets.SourceList {
         var number_of_genre_entries = int.parse (genre_item.badge);
         number_of_genre_entries--;
         genre_item.badge = @"$number_of_genre_entries";
+    }
+
+    public override void item_selected (Granite.Widgets.SourceList.Item? item) {
+        if (!App.ui_ready) // Prevent early call - IMPORTANT
+            return;
+        var liststore = App.main_window.view_stack.stations_list_view.stations_treeview.treeview.stations_liststore;
+        if (item.name == "All Stations") {
+            liststore.apply_filter (ListStoreFilterType.NONE,"");
+        } else {
+            liststore.apply_filter (ListStoreFilterType.GENRE,item.name);
+        }
+
+
     }
 
 }

@@ -65,6 +65,7 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/asx_decoder.vala
 
     src/Enums/player_status.vala
+    src/Enums/ListStoreFilterType.vala
 
     src/Models/Genre.vala
     src/Models/Station.vala
@@ -91,6 +92,7 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/UserInterface/Widgets/GenresTreeView.vala
     src/UserInterface/Widgets/GenresTreeViewScrollable.vala
     src/UserInterface/Widgets/GenresTreeViewToolbar.vala
+    src/UserInterface/Widgets/SideBarExpandableItem.vala
 
     src/UserInterface/Dialogs/StationDialog.vala
     src/UserInterface/Dialogs/AddStationDialog.vala

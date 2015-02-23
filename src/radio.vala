@@ -36,6 +36,7 @@ class Radio.App : Granite.Application {
     private Radio.MPRIS mpris;
 
     public signal void ui_build_finished ();
+    public static bool ui_ready = false;
 
     construct {
         // Application info
@@ -82,7 +83,6 @@ class Radio.App : Granite.Application {
     public void initialize () {
         create_core_objects ();
         create_user_interface ();
-
     }
 
     private void create_core_objects () {
@@ -100,6 +100,7 @@ class Radio.App : Granite.Application {
         create_window ();
         create_dialogs ();
         ui_build_finished ();
+        ui_ready = true;
     }
 
     private void create_window () {
