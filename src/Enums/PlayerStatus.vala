@@ -18,7 +18,7 @@
  *               Fotini Skoti <fotini.skoti@gmail.com>
  */
 
- public enum Radio.PLAYER_STATUS {
+ public enum Radio.PlayerStatus {
     PLAYING,
     PAUSED,
     STOPPED;

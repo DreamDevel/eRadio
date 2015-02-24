@@ -30,15 +30,16 @@ public class Radio.Core.Player : GLib.Object {
     private Gst.Bus bus;
 
     public bool has_url {get;set;}
-    public PLAYER_STATUS status;
+    public PlayerStatus status;
     public Models.Station? station;
 
     public signal void volume_changed (double volume_value);
-    public signal void play_status_changed(PLAYER_STATUS status);
+    public signal void play_status_changed(PlayerStatus status);
     public signal void playback_error(GLib.Error error);
+    public signal void playing_station_updated (Models.Station updated_station);
 
     public Player () {
-        status = PLAYER_STATUS.STOPPED;
+        status = PlayerStatus.STOPPED;
 
         // Create GStreamer Elements
         create_gstreamer_elements ();
@@ -47,7 +48,7 @@ public class Radio.Core.Player : GLib.Object {
 
         // Connect internal signals
         connect_handlers_to_internal_signals ();
-        
+        connect_handlers_to_external_signals ();
     }
 
     // TODO throws critical error
@@ -82,7 +83,7 @@ public class Radio.Core.Player : GLib.Object {
 
         if (pad.get_current_caps ().is_fixed ())
             stdout.printf("- Caps is fixed\n");
-        else 
+        else
             stdout.printf ("- Caps is not fixed \n");
 
         //stdout.printf(pad.get_current_caps ().to_string () + "\n");
@@ -117,6 +118,23 @@ public class Radio.Core.Player : GLib.Object {
                 break;
         }
         return true;
+    }
+
+    private void connect_handlers_to_external_signals () {
+        // Make sure database instance exists
+        App.instance.ui_build_finished.connect (()=>{
+            Radio.App.database.station_updated.connect (handle_station_updated);
+        });
+    }
+
+    private void handle_station_updated (Models.Station old_station, Models.Station new_station) {
+        if (status != PlayerStatus.PLAYING)
+            return;
+
+        if (station.id == new_station.id) {
+            station = new_station;
+            playing_station_updated (new_station);
+        }
     }
 
 
@@ -178,16 +196,16 @@ public class Radio.Core.Player : GLib.Object {
     public void play() {
         if(pipeline != null) {
             pipeline.set_state(State.PLAYING);
-            status = PLAYER_STATUS.PLAYING;
-            play_status_changed(PLAYER_STATUS.PLAYING);
+            status = PlayerStatus.PLAYING;
+            play_status_changed(PlayerStatus.PLAYING);
         }
     }
 
     public void pause() {
         if(pipeline != null) {
             pipeline.set_state(State.PAUSED);
-            status = PLAYER_STATUS.PAUSED;
-            play_status_changed(PLAYER_STATUS.PAUSED);
+            status = PlayerStatus.PAUSED;
+            play_status_changed(PlayerStatus.PAUSED);
         }
 
     }
@@ -195,13 +213,13 @@ public class Radio.Core.Player : GLib.Object {
     public void stop() {
         if(pipeline != null) {
             pipeline.set_state(State.NULL);
-            status = PLAYER_STATUS.STOPPED;
-            play_status_changed(PLAYER_STATUS.STOPPED);
+            status = PlayerStatus.STOPPED;
+            play_status_changed(PlayerStatus.STOPPED);
             this.has_url = false;
             station = null;
         }
     }
-    
+
 
     // Do we really need content type ? Check if pad_added reports the same content
     private string? get_content_type (string url) {

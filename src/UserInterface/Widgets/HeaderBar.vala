@@ -98,12 +98,12 @@ public class Radio.Widgets.HeaderBar : Gtk.HeaderBar {
     private void handle_play_button_clicked () {
         switch (Radio.App.player.status) {
 
-            case PLAYER_STATUS.PLAYING:
+            case PlayerStatus.PLAYING:
                 Radio.App.player.stop ();
                 break;
 
-            case PLAYER_STATUS.PAUSED:
-            case PLAYER_STATUS.STOPPED:
+            case PlayerStatus.PAUSED:
+            case PlayerStatus.STOPPED:
                 var treeview =  Radio.App
                                 .main_window
                                 .view_stack
@@ -136,22 +136,15 @@ public class Radio.Widgets.HeaderBar : Gtk.HeaderBar {
         // Get Treeview selection and connect to change
         Radio.App.instance
         .ui_build_finished.connect ( () => {
-            var treeview =  Radio.App
-                            .main_window
-                            .view_stack
-                            .stations_list_view
-                            .stations_treeview
-                            .treeview;
-
-            var treeview_selection = treeview
-                                     .get_selection ();
+            var treeview =  Radio.App.main_window.view_stack
+            .stations_list_view.stations_treeview.treeview;
+            var treeview_selection = treeview.get_selection ();
 
             treeview_selection.changed.connect (handle_treeview_station_selected);
         });
 
-        Radio.App.player.play_status_changed.connect (handle_player_status_changed);
-
-
+        App.player.play_status_changed.connect (handle_player_status_changed);
+        App.player.playing_station_updated.connect (handle_playing_station_updated);
     }
 
     private void handle_treeview_station_selected () {
@@ -166,8 +159,8 @@ public class Radio.Widgets.HeaderBar : Gtk.HeaderBar {
         var station_id_next = treeview.get_next_station_id ();
         var station_id_prev = treeview.get_previous_station_id ();
 
-        if (station_id_current != -1 && (Radio.App.player.status == PLAYER_STATUS.STOPPED ||
-            Radio.App.player.status == PLAYER_STATUS.PAUSED) )
+        if (station_id_current != -1 && (Radio.App.player.status == PlayerStatus.STOPPED ||
+            Radio.App.player.status == PlayerStatus.PAUSED) )
             play_button.set_sensitive (true);
 
 
@@ -180,20 +173,20 @@ public class Radio.Widgets.HeaderBar : Gtk.HeaderBar {
             previous_button.set_sensitive (true);
         else
             previous_button.set_sensitive (false);
-    
+
     }
 
-    private void handle_player_status_changed (PLAYER_STATUS status) {
+    private void handle_player_status_changed (PlayerStatus status) {
         switch (status) {
-            case PLAYER_STATUS.PLAYING :
+            case PlayerStatus.PLAYING :
                     handle_player_status_playing ();
                     play_button.set_sensitive (true);
-                    playback_label.set_markup ("<b>" + Radio.App.player.station.name + "</b>");
-                break; 
-            case PLAYER_STATUS.PAUSED  :
+                    change_title (App.player.station.name);
+                break;
+            case PlayerStatus.PAUSED  :
                 handle_player_status_paused ();
                 break;
-            case PLAYER_STATUS.STOPPED :
+            case PlayerStatus.STOPPED :
                 handle_player_status_stopped ();
                 playback_label.set_markup ("");
                 break;
@@ -212,5 +205,13 @@ public class Radio.Widgets.HeaderBar : Gtk.HeaderBar {
 
     private void handle_player_status_stopped () {
         play_button.set_icon_widget (play_button_image_play);
+    }
+
+    private void change_title (string new_title) {
+        playback_label.set_markup ("<b>" + new_title + "</b>");
+    }
+
+    private void handle_playing_station_updated (Models.Station updated_station) {
+        change_title (updated_station.name);
     }
 }

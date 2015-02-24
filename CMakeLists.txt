@@ -64,7 +64,7 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/pls_decoder.vala
     src/asx_decoder.vala
 
-    src/Enums/player_status.vala
+    src/Enums/PlayerStatus.vala
     src/Enums/ListStoreFilterType.vala
 
     src/Models/Genre.vala
