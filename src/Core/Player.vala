@@ -140,6 +140,9 @@ public class Radio.Core.Player : GLib.Object {
 
     public void add (Radio.Models.Station station) throws Radio.Error{
 
+        if (status == PlayerStatus.PLAYING)
+            stop ();
+
         string uri = station.url;
         string final_uri = station.url;
         string content_type = "";
