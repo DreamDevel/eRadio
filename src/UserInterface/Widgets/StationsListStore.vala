@@ -26,6 +26,7 @@ public class Radio.Widgets.StationsListStore : Gtk.ListStore {
     const int URL_COLUMN_ID = 2;
     const int ID_COLUMN_ID = 3;
     const int ICON_COLUMN_ID = 4;
+    const string play_icon_name = "audio-volume-high-panel";
 
     public ListStoreFilterType current_filter_type = ListStoreFilterType.NONE;
     public string current_filter_argument = "";
@@ -48,6 +49,7 @@ public class Radio.Widgets.StationsListStore : Gtk.ListStore {
         Radio.App.database.station_added.connect (handle_station_added);
         Radio.App.database.station_removed.connect (handle_station_removed);
         Radio.App.database.station_updated.connect (handle_station_updated);
+        Radio.App.player.play_status_changed.connect (handle_player_status_changed);
     }
 
     private void load_stations_from_database () {
@@ -90,6 +92,9 @@ public class Radio.Widgets.StationsListStore : Gtk.ListStore {
         set_value (iterator,GENRE_COLUMN_ID,genres_text);
         set_value (iterator,URL_COLUMN_ID,station.url);
         set_value (iterator,ID_COLUMN_ID,station.id);
+
+        if (App.player.status == PlayerStatus.PLAYING && App.player.station.id == station.id)
+             set_play_icon_to_iter (iterator);
     }
 
     private void handle_station_removed (Radio.Models.Station station) {
@@ -131,7 +136,44 @@ public class Radio.Widgets.StationsListStore : Gtk.ListStore {
         set_value (iterator,GENRE_COLUMN_ID,genres_text);
     }
 
-    private Gtk.TreeIter get_iterator_for_station_id (int station_id) {
+    private void handle_player_status_changed (PlayerStatus status) {
+        switch (status) {
+            case PlayerStatus.PLAYING:
+                set_play_icon_to_playing_station ();
+                break;
+            default :
+                remove_play_icon_from_playing_station ();
+                break;
+        }
+    }
+
+    private void set_play_icon_to_playing_station () {
+        var playing_station = App.player.station;
+        var station_iter = get_iterator_for_station_id (playing_station.id);
+        if (station_iter == null)
+            return;
+
+        set_play_icon_to_iter (station_iter);
+    }
+
+    private void set_play_icon_to_iter (Gtk.TreeIter iterator) {
+        set_value(iterator,ICON_COLUMN_ID,play_icon_name);
+    }
+
+    private void remove_play_icon_from_playing_station () {
+        var playing_station = App.player.station;
+        var station_iter = get_iterator_for_station_id (playing_station.id);
+        if (station_iter == null)
+            return;
+
+        remove_play_icon_from_iter (station_iter);
+    }
+
+    private void remove_play_icon_from_iter (Gtk.TreeIter iterator) {
+        set_value(iterator,ICON_COLUMN_ID,"");
+    }
+
+    private Gtk.TreeIter? get_iterator_for_station_id (int station_id) {
         Gtk.TreeIter? return_iterator = null;
         this.foreach ((model, path, iter) => {
             Value id_value;
@@ -144,7 +186,6 @@ public class Radio.Widgets.StationsListStore : Gtk.ListStore {
             return false;
         });
 
-        // TODO throw exception if iterator couldn't be found
         return return_iterator;
     }
 
