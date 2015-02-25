@@ -25,6 +25,7 @@ class Radio.App : Granite.Application {
     public static Radio.App instance;
     public static Radio.Core.Database database;
     public static Radio.Core.Player player;
+    public static Radio.Core.PlayerHelper player_helper;
 
     public static Radio.Dialogs.AddStationDialog add_dialog;
     public static Radio.Dialogs.EditStationDialog edit_dialog;
@@ -87,6 +88,7 @@ class Radio.App : Granite.Application {
 
     private void create_core_objects () {
         player = new Radio.Core.Player ();
+        player_helper = new Radio.Core.PlayerHelper ();
         settings = new Radio.Settings ();
         mpris = new Radio.MPRIS ();
 

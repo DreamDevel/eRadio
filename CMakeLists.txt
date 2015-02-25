@@ -72,6 +72,7 @@ vala_precompile(VALA_C ${EXEC_NAME}
 
     src/Core/Database.vala
     src/Core/Player.vala
+    src/Core/PlayerHelper.vala
     src/Core/DatabaseModels/GenreModel.vala
     src/Core/DatabaseModels/StationModel.vala
     src/Core/DatabaseModels/StationsGenresModel.vala

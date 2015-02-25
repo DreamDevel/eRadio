@@ -104,35 +104,10 @@ public class Radio.Widgets.HeaderBar : Gtk.HeaderBar {
 
             case PlayerStatus.PAUSED:
             case PlayerStatus.STOPPED:
-                try_to_play_station ();
+                App.player_helper.play_selected_station ();
                 break;
             default:
                 assert_not_reached ();
-        }
-    }
-
-    private void try_to_play_station () {
-        try {
-            var treeview =  Radio.App
-                            .main_window
-                            .view_stack
-                            .stations_list_view
-                            .stations_treeview
-                            .treeview;
-            var selected_station_id = treeview.get_selected_station_id ();
-            if (selected_station_id == -1) {
-                warning ("Could not get selected station from treeview");
-                return;
-            }
-
-            var station = Radio.App.database.get_station_by_id (selected_station_id);
-
-            if (Radio.App.player.station == null || station.id != Radio.App.player.station.id) {
-                Radio.App.player.add (station);
-            }
-            Radio.App.player.play ();
-        } catch (Radio.Error error) {
-            warning (error.message);
         }
     }
 

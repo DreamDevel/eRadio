@@ -122,18 +122,8 @@ public class Radio.Widgets.StationsTreeView : Gtk.TreeView {
     }
 
     private void handle_row_activated (Gtk.TreePath path, Gtk.TreeViewColumn column) {
-        try_to_play_selected_station (path,column);
-    }
-
-    private void try_to_play_selected_station (Gtk.TreePath path, Gtk.TreeViewColumn column) {
-        try {
-            var station_id = stations_liststore.get_station_id_for_path (path);
-            var station = Radio.App.database.get_station_by_id (station_id);
-            Radio.App.player.add (station);
-            Radio.App.player.play ();
-        } catch (Radio.Error error) {
-            warning (error.message);
-        }
+        var station_id = stations_liststore.get_station_id_for_path (path);
+        App.player_helper.play_station_with_id (station_id);
     }
 
     private void handle_right_click (Gdk.EventButton event) {
