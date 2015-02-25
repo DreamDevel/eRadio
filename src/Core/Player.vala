@@ -118,6 +118,7 @@ public class Radio.Core.Player : GLib.Object {
         // Make sure database instance exists
         App.instance.ui_build_finished.connect (()=>{
             Radio.App.database.station_updated.connect (handle_station_updated);
+            Radio.App.database.station_removed.connect (handle_station_removed);
         });
     }
 
@@ -131,6 +132,10 @@ public class Radio.Core.Player : GLib.Object {
         }
     }
 
+    private void handle_station_removed (Models.Station removed_station) {
+        if (station.id == removed_station.id)
+            stop ();
+    }
 
     public void add (Radio.Models.Station station) throws Radio.Error{
 
