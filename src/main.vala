@@ -18,11 +18,18 @@
  */
 
 int main(string[] args) {
-
+    set_log_level_by_args (ref args);
     Gtk.init (ref args);
     Gst.init (ref args);
     var app = new Radio.App ();
     app.run(args);
 
     return 0;
+}
+
+void set_log_level_by_args (ref unowned string[] args) {
+    foreach (var arg in args) {
+        if (arg == "--debug")
+            Granite.Services.Logger.DisplayLevel = Granite.Services.LogLevel.DEBUG;
+    }
 }
