@@ -143,12 +143,20 @@ public class Radio.Core.Player : GLib.Object {
 
         this.station = station;
 
-        if (final_uri.index_of("http") == 0){
+        if (final_uri.has_prefix ("http")){
             content_type = this.get_content_type (uri);
         }
 
         // Check content type to decode
         if ( content_type == "audio/x-mpegurl" || content_type == "audio/mpegurl" ) {
+            var list = M3UDecoder.parse (uri);
+            // Temporary ignoring all links beside the first
+            if ( list != null )
+                final_uri = list[0];
+            else
+                throw new Radio.Error.General ("Could not decode m3u file, wrong url or corrupted file");
+        }
+        else if ( content_type == "text/html" && final_uri.has_suffix (".m3u")) {
             var list = M3UDecoder.parse (uri);
             // Temporary ignoring all links beside the first
             if ( list != null )

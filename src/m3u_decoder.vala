@@ -30,12 +30,16 @@ public class M3UDecoder {
        }
 
        var myList = new Gee.ArrayList<string> ();
-       string[] lines = data.split ("\n"); 
+       string[] lines = data.split ("\n");
+       int comment;
 
-       foreach (unowned string str in lines) {
-          if (str[0] != '#')
-            myList.add(str);
-       }  
+       foreach (unowned string line in lines) {
+          if (line != "") {
+            comment = line.index_of ("#");
+            if (line.contains ("://") && comment == -1)
+              myList.add(line);
+          }
+       }
 
         if (myList.size == 0)
             return null;
@@ -54,7 +58,7 @@ public class M3UDecoder {
       if (msg.status_code == 200)
         return data;
       else
-        return null;    
+        return null;
     }
 
 }
