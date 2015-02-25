@@ -112,8 +112,6 @@ public class Radio.Widgets.StationsTreeView : Gtk.TreeView {
     private void connect_handlers_to_internal_signals () {
         button_release_event.connect (handle_button_release);
         row_activated.connect (handle_row_activated);
-
-        var treeview_selection = get_selection ();
     }
 
     private bool handle_button_release (Gdk.EventButton event) {
@@ -124,14 +122,18 @@ public class Radio.Widgets.StationsTreeView : Gtk.TreeView {
     }
 
     private void handle_row_activated (Gtk.TreePath path, Gtk.TreeViewColumn column) {
+        try_to_play_selected_station (path,column);
+    }
 
-        stdout.printf ("Double Clicked\n");
-        // Get Station 
-        // Send it to play
-        var station_id = stations_liststore.get_station_id_for_path (path);
-        var station = Radio.App.database.get_station_by_id (station_id);
-        Radio.App.player.add (station);
-        Radio.App.player.play ();
+    private void try_to_play_selected_station (Gtk.TreePath path, Gtk.TreeViewColumn column) {
+        try {
+            var station_id = stations_liststore.get_station_id_for_path (path);
+            var station = Radio.App.database.get_station_by_id (station_id);
+            Radio.App.player.add (station);
+            Radio.App.player.play ();
+        } catch (Radio.Error error) {
+            warning (error.message);
+        }
     }
 
     private void handle_right_click (Gdk.EventButton event) {
@@ -141,17 +143,25 @@ public class Radio.Widgets.StationsTreeView : Gtk.TreeView {
     }
 
     private Radio.Models.Station? get_station_by_cursor_cords (int x, int y) {
-        Gtk.TreePath path;
-        Radio.Models.Station station = null;
+        return try_to_get_station_by_cursor_cords (x,y);
+    }
 
-        var row_exists = get_path_at_pos(x,y,out path,null,null,null);
-        if (row_exists) {
-            //test
-            var station_id = stations_liststore.get_station_id_for_path (path);
-            station = Radio.App.database.get_station_by_id (station_id);
+    private Radio.Models.Station? try_to_get_station_by_cursor_cords (int x, int y) {
+        try {
+            Gtk.TreePath path;
+            Radio.Models.Station station = null;
+
+            var row_exists = get_path_at_pos(x,y,out path,null,null,null);
+            if (row_exists) {
+                var station_id = stations_liststore.get_station_id_for_path (path);
+                station = Radio.App.database.get_station_by_id (station_id);
+            }
+
+            return station;
+        } catch (Radio.Error error) {
+            warning (error.message);
+            return null;
         }
-
-        return station;
     }
 
     public int get_selected_station_id () {

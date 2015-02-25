@@ -36,12 +36,20 @@ public class Radio.Dialogs.EditStationDialog : Radio.Dialogs.StationDialog {
     }
 
     protected override void handle_action_button_click () {
-        editing_station.name = name_entry.text.strip ();
-        editing_station.url = url_entry.text.strip ();
-        editing_station.genres = genres_treeview.treeview.get_genres_in_array ();
-
-        Radio.App.database.update_station (editing_station);
+        try_to_update_station ();
         this.hide ();
+    }
+
+    private void try_to_update_station () {
+        try {
+            editing_station.name = name_entry.text.strip ();
+            editing_station.url = url_entry.text.strip ();
+            editing_station.genres = genres_treeview.treeview.get_genres_in_array ();
+
+            Radio.App.database.update_station (editing_station);
+        } catch (Radio.Error error) {
+            warning (error.message);
+        }
     }
 
     public void show_with_station (Radio.Models.Station station) {

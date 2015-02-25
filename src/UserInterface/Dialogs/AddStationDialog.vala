@@ -34,12 +34,21 @@ public class Radio.Dialogs.AddStationDialog : Radio.Dialogs.StationDialog {
     }
 
     protected override void handle_action_button_click () {
-        var name = name_entry.text.strip ();
-        var url = url_entry.text.strip ();
-        var genres = genres_treeview.treeview.get_genres_in_array ();
-
-        Radio.App.database.create_new_station (name, genres, url);
+        try_to_add_station ();
         this.hide ();
+    }
+
+    private void try_to_add_station () {
+        try {
+            var name = name_entry.text.strip ();
+            var url = url_entry.text.strip ();
+            var genres = genres_treeview.treeview.get_genres_in_array ();
+
+            Radio.App.database.create_new_station (name, genres, url);
+        } catch (Radio.Error error) {
+            warning (error.message);
+            warning ("Couldn't add station from dialog");
+        }
     }
 
     public override void show () {

@@ -41,7 +41,7 @@ public class Radio.Widgets.StationsListStore : Gtk.ListStore {
                 typeof(string)  // icon column (icon name)
             });
         connect_handlers_to_external_signals ();
-        load_stations_from_database ();
+        try_to_load_stations_from_database ();
     }
 
     private void  connect_handlers_to_external_signals () {
@@ -52,7 +52,15 @@ public class Radio.Widgets.StationsListStore : Gtk.ListStore {
         Radio.App.player.play_status_changed.connect (handle_player_status_changed);
     }
 
-    private void load_stations_from_database () {
+    private void try_to_load_stations_from_database () {
+        try {
+            load_stations_from_database ();
+        } catch (Radio.Error error) {
+            warning (error.message);
+        }
+    }
+
+    private void load_stations_from_database () throws Radio.Error {
         var stations = Radio.App.database.get_all_stations ();
         foreach (var station in stations) {
             add_station_entry (station);
@@ -209,20 +217,26 @@ public class Radio.Widgets.StationsListStore : Gtk.ListStore {
             return;
         } else if (filter_type == ListStoreFilterType.NONE) {
             clear ();
-            load_stations_from_database ();
+            try_to_load_stations_from_database ();
 
         } else if (filter_type == ListStoreFilterType.GENRE) {
             clear ();
-            var genre = App.database.get_genre_by_name (filter_argument);
-            var stations = App.database.get_stations_by_genre_id (genre.id);
-
-            foreach (var station in stations) {
-                add_station_entry (station);
-            }
-
+            try_to_apply_genre_filter (filter_argument);
         }
 
         current_filter_type = filter_type;
         current_filter_argument = filter_argument;
+    }
+
+    private void try_to_apply_genre_filter (string filter_argument) {
+        try {
+            var genre = App.database.get_genre_by_name (filter_argument);
+            var stations = App.database.get_stations_by_genre_id (genre.id);
+            foreach (var station in stations) {
+                add_station_entry (station);
+            }
+        } catch (Radio.Error error) {
+            warning (error.message);
+        }
     }
 }

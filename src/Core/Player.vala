@@ -74,19 +74,13 @@ public class Radio.Core.Player : GLib.Object {
     }
 
     private void handle_url_decoded (Gst.Element element, Gst.Pad pad) {
-        stdout.printf("- Padd Added\n");
+        debug ("URL decoded");
         // Here we can check the type of the media TODO
         //if (!waiting_uri_decode)
             //return;
 
         //waiting_uri_decode = false;
 
-        if (pad.get_current_caps ().is_fixed ())
-            stdout.printf("- Caps is fixed\n");
-        else
-            stdout.printf ("- Caps is not fixed \n");
-
-        //stdout.printf(pad.get_current_caps ().to_string () + "\n");
         var struct_string = pad.get_current_caps ().to_string ();
 
         if (struct_string.has_prefix ("audio"))
@@ -160,7 +154,7 @@ public class Radio.Core.Player : GLib.Object {
             if ( list != null )
                 final_uri = list[0];
             else
-                throw new Radio.Error.GENERAL ("Could not decode m3u file, wrong url or corrupted file");
+                throw new Radio.Error.General ("Could not decode m3u file, wrong url or corrupted file");
         }
         else if ( content_type == "audio/x-scpls" || content_type == "application/pls+xml") {
             var list = PLSDecoder.parse (uri);
@@ -168,7 +162,7 @@ public class Radio.Core.Player : GLib.Object {
             if ( list != null )
                 final_uri = list[0];
             else
-                throw new Radio.Error.GENERAL ("Could not decode pls file, wrong url or corrupted file");
+                throw new Radio.Error.General ("Could not decode pls file, wrong url or corrupted file");
 
         }
         else if ( content_type == "video/x-ms-wmv" || content_type == "video/x-ms-wvx" || content_type == "video/x-ms-asf" || content_type == "video/x-ms-asx" || content_type == "audio/x-ms-wax" || uri.last_index_of (".asx",uri.length - 4) != -1) {
@@ -177,7 +171,7 @@ public class Radio.Core.Player : GLib.Object {
             if ( list != null )
                 final_uri = list[0];
             else
-                throw new Radio.Error.GENERAL ("Could not decode asx file, wrong url or corrupted file");
+                throw new Radio.Error.General ("Could not decode asx file, wrong url or corrupted file");
         }
 
         this.has_url = true;

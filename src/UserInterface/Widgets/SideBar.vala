@@ -49,9 +49,19 @@ public class Radio.Widgets.SideBar : Granite.Widgets.SourceList {
         genre_list_item = new Widgets.SideBarExpandableItem ("Genres");
         genre_list_item.expanded = true;
 
-        var stations_number = Radio.App.database.count_stations ();
-        all_stations_item = new Granite.Widgets.SourceList.Item ("All Stations");
-        all_stations_item.badge = @"$stations_number";
+        try_to_create_all_stations_item ();
+    }
+
+    private void try_to_create_all_stations_item () {
+        try {
+            all_stations_item = new Granite.Widgets.SourceList.Item ("All Stations");
+
+            var stations_number = Radio.App.database.count_stations ();
+            all_stations_item.badge = @"$stations_number";
+        } catch (Radio.Error error) {
+            warning (error.message);
+            all_stations_item.badge = "0";
+        }
     }
 
     private void append_items () {
@@ -60,10 +70,19 @@ public class Radio.Widgets.SideBar : Granite.Widgets.SourceList {
     }
 
     private void load_genres () {
-        var genres_list = Radio.App.database.get_all_genres ();
-        foreach (var genre in genres_list) {
-            var stations_of_genre = Radio.App.database.count_entries_of_genre_id (genre.id);
-            add_genre (genre,stations_of_genre);
+        try_to_load_genres ();
+    }
+
+    private void try_to_load_genres () {
+        try {
+            var genres_list = Radio.App.database.get_all_genres ();
+            foreach (var genre in genres_list) {
+                var stations_of_genre = Radio.App.database.count_entries_of_genre_id (genre.id);
+                add_genre (genre,stations_of_genre);
+            }
+        } catch (Radio.Error error) {
+            warning (error.message);
+            warning ("Couldn't load genres");
         }
     }
 
@@ -148,22 +167,40 @@ public class Radio.Widgets.SideBar : Granite.Widgets.SourceList {
     }
 
     private void increase_genre_badge (string genre_name) {
-        var genre = App.database.get_genre_by_name (genre_name);
-        var genre_item = genre_list_items[genre.id];
-        var number_of_genre_entries = int.parse (genre_item.badge);
-        number_of_genre_entries++;
-        genre_item.badge = @"$number_of_genre_entries";
+        try_to_increase_genre_badge (genre_name);
+    }
+
+    private void try_to_increase_genre_badge (string genre_name) {
+        try {
+            var genre = App.database.get_genre_by_name (genre_name);
+            var genre_item = genre_list_items[genre.id];
+            var number_of_genre_entries = int.parse (genre_item.badge);
+            number_of_genre_entries++;
+            genre_item.badge = @"$number_of_genre_entries";
+        } catch (Radio.Error error) {
+            warning (error.message);
+            warning ("Couldn't increase genre badge");
+        }
     }
 
     private void decrease_genre_badge (string genre_name) {
-        var genre = App.database.get_genre_by_name (genre_name);
-        if (genre == null)
-            return;
+        try_to_decrease_genre_badge (genre_name);
+    }
 
-        var genre_item = genre_list_items[genre.id];
-        var number_of_genre_entries = int.parse (genre_item.badge);
-        number_of_genre_entries--;
-        genre_item.badge = @"$number_of_genre_entries";
+    private void try_to_decrease_genre_badge (string genre_name) {
+        try {
+            var genre = App.database.get_genre_by_name (genre_name);
+            if (genre == null)
+                return;
+
+            var genre_item = genre_list_items[genre.id];
+            var number_of_genre_entries = int.parse (genre_item.badge);
+            number_of_genre_entries--;
+            genre_item.badge = @"$number_of_genre_entries";
+        } catch (Radio.Error error) {
+            warning (error.message);
+            warning ("Couldn't decrease genre badge");
+        }
     }
 
     public override void item_selected (Granite.Widgets.SourceList.Item? item) {

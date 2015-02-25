@@ -18,7 +18,7 @@
  */
 
 public errordomain Radio.Error {
-    GENERAL,
+    General,
     DatabaseCreate,
     DatabaseWrite,
     DatabaseRead,

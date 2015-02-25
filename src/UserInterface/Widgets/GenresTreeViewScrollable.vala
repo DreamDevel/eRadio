@@ -34,13 +34,21 @@ public class Radio.Widgets.GenresTreeViewScrollable : Gtk.ScrolledWindow {
     }
 
     private void add_border_style () {
-        // We set shadow to make css border work
-        this.shadow_type = Gtk.ShadowType.ETCHED_OUT;
+        try_to_add_border_style ();
+    }
 
-        var css_provider = new Gtk.CssProvider ();
-        var style = "* { border: 1px solid #C3C0C0; }";
-        css_provider.load_from_data (style,style.length);
-        get_style_context().add_provider (css_provider,Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+    private void try_to_add_border_style () {
+        try {
+            // We set shadow to make css border work
+            this.shadow_type = Gtk.ShadowType.ETCHED_OUT;
+
+            var css_provider = new Gtk.CssProvider ();
+            var style = "* { border: 1px solid #C3C0C0; }";
+            css_provider.load_from_data (style,style.length);
+            get_style_context().add_provider (css_provider,Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+        } catch (GLib.Error error) {
+            warning (error.message);
+        }
     }
 
     private void create_treeview () {

@@ -37,16 +37,24 @@ public class Radio.Widgets.GenresTreeViewToolbar : Gtk.Toolbar {
     }
 
     private void set_toolbar_style () {
-        icon_size = Gtk.IconSize.SMALL_TOOLBAR;
-        show_arrow = false;
+        try_to_set_toolbar_style ();
+    }
 
-        var css_provider = new Gtk.CssProvider ();
-        var style = "* { background-image: linear-gradient(to bottom,
-                                  shade (#FFF, 0.93),
-                                  shade (#FFF, 0.97)
-                                  ); border: 1px solid alpha (#000, 0.22);border-top:none; }";
-        css_provider.load_from_data (style,style.length);
-        get_style_context().add_provider (css_provider,Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+    private void try_to_set_toolbar_style () {
+        try {
+            icon_size = Gtk.IconSize.SMALL_TOOLBAR;
+            show_arrow = false;
+
+            var css_provider = new Gtk.CssProvider ();
+            var style = "* { background-image: linear-gradient(to bottom,
+                                      shade (#FFF, 0.93),
+                                      shade (#FFF, 0.97)
+                                      ); border: 1px solid alpha (#000, 0.22);border-top:none; }";
+            css_provider.load_from_data (style,style.length);
+            get_style_context().add_provider (css_provider,Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+        } catch (GLib.Error error) {
+            warning (error.message);
+        }
     }
 
     private void create_toolbar_buttons () {

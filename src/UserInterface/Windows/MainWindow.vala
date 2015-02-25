@@ -77,14 +77,9 @@ public class Radio.Windows.MainWindow : Gtk.Window {
     public void change_station (Radio.Models.Station station) {
 
         Radio.App.playing_station = station;
-        try {
-            //Radio.App.player.add (station.url);
-            this.play ();
-            this.new_notification (station.name,_("Radio Station Changed"));
-        } catch (Radio.Error error) {
-            stderr.printf(error.message + "\n");
-            //dialog_error.show (error.message);
-        }
+
+        this.play ();
+        this.new_notification (station.name,_("Radio Station Changed"));
     }
 
     public void play () {

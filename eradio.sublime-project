@@ -13,7 +13,7 @@
 				{
 					"cmd":
 					[
-						"pantheon-terminal --execute=${project_path:${folder}}/build/eradio"
+						"pantheon-terminal --execute='${project_path:${folder}}/build/eradio --debug'"
 					],
 					"name": "Run",
 					"shell": true

@@ -47,7 +47,7 @@ public class Radio.Core.DatabaseModels.StationModel {
         }
     }
 
-    public Radio.Models.Station? select_by_name (string station_name) {
+    public Radio.Models.Station? select_by_name (string station_name) throws Radio.Error {
         Radio.Models.Station? station = null;
         try {
             SQLHeavy.Query query = db.prepare ("SELECT * FROM `Stations` WHERE `name` = :station_name;");
@@ -67,7 +67,7 @@ public class Radio.Core.DatabaseModels.StationModel {
         return station;
     }
 
-    public Radio.Models.Station? select_by_id (int station_id) {
+    public Radio.Models.Station? select_by_id (int station_id) throws Radio.Error {
         Radio.Models.Station? station = null;
         try {
             SQLHeavy.Query query = db.prepare ("SELECT * FROM `Stations` WHERE `id` = :station_id;");
@@ -87,7 +87,7 @@ public class Radio.Core.DatabaseModels.StationModel {
         return station;
     }
 
-    public Gee.ArrayList<Radio.Models.Station> select_all () {
+    public Gee.ArrayList<Radio.Models.Station> select_all () throws Radio.Error {
         var stations_list = new Gee.ArrayList <Radio.Models.Station> ();
         try {
             SQLHeavy.Query query = db.prepare ("SELECT * FROM `Stations`;");

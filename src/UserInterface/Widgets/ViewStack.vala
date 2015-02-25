@@ -46,11 +46,20 @@ public class Radio.Widgets.ViewStack : Gtk.Stack {
     }
 
     private void change_view_based_on_station_count () {
-        var number_of_stations = Radio.App.database.count_stations ();
-        if (number_of_stations > 0)
-            change_to_view_with_name ("stations_list");
-        else
+        try_to_change_view_based_on_station_count ();
+    }
+
+    private void try_to_change_view_based_on_station_count () {
+        try {
+            var number_of_stations = Radio.App.database.count_stations ();
+            if (number_of_stations > 0)
+                change_to_view_with_name ("stations_list");
+            else
+                change_to_view_with_name ("welcome");
+        } catch (Radio.Error error) {
+            warning (error.message);
             change_to_view_with_name ("welcome");
+        }
     }
 
     private void connect_handlers_to_external_signals () {

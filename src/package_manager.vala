@@ -35,7 +35,7 @@
             parser.load_from_file (path);
         } catch (GLib.Error e) {
             stderr.printf(e.message);
-            throw new Radio.Error.GENERAL ("Could not parse file");
+            throw new Radio.Error.General ("Could not parse file");
         }
 
         var root = parser.get_root();

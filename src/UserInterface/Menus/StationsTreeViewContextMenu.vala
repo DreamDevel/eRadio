@@ -56,8 +56,15 @@ public class Radio.Menus.StationsTreeViewContextMenu : Gtk.Menu {
     }
 
     private void handle_remove_item_click () {
-        //Radio.App.add_dialog.show (); TODO implement Edit Dialog and show it here
-        Radio.App.database.remove_station (context_station.id);
+        try_to_remove_station ();
+    }
+
+    private void try_to_remove_station () {
+        try {
+            Radio.App.database.remove_station (context_station.id);
+        } catch (Radio.Error error) {
+            warning (error.message);
+        }
     }
 
     public void popup_with_station (Radio.Models.Station station) {

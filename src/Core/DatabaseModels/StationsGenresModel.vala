@@ -44,7 +44,6 @@ public class Radio.Core.DatabaseModels.StationsGenresModel {
 
             for (SQLHeavy.QueryResult results = query.execute (); !results.finished; results.next ()) {
                 genres_name.add (results.get ("name").get_string ());
-                var name = results.get ("name").get_string ();
             }
          }
         catch (SQLHeavy.Error e) {
