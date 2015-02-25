@@ -123,10 +123,12 @@ public class Radio.Core.Player : GLib.Object {
     }
 
     private void handle_station_updated (Models.Station old_station, Models.Station new_station) {
-        if (status != PlayerStatus.PLAYING)
+        if (status != PlayerStatus.PLAYING || station.id != new_station.id)
             return;
 
-        if (station.id == new_station.id) {
+        if (old_station.url != new_station.url) {
+            stop ();
+        } else {
             station = new_station;
             playing_station_updated (new_station);
         }
