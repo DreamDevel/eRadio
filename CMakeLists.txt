@@ -60,9 +60,6 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/mpris.vala
     src/PlaybackStatus.vala
     src/package_manager.vala
-    src/m3u_decoder.vala
-    src/pls_decoder.vala
-    src/asx_decoder.vala
 
     src/Enums/PlayerStatus.vala
     src/Enums/ListStoreFilterType.vala
@@ -76,6 +73,9 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/Core/DatabaseModels/GenreModel.vala
     src/Core/DatabaseModels/StationModel.vala
     src/Core/DatabaseModels/StationsGenresModel.vala
+    src/Core/PlayerDecoders/M3UDecoder.vala
+    src/Core/PlayerDecoders/PLSDecoder.vala
+    src/Core/PlayerDecoders/ASXDecoder.vala
 
     src/UserInterface/Menus/ApplicationMenu.vala
     src/UserInterface/Menus/StationsTreeViewContextMenu.vala
