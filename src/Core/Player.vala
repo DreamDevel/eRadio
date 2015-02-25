@@ -193,6 +193,7 @@ public class Radio.Core.Player : GLib.Object {
 
         pipeline.set_state (State.READY);
         source.set ("uri",final_uri);
+        debug (@"Set station with name: $(station.name)");
     }
 
     public void set_volume (double value) {
@@ -209,6 +210,7 @@ public class Radio.Core.Player : GLib.Object {
         if(pipeline != null) {
             pipeline.set_state(State.PLAYING);
             status = PlayerStatus.PLAYING;
+            debug ("Player status: Playing");
             play_status_changed(PlayerStatus.PLAYING);
         }
     }
@@ -217,6 +219,7 @@ public class Radio.Core.Player : GLib.Object {
         if(pipeline != null) {
             pipeline.set_state(State.PAUSED);
             status = PlayerStatus.PAUSED;
+            debug ("Player status: Paused");
             play_status_changed(PlayerStatus.PAUSED);
         }
 
@@ -226,9 +229,8 @@ public class Radio.Core.Player : GLib.Object {
         if(pipeline != null) {
             pipeline.set_state(State.NULL);
             status = PlayerStatus.STOPPED;
+            debug ("Player status: Stopped");
             play_status_changed(PlayerStatus.STOPPED);
-            this.has_url = false;
-            station = null;
         }
     }
 

@@ -31,6 +31,9 @@ public class Radio.Widgets.StationsListStore : Gtk.ListStore {
     public ListStoreFilterType current_filter_type = ListStoreFilterType.NONE;
     public string current_filter_argument = "";
 
+    public signal void filter_applied (ListStoreFilterType filter_type, string filter_argument);
+    public signal void entry_added ();
+
     public StationsListStore () {
 
         set_column_types (new Type[] {
@@ -103,6 +106,8 @@ public class Radio.Widgets.StationsListStore : Gtk.ListStore {
 
         if (App.player.status == PlayerStatus.PLAYING && App.player.station.id == station.id)
              set_play_icon_to_iter (iterator);
+
+        entry_added ();
     }
 
     private void handle_station_removed (Radio.Models.Station station) {
@@ -181,7 +186,7 @@ public class Radio.Widgets.StationsListStore : Gtk.ListStore {
         set_value(iterator,ICON_COLUMN_ID,"");
     }
 
-    private Gtk.TreeIter? get_iterator_for_station_id (int station_id) {
+    public Gtk.TreeIter? get_iterator_for_station_id (int station_id) {
         Gtk.TreeIter? return_iterator = null;
         this.foreach ((model, path, iter) => {
             Value id_value;
@@ -226,6 +231,7 @@ public class Radio.Widgets.StationsListStore : Gtk.ListStore {
 
         current_filter_type = filter_type;
         current_filter_argument = filter_argument;
+        filter_applied (filter_type,filter_argument);
     }
 
     private void try_to_apply_genre_filter (string filter_argument) {

@@ -62,4 +62,56 @@ public class Radio.Core.PlayerHelper {
             warning (error.message);
         }
     }
+
+    public void play_next_station () {
+        try_to_play_next_station ();
+    }
+
+    private void try_to_play_next_station () {
+        try {
+            if (App.player.status != PlayerStatus.PLAYING)
+                return;
+
+            var treeview =  Radio.App
+                            .main_window
+                            .view_stack
+                            .stations_list_view
+                            .stations_treeview
+                            .treeview;
+
+            var station_id_current = App.player.station.id;
+            var station_id_next = treeview.get_next_station_id (station_id_current);
+            var next_station = App.database.get_station_by_id (station_id_next);
+            Radio.App.player.add (next_station);
+            Radio.App.player.play ();
+        } catch (Radio.Error error) {
+            warning (error.message);
+        }
+    }
+
+    public void play_previous_station () {
+        try_to_play_previous_station ();
+    }
+
+    private void try_to_play_previous_station () {
+        try {
+            if (App.player.status != PlayerStatus.PLAYING)
+                return;
+
+            var treeview =  Radio.App
+                            .main_window
+                            .view_stack
+                            .stations_list_view
+                            .stations_treeview
+                            .treeview;
+
+            var station_id_current = App.player.station.id;
+            var station_id_previous = treeview.get_previous_station_id (station_id_current);
+            var previous_station = App.database.get_station_by_id (station_id_previous);
+            Radio.App.player.add (previous_station);
+            Radio.App.player.play ();
+        } catch (Radio.Error error) {
+            warning (error.message);
+        }
+    }
 }
