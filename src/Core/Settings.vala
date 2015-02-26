@@ -17,7 +17,7 @@
  *  Authored by: George Sofianos <georgesofianosgr@gmail.com>
  */
 
-public class Radio.Settings : Granite.Services.Settings {
+public class Radio.Core.Settings : Granite.Services.Settings {
     public double volume {get;set;}
     public int window_width {get;set;}
     public int window_height {get;set;}
