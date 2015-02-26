@@ -22,7 +22,7 @@
 
 using Gee;
 
-public class Radio.MPRIS : GLib.Object {
+public class Radio.Core.MPRIS : GLib.Object {
     public MprisPlayer player = null;
     public MprisRoot root = null;
 
@@ -44,7 +44,7 @@ public class Radio.MPRIS : GLib.Object {
 
     private void on_bus_acquired (DBusConnection connection, string name) {
         this.conn = connection;
-        debug ("bus acquired");
+        debug ("Bus acquired");
         try {
             root = new MprisRoot ();
             connection.register_object ("/org/mpris/MediaPlayer2", root);
@@ -52,16 +52,16 @@ public class Radio.MPRIS : GLib.Object {
             connection.register_object ("/org/mpris/MediaPlayer2", player);
         }
         catch(IOError e) {
-            warning("could not create MPRIS player: %s\n", e.message);
+            warning("Could not create MPRIS player: %s\n", e.message);
         }
     }
 
     private void on_name_acquired(DBusConnection connection, string name) {
-        debug ("name acquired");
+        debug ("Name acquired");
     }
 
     private void on_name_lost(DBusConnection connection, string name) {
-        debug ("name_lost");
+        debug ("Name_lost");
     }
 }
 
@@ -169,7 +169,8 @@ public class MprisPlayer : GLib.Object {
                              );
         }
         catch(Error e) {
-            print("Could not send MPRIS property change: %s\n", e.message);
+            warning (e.message);
+            warning ("Could not send MPRIS property change");
         }
         send_property_source = 0;
         return false;
@@ -190,14 +191,15 @@ public class MprisPlayer : GLib.Object {
 
     public string PlaybackStatus {
         owned get {
-            if(Radio.App.playback_status == Radio.PlaybackStatus.PLAYING)
+            if(Radio.App.player.status == Radio.PlayerStatus.PLAYING) {
                 return "Playing";
-            else if(Radio.App.playback_status == Radio.PlaybackStatus.STOPPED)
+            } else if(Radio.App.player.status == Radio.PlayerStatus.STOPPED) {
                 return "Stopped";
-            else if(Radio.App.playback_status == Radio.PlaybackStatus.PAUSED)
+            } else if(Radio.App.player.status == Radio.PlayerStatus.PAUSED) {
                 return "Paused";
-            else
+            } else {
                 return "Stopped";
+            }
         }
     }
 
@@ -209,7 +211,7 @@ public class MprisPlayer : GLib.Object {
         }
     }
 
-    // eRadio - TODO - Get Real Volume & Update It
+    // Currently not needed
     public double Volume {
         get{
             return 1;
@@ -259,33 +261,27 @@ public class MprisPlayer : GLib.Object {
     public signal void Seeked(int64 Position);
 
     public void Next() {
-
-        Radio.App.main_window.next_clicked ();
+        Radio.App.player_helper.play_next_station ();
     }
 
     public void Previous() {
-
-        Radio.App.main_window.prev_clicked ();
+        Radio.App.player_helper.play_previous_station ();
     }
 
     public void Pause() {
-
-        Radio.App.main_window.pause ();
+        Radio.App.player.stop ();
     }
 
     public void PlayPause() {
-
-        Radio.App.main_window.play_pause_clicked ();
+        Radio.App.player_helper.play_pause ();
     }
 
     public void Stop() {
-
-        Radio.App.main_window.stop ();
+        Radio.App.player.stop ();
     }
 
     public void Play() {
-
-        Radio.App.main_window.play ();
+        Radio.App.player.play ();
     }
 
     public void OpenUri(string Uri) {

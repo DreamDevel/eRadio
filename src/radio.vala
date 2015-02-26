@@ -27,15 +27,12 @@ class Radio.App : Granite.Application {
     public static Radio.Core.Player player;
     public static Radio.Core.PlayerHelper player_helper;
     public static Radio.Core.Notifier notifier;
+    private Radio.Core.MPRIS mpris;
 
     public static Radio.Dialogs.AddStationDialog add_dialog;
     public static Radio.Dialogs.EditStationDialog edit_dialog;
     public static Radio.Dialogs.ErrorDialog error_dialog;
 
-    public static Radio.PlaybackStatus playback_status {get;set;default=Radio.PlaybackStatus.STOPPED;}
-    public static Radio.Models.Station? playing_station;
-
-    private Radio.MPRIS mpris;
 
     public signal void ui_build_finished ();
     public static bool ui_ready = false;
@@ -68,9 +65,6 @@ class Radio.App : Granite.Application {
         about_license_type = Gtk.License.GPL_3_0;
 
         this.set_flags (ApplicationFlags.FLAGS_NONE);
-
-        playing_station = null; // TODO remove
-
     }
 
     public App () {
@@ -91,7 +85,7 @@ class Radio.App : Granite.Application {
         player = new Radio.Core.Player ();
         player_helper = new Radio.Core.PlayerHelper ();
         settings = new Radio.Settings ();
-        mpris = new Radio.MPRIS ();
+        mpris = new Radio.Core.MPRIS ();
         notifier = new Radio.Core.Notifier ();
 
         initialize_database ();
