@@ -48,7 +48,7 @@ public class Radio.MediaKeyListener : Object {
         } catch (IOError e) {
             warning ("Mediakeys error: %s", e.message);
         }
-        
+
         if(media_object != null) {
             media_object.MediaPlayerKeyPressed.connect(mediaKeyPressed);
             try {
@@ -59,7 +59,7 @@ public class Radio.MediaKeyListener : Object {
             }
         }
     }
-    
+
     public void releaseMediaKeys() {
         try {
             media_object.ReleaseMediaPlayerKeys ("eradio");
@@ -68,22 +68,22 @@ public class Radio.MediaKeyListener : Object {
             warning("Could not release media player keys: %s", err.message);
         }
     }
-    
+
     private void mediaKeyPressed(dynamic Object bus, string application, string key) {
         if (application != "eradio")
             return;
 
         if(key == "Previous") {
-            App.main_window.prev_clicked();
+            App.player_helper.play_previous_station ();
         }
         else if(key == "Play") {
-            App.main_window.play_pause_clicked();
+            App.player_helper.play_pause ();
         }
         else if(key == "Next") {
-            App.main_window.next_clicked();
+            App.player_helper.play_next_station ();
         }
         else if(key == "Pause") {
-            // TODO
+           App.player.stop ();
         }
         else {
             message ("Unused key pressed: %s", key);

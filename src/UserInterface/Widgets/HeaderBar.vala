@@ -54,8 +54,6 @@ public class Radio.Widgets.HeaderBar : Gtk.HeaderBar {
     }
 
     private void create_playback_buttons () {
-        var icon_size = Gtk.IconSize.LARGE_TOOLBAR;
-
         play_button = new Gtk.ToolButton (null,"");
         previous_button = new Gtk.ToolButton (null,"");
         next_button = new Gtk.ToolButton (null,"");
@@ -147,7 +145,7 @@ public class Radio.Widgets.HeaderBar : Gtk.HeaderBar {
             next_button.set_sensitive (false);
             return;
         }
-        debug ("Updating Previous/Next Button Sensitivity");
+
         var treeview =  Radio.App
                         .main_window
                         .view_stack
@@ -158,9 +156,7 @@ public class Radio.Widgets.HeaderBar : Gtk.HeaderBar {
         var station_id_current = App.player.station.id;
         var station_id_next = treeview.get_next_station_id (station_id_current);
         var station_id_prev = treeview.get_previous_station_id (station_id_current);
-        debug (@"Current S: $(station_id_current)");
-        debug (@"Next S: $(station_id_next)");
-        debug (@"Prev S: $(station_id_prev)");
+
         if (station_id_next != -1)
             next_button.set_sensitive (true);
         else

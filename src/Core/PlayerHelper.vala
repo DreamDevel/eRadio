@@ -81,6 +81,9 @@ public class Radio.Core.PlayerHelper {
 
             var station_id_current = App.player.station.id;
             var station_id_next = treeview.get_next_station_id (station_id_current);
+            if (station_id_next == -1)
+                return;
+
             var next_station = App.database.get_station_by_id (station_id_next);
             Radio.App.player.add (next_station);
             Radio.App.player.play ();
@@ -107,11 +110,22 @@ public class Radio.Core.PlayerHelper {
 
             var station_id_current = App.player.station.id;
             var station_id_previous = treeview.get_previous_station_id (station_id_current);
+            if (station_id_previous == -1)
+                return;
+
             var previous_station = App.database.get_station_by_id (station_id_previous);
             Radio.App.player.add (previous_station);
             Radio.App.player.play ();
         } catch (Radio.Error error) {
             warning (error.message);
+        }
+    }
+
+    public void play_pause () {
+        if (App.player.status == PlayerStatus.PLAYING) {
+            App.player.stop ();
+        } else if (App.player.station != null) {
+            App.player.play ();
         }
     }
 }

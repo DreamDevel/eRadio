@@ -56,7 +56,6 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/radio.vala
     src/error.vala
     src/settings.vala
-    src/media_key_listener.vala
     src/mpris.vala
     src/PlaybackStatus.vala
     src/package_manager.vala
@@ -70,6 +69,7 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/Core/Database.vala
     src/Core/Player.vala
     src/Core/PlayerHelper.vala
+    src/Core/MediaKeyListener.vala
     src/Core/DatabaseModels/GenreModel.vala
     src/Core/DatabaseModels/StationModel.vala
     src/Core/DatabaseModels/StationsGenresModel.vala
