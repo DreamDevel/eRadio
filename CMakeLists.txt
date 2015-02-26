@@ -104,6 +104,8 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/UserInterface/Windows/MainWindow.vala
 PACKAGES
     ${PROJECT_DEPS}
+OPTIONS
+--enable-experimental
 )
 
 add_subdirectory (po)
