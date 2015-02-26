@@ -25,6 +25,7 @@ class Radio.App : Granite.Application {
     public static Radio.Core.Database database;
     public static Radio.Core.Player player;
     public static Radio.Core.PlayerHelper player_helper;
+    public static Radio.Core.PackageManager package_manager;
     public static Radio.Core.Notifier notifier;
     public static Radio.Core.Settings settings;
     private Radio.Core.MPRIS mpris;
@@ -32,6 +33,7 @@ class Radio.App : Granite.Application {
     public static Radio.Dialogs.AddStationDialog add_dialog;
     public static Radio.Dialogs.EditStationDialog edit_dialog;
     public static Radio.Dialogs.ErrorDialog error_dialog;
+    public static Radio.Dialogs.ImportProgressDialog import_progress_dialog;
 
 
     public signal void ui_build_finished ();
@@ -87,6 +89,7 @@ class Radio.App : Granite.Application {
         settings = new Radio.Core.Settings ();
         mpris = new Radio.Core.MPRIS ();
         notifier = new Radio.Core.Notifier ();
+        package_manager = new Radio.Core.PackageManager ();
 
         initialize_database ();
         Radio.MediaKeyListener.instance.init ();
@@ -109,6 +112,7 @@ class Radio.App : Granite.Application {
         add_dialog = new Radio.Dialogs.AddStationDialog.with_parent (main_window);
         edit_dialog = new Radio.Dialogs.EditStationDialog.with_parent (main_window);
         error_dialog = new Radio.Dialogs.ErrorDialog.with_parent (main_window);
+        import_progress_dialog = new Radio.Dialogs.ImportProgressDialog.with_parent (main_window);
     }
 
     private void initialize_database () {
@@ -132,6 +136,33 @@ class Radio.App : Granite.Application {
             database.connect_to_database_file (db_file.get_path());
         } catch (Radio.Error e) {
             stderr.printf(e.message);
+        }
+    }
+
+    public static void import_package () {
+        try_to_import_package ();
+    }
+
+    private static void try_to_import_package () {
+        try {
+            var file_chooser = UserInterface.FileChooserCreator.create_import_dialog ();
+            if (file_chooser.run () != Gtk.ResponseType.ACCEPT) {
+                file_chooser.destroy ();
+                return;
+            }
+
+            var path = file_chooser.get_filename ();
+            file_chooser.destroy ();
+
+            var stations = package_manager.parse (path);
+            foreach (var station in stations) {
+                database.create_new_station (station.name, station.genres, station.url);
+                while (Gtk.events_pending())
+                    Gtk.main_iteration ();
+            }
+        } catch (Radio.Error error) {
+            warning (error.message);
+            import_progress_dialog.hide ();
         }
     }
 }

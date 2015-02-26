@@ -18,18 +18,24 @@
  *               Fotini Skoti <fotini.skoti@gmail.com>
  */
 
- public class Radio.PackageManager : GLib.Object {
+ using Gee;
 
-    private static Json.Parser parser;
-    private static Json.Builder builder;
-    private static double pkg_version {get;set;default=1.0;}
+ public class Radio.Core.PackageManager : GLib.Object {
 
-    public static Radio.Models.Station[] parse (string path) throws Radio.Error{
+    private Json.Parser parser;
+    private Json.Builder builder;
+    private double pkg_version {get;set;default=1.0;}
+
+    public signal void parse_started (uint number_of_entries);
+    public signal void parse_updated (uint number_of_parsed_entries);
+    public signal void parse_finished (bool success);
+
+    public ArrayList<Radio.Models.Station> parse (string path) throws Radio.Error{
 
         if(parser == null)
             parser = new Json.Parser ();
 
-        Radio.Models.Station[] stations_array = null;
+        var stations_list = new ArrayList <Models.Station> ();
 
         try {
             parser.load_from_file (path);
@@ -49,8 +55,8 @@
 
             var stations = obj.get_array_member ("stations");
             var stations_length = stations.get_length();
+            parse_started (stations_length);
 
-            stations_array = new Radio.Models.Station[stations_length];
             for(var i = 0; i < stations_length; i++) {
 
                 var station_object = stations.get_object_element(i);
@@ -69,17 +75,22 @@
 
                 var station = new Radio.Models.Station (-1,name,url,genres);
 
-                stations_array[i] = station;
+                stations_list.add (station);
+                parse_updated (i+1);
+                while (Gtk.events_pending())
+                    Gtk.main_iteration ();
             }
 
         } else {
-            stderr.printf("Error, package corrupted\n");
+            parse_finished (false);
+            throw new Radio.Error.General ("Could not parse file, package seems to be corrupted");
         }
 
-        return stations_array;
+        parse_finished (true);
+        return stations_list;
     }
 
-    public static void extract (Gee.ArrayList<Radio.Models.Station> stations,string file_path) throws GLib.Error {
+    public void extract (Gee.ArrayList<Radio.Models.Station> stations,string file_path) throws GLib.Error {
 
         if(builder == null)
             builder = new Json.Builder ();

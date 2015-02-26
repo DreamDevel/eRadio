@@ -60,10 +60,15 @@ public class Radio.Menus.ApplicationMenu : Gtk.Menu {
 
     private void connect_handlers_to_internal_signals () {
         add_item.activate.connect (handle_add_item_click);
+        import_item.activate.connect (handle_import_item_click);
     }
 
     private void handle_add_item_click () {
         Radio.App.add_dialog.show ();
+    }
+
+    private void handle_import_item_click () {
+        App.import_package ();
     }
 
     public Granite.Widgets.AppMenu get_as_granite_app_menu () {

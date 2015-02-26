@@ -99,6 +99,10 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/UserInterface/Dialogs/AddStationDialog.vala
     src/UserInterface/Dialogs/EditStationDialog.vala
     src/UserInterface/Dialogs/ErrorDialog.vala
+    src/UserInterface/Dialogs/ProgressDialog.vala
+    src/UserInterface/Dialogs/ImportProgressDialog.vala
+
+    src/UserInterface/Others/FileChooserCreator.vala
 
     src/UserInterface/Windows/MainWindow.vala
 PACKAGES
