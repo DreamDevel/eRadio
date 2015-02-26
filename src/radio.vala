@@ -26,6 +26,7 @@ class Radio.App : Granite.Application {
     public static Radio.Core.Database database;
     public static Radio.Core.Player player;
     public static Radio.Core.PlayerHelper player_helper;
+    public static Radio.Core.Notifier notifier;
 
     public static Radio.Dialogs.AddStationDialog add_dialog;
     public static Radio.Dialogs.EditStationDialog edit_dialog;
@@ -91,6 +92,7 @@ class Radio.App : Granite.Application {
         player_helper = new Radio.Core.PlayerHelper ();
         settings = new Radio.Settings ();
         mpris = new Radio.MPRIS ();
+        notifier = new Radio.Core.Notifier ();
 
         initialize_database ();
         Radio.MediaKeyListener.instance.init ();
