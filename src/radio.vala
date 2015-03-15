@@ -74,7 +74,8 @@ class Radio.App : Granite.Application {
     }
 
     public override void activate () {
-        initialize ();
+        if (main_window == null)
+            initialize ();
 
     }
 
