@@ -76,6 +76,8 @@ class Radio.App : Granite.Application {
     public override void activate () {
         if (main_window == null)
             initialize ();
+        else if (!main_window.visible)
+            main_window.show ();
 
     }
 
