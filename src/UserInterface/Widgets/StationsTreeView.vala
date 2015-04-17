@@ -102,7 +102,8 @@ public class Radio.Widgets.StationsTreeView : Gtk.TreeView {
     	append_column(play_icon_column);
     	append_column(title_column);
     	append_column(genre_column);
-    	append_column(url_column);
+        // Disabled URL Column, maybe re-enable it by prefrences?
+    	//append_column(url_column);
     }
 
     private void create_context_menu () {
@@ -112,6 +113,8 @@ public class Radio.Widgets.StationsTreeView : Gtk.TreeView {
     private void connect_handlers_to_internal_signals () {
         button_release_event.connect (handle_button_release);
         row_activated.connect (handle_row_activated);
+        title_column.notify.connect(handle_title_column_resized);
+        genre_column.notify.connect(handle_genre_column_resized);
     }
 
     private bool handle_button_release (Gdk.EventButton event) {
@@ -151,6 +154,18 @@ public class Radio.Widgets.StationsTreeView : Gtk.TreeView {
         } catch (Radio.Error error) {
             warning (error.message);
             return null;
+        }
+    }
+
+    private void handle_title_column_resized (GLib.ParamSpec param) {
+        if (param.get_name () == "width") {
+            Radio.App.settings.title_column_width = title_column.width;
+        }
+    }
+
+    private void handle_genre_column_resized (GLib.ParamSpec param) {
+        if (param.get_name () == "width") {
+            Radio.App.settings.genre_column_width = genre_column.width;
         }
     }
 

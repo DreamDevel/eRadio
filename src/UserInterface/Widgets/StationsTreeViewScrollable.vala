@@ -24,7 +24,12 @@ public class Radio.Widgets.StationsTreeViewScrollable : Gtk.ScrolledWindow {
     public Radio.Widgets.StationsTreeView treeview;
 
     public StationsTreeViewScrollable () {
+        set_properties ();
         build_interface ();
+    }
+
+    private void set_properties () {
+        hscrollbar_policy = Gtk.PolicyType.NEVER;
     }
 
     private void build_interface () {
