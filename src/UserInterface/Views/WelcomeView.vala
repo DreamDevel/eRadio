@@ -52,10 +52,15 @@ public class Radio.Views.WelcomeView : Granite.Widgets.Welcome {
     private void handle_welcome_menu_click (int index) {
         if (index == 0)
             handle_add_station_click ();
-        // TODO handle import stations
+        else if (index == 1)
+            handle_import_stations_click ();
     }
 
     private void handle_add_station_click () {
         Radio.App.add_dialog.show ();
+    }
+
+    private void handle_import_stations_click () {
+        Radio.App.import_package ();
     }
 }
