@@ -5,12 +5,7 @@
  ```
 Project is under development but almost complete (v2.0). You are free to report any bugs or create pull requests. 
 ``` 
-<img src="http://i.imgur.com/sdgOr1s.png" alt="Screenshot of daily build, not final product" width=600>  
-*Screenshot of daily build, not final product.*
-
-Visit our webpage for more info : http://www.dreamdevel.com/apps/eradio
-
-```Note: Web page under construction```
+<img src="http://i.imgur.com/O7SuOJo.png">  
 
 ##Install Build Dependencies
 
