@@ -1,4 +1,5 @@
-# eRadio
+<img src="https://github.com/DreamDevel/eRadio/raw/master/images/icons/48x48/apps/eRadio.png" width=48> 
+# eRadio #
 **A minimalist and powerfull radio player for elementary OS** 
 
  ```
@@ -13,7 +14,7 @@ Visit our webpage for more info : http://www.dreamdevel.com/apps/eradio
 
 ##Install Build Dependencies
 
-**For elementary OS Freya and other ubuntu based distributions** 
+**For elementary OS Loki and other ubuntu based distributions** 
 
 ```
 Navigate to project's tools directory via terminal and run ./install-deps
