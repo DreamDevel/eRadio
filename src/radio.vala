@@ -175,8 +175,17 @@ class Radio.App : Granite.Application {
 
     private static void try_to_export_package () {
       try {
+          var file_chooser = UserInterface.FileChooserCreator.create_export_dialog ();
+          if (file_chooser.run () != Gtk.ResponseType.ACCEPT) {
+              file_chooser.destroy ();
+              return;
+          }
+
+          var path = file_chooser.get_filename ();
+          file_chooser.destroy ();
+
           var stations = database.get_all_stations ();
-          package_manager.extract (stations, "");
+          package_manager.extract (stations, path + ".erpkg");
       } catch (Radio.Error error) {
           warning (error.message);
       }

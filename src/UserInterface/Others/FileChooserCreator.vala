@@ -41,5 +41,26 @@ class Radio.UserInterface.FileChooserCreator {
         file_filter.add_pattern ("*.erpkg");
         return file_filter;
     }
-}
 
+    public static Gtk.FileChooserDialog create_export_dialog () {
+        var file_chooser_export = new Gtk.FileChooserDialog (_("Export Radio Stations"),
+            null, Gtk.FileChooserAction.SAVE,
+            _("Cancel"), Gtk.ResponseType.CANCEL,
+            _("Save"),Gtk.ResponseType.ACCEPT);
+
+        file_chooser_export.transient_for = App.main_window;
+        file_chooser_export.destroy_with_parent = true;
+        file_chooser_export.set_current_folder (Environment.get_home_dir () + "/Documents");
+
+        var filter = create_export_dialog_filter();
+        file_chooser_export.add_filter(filter);
+        return file_chooser_export;
+    }
+
+    private static Gtk.FileFilter create_export_dialog_filter () {
+        var file_filter = new Gtk.FileFilter ();
+        file_filter.set_filter_name (_("eRadio Package"));
+        file_filter.add_pattern ("*.erpkg");
+        return file_filter;
+    }
+}
