@@ -140,6 +140,7 @@ public class MprisPlayer : GLib.Object {
 
         Variant variant = this.PlaybackStatus;
         queue_property_for_notification("PlaybackStatus", variant);
+
     }
 
     private bool send_property_change() {
@@ -158,7 +159,7 @@ public class MprisPlayer : GLib.Object {
         changed_properties = null;
 
         try {
-            conn.emit_signal("org.mpris.MediaPlayer2." + Radio.App.instance.exec_name,
+            conn.emit_signal(null,
                              "/org/mpris/MediaPlayer2",
                              "org.freedesktop.DBus.Properties",
                              "PropertiesChanged",
