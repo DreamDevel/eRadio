@@ -43,7 +43,7 @@ public class Radio.Windows.MainWindow : Gtk.Window {
         this.set_default_size(settings.window_width,settings.window_height);
         this.set_application (Radio.App.instance);
         this.set_position (Gtk.WindowPosition.CENTER);
-        this.icon_name = "eradio";
+        this.icon_name = "eRadio";
         this.resizable = true;
     }
 
