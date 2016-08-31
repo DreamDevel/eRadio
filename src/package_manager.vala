@@ -24,7 +24,7 @@
 
     private Json.Parser parser;
     private Json.Builder builder;
-    private double pkg_version {get;set;default=1.0;}
+    private double pkg_version {get;set;default=2.0;}
 
     public signal void parse_started (uint number_of_entries);
     public signal void parse_updated (uint number_of_parsed_entries);
