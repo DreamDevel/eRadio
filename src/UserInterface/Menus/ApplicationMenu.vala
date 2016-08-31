@@ -61,6 +61,7 @@ public class Radio.Menus.ApplicationMenu : Gtk.Menu {
     private void connect_handlers_to_internal_signals () {
         add_item.activate.connect (handle_add_item_click);
         import_item.activate.connect (handle_import_item_click);
+        export_item.activate.connect (handle_export_item_click);
     }
 
     private void handle_add_item_click () {
@@ -69,6 +70,10 @@ public class Radio.Menus.ApplicationMenu : Gtk.Menu {
 
     private void handle_import_item_click () {
         App.import_package ();
+    }
+
+    private void handle_export_item_click () {
+        App.export_package ();
     }
 
     public Granite.Widgets.AppMenu get_as_granite_app_menu () {

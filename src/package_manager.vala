@@ -30,6 +30,10 @@
     public signal void parse_updated (uint number_of_parsed_entries);
     public signal void parse_finished (bool success);
 
+    public signal void extract_started (uint number_of_entries);
+    public signal void extract_updated (uint number_of_parsed_entries);
+    public signal void extract_finished (bool success);
+
     public ArrayList<Radio.Models.Station> parse (string path) throws Radio.Error{
 
         if(parser == null)
@@ -92,6 +96,8 @@
 
     public void extract (Gee.ArrayList<Radio.Models.Station> stations,string file_path) throws GLib.Error {
 
+        extract_started (stations.size);
+
         if(builder == null)
             builder = new Json.Builder ();
         else
@@ -103,7 +109,10 @@
         builder.set_member_name ("stations");
         builder.begin_array ();
 
+        var counter = 0;
+
         foreach (Radio.Models.Station station in stations) {
+            extract_updated (++counter);
             builder.begin_object ();
 
             string genre = "";
@@ -132,13 +141,13 @@
         Json.Node root = builder.get_root ();
         generator.set_root (root);
 
-        //string str = generator.to_data (null);
-        //stdout.printf(str);
         try {
             generator.to_file(file_path);
         } catch (GLib.Error error) {
+            extract_finished (false);
             throw error;
         }
 
+        extract_finished (true);
     }
  }

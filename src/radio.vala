@@ -168,4 +168,17 @@ class Radio.App : Granite.Application {
             import_progress_dialog.hide ();
         }
     }
+
+    public static void export_package () {
+        try_to_export_package ();
+    }
+
+    private static void try_to_export_package () {
+      try {
+          var stations = database.get_all_stations ();
+          package_manager.extract (stations, "");
+      } catch (Radio.Error error) {
+          warning (error.message);
+      }
+    }
 }
