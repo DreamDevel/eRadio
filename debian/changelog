@@ -1,9 +1,7 @@
-eradio (1.2) precise; urgency=low
+eradio (2.0) xenial; urgency=low
 
-  * Import/Export eRadio packages
-  * Changes to UI
-  * Finnish language support
-  * M3U, PLS, ASX Support
+  * Redesign UI
+  * Added genre filtering
   * Bug Fixes
 
  -- George Sofianos <georgesofianosgr@gmail.com>  Sat, 6 Jul 2014 11:56:39 -0500

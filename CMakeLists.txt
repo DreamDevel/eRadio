@@ -15,7 +15,7 @@ set (PKG_DATADIR ${PKGDATADIR})
 
 set (EXEC_NAME "eradio")
 set (RELEASE_NAME "eRadio")
-set (VERSION "1.2")
+set (VERSION "2.0")
 
 set (CONFIG_FILE ${CMAKE_CURRENT_SOURCE_DIR}/src/config.vala)
 set (CONFIG_FILE_REL src/config.vala)

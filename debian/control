@@ -9,7 +9,7 @@ Build-Depends: cmake (>= 2.8),
                libgtk-3-dev,
                libgranite-dev,
                libsqlite3-dev,
-               libgee-dev,
+               libgee-0.8-dev,
                libnotify-dev,
                libjson-glib-dev,
                libsoup2.4-dev,
@@ -19,13 +19,13 @@ Standards-Version: 3.9.3
 
 Package: eradio
 Architecture: any
-Depends: ${misc:Depends}, ${shlibs:Depends}, gstreamer0.10-ffmpeg, gstreamer0.10-plugins-ugly, gstreamer0.10-plugins-bad
+Depends: ${misc:Depends}, ${shlibs:Depends}, gstreamer1.0-plugins-good, gstreamer1.0-plugins-ugly, gstreamer1.0-plugins-bad
 Description: A minimalist radio player
  eRadio (e stands for Elementary) is a radio player designed for Elementary OS. Created with Granite Framework and Vala language.
  .
  Features:
   - Support many stream types ( based on gstreamer plugins )
-  - Supoort for m3u, pls and asx.
+  - Support for m3u, pls and asx.
   - Import/Export Radio Stations with eRadio Packages (.erpkg)
   - Sound Indicator Integration
   - Media Keys Support

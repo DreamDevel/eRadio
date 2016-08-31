@@ -3,7 +3,7 @@ Upstream-Name: eradio
 Source: https://launchpad.net/eradio/
 
 Files: src/* data/* cmake/* debian/* shemas/*
-Copyright: 2014 George Sofianos <georgesofianosgr@gmail.com>
+Copyright: 2014-2016 George Sofianos <georgesofianosgr@gmail.com>
 License: GPL-3.0+
 
 License: GPL-3.0+
@@ -22,4 +22,3 @@ License: GPL-3.0+
  .
  On Debian systems, the complete text of the GNU General
  Public License version 3 can be found in "/usr/share/common-licenses/GPL-3".
-
