@@ -3,7 +3,7 @@
 **A minimalist and powerfull radio player for elementary OS** 
 
  ```
-Project is under development. Please report bugs or create pull requests after the version 2.0 is released. 
+Project is under development but almost complete (v2.0). You are free to report any bugs or create pull requests. 
 ``` 
 <img src="http://i.imgur.com/sdgOr1s.png" alt="Screenshot of daily build, not final product" width=600>  
 *Screenshot of daily build, not final product.*
