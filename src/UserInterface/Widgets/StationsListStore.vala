@@ -26,7 +26,7 @@ public class Radio.Widgets.StationsListStore : Gtk.ListStore {
     const int URL_COLUMN_ID = 2;
     const int ID_COLUMN_ID = 3;
     const int ICON_COLUMN_ID = 4;
-    const string play_icon_name = "audio-volume-high-panel";
+    const string play_icon_name = "audio-volume-high-symbolic";
 
     public ListStoreFilterType current_filter_type = ListStoreFilterType.NONE;
     public string current_filter_argument = "";
