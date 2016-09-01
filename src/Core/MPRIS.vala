@@ -128,20 +128,72 @@ public class MprisPlayer : GLib.Object {
     private const string INTERFACE_NAME = "org.mpris.MediaPlayer2.Player";
     private uint send_property_source = 0;
     private HashTable<string,Variant> changed_properties = null;
+    private HashTable<string,Variant> _metadata;
+    private uint update_metadata_source = 0;
 
 
     public MprisPlayer(DBusConnection conn) {
         this.conn = conn;
+        _metadata = new HashTable<string,Variant>(str_hash, str_equal);
 
+        update_metadata(null);
+
+        Radio.App.player.playing_station_updated.connect(handle_station_updated);
         Radio.App.player.play_status_changed.connect(playing_changed);
     }
 
-    private void playing_changed() {
+    private void playing_changed(Radio.PlayerStatus status) {
 
-        Variant variant = this.PlaybackStatus;
-        queue_property_for_notification("PlaybackStatus", variant);
+        if(status == Radio.PlayerStatus.PLAYING) {
+          update_metadata (Radio.App.player.station);
+        } else if (status == Radio.PlayerStatus.STOPPED) {
+          update_metadata (null);
+        }
 
+        trigger_metadata_update ();
     }
+
+    private void trigger_metadata_update() {
+        if(update_metadata_source != 0)
+            Source.remove(update_metadata_source);
+
+        update_metadata_source = Timeout.add(300, () => {
+
+            Variant variant = this.PlaybackStatus;
+
+            queue_property_for_notification("PlaybackStatus", variant);
+            queue_property_for_notification("Metadata", _metadata);
+            update_metadata_source = 0;
+            return false;
+        });
+    }
+
+    private void handle_station_updated (Radio.Models.Station? station) {
+        update_metadata (station);
+    }
+
+    private void update_metadata (Radio.Models.Station? station) {
+        if (station == null)
+            _metadata.remove_all ();
+        else
+            set_media_metadata (station);
+
+        trigger_metadata_update ();
+    }
+
+    private void set_media_metadata (Radio.Models.Station? station) {
+        _metadata = new HashTable<string, Variant> (null, null);
+        _metadata.insert("xesam:title", station.name);
+        _metadata.insert("xesam:artist", get_simple_string_array("Unknown"));
+    }
+
+    private static string[] get_simple_string_array (string? text) {
+    if (text == null)
+        return new string [0];
+    string[] array = new string[0];
+    array += text;
+    return array;
+}
 
     private bool send_property_change() {
 
