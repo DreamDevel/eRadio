@@ -62,6 +62,7 @@ vala_precompile(VALA_C ${EXEC_NAME}
 
     src/Models/Genre.vala
     src/Models/Station.vala
+    src/Models/WebRadio.vala
 
     src/Core/Database.vala
     src/Core/Player.vala

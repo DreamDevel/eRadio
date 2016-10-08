@@ -19,6 +19,7 @@
 
 int main(string[] args) {
     set_log_level_by_args (ref args);
+
     Gtk.init (ref args);
     Gst.init (ref args);
     var app = new Radio.App ();

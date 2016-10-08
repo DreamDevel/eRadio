@@ -23,7 +23,7 @@ public class Radio.Widgets.GenresTreeView : Gtk.TreeView {
 
 	private Gtk.TreeViewColumn genre_column;
 	private Gtk.CellRendererText cell_text_renderer;
-    private Radio.Widgets.GenresListStore genres_liststore;
+  private Radio.Widgets.GenresListStore genres_liststore;
 
     public GenresTreeView () {
         build_interface ();
@@ -111,5 +111,9 @@ public class Radio.Widgets.GenresTreeView : Gtk.TreeView {
         var selection = get_selection ();
         selection.unselect_all ();
     }
+
+		public void add_genre (string genre_name) {
+			genres_liststore.add_genre_entry(genre_name);
+		}
 
 }

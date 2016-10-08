@@ -56,4 +56,13 @@ public class Radio.Dialogs.AddStationDialog : Radio.Dialogs.StationDialog {
         base.show ();
     }
 
+    public void show_with_details (string name,string url,string[] genres) {
+      show();
+      name_entry.text = name;
+      url_entry.text = url;
+      foreach (string genre in genres){
+        genres_treeview.treeview.add_genre(genre);
+      }
+    }
+
 }

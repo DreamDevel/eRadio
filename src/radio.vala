@@ -66,7 +66,7 @@ class Radio.App : Granite.Application {
                                       null };
         about_license_type = Gtk.License.GPL_3_0;
 
-        this.set_flags (ApplicationFlags.FLAGS_NONE);
+        this.set_flags (ApplicationFlags.HANDLES_COMMAND_LINE);
     }
 
     public App () {
@@ -189,5 +189,19 @@ class Radio.App : Granite.Application {
       } catch (Radio.Error error) {
           warning (error.message);
       }
+    }
+
+    public override int command_line (ApplicationCommandLine command_line) {
+      activate();
+
+      string[] args = command_line.get_arguments();
+      foreach (string argument in args) {
+        if (argument.has_prefix("webradio:")) {
+          var webRadio = new Radio.Models.WebRadio.from_link(argument);
+          Radio.App.add_dialog.show_with_details(webRadio.name,webRadio.url,webRadio.genres);
+          break;
+        }
+      }
+      return 0;
     }
 }
