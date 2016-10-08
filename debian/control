@@ -20,13 +20,14 @@ Standards-Version: 3.9.3
 Package: eradio
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}, gstreamer1.0-plugins-good, gstreamer1.0-plugins-ugly, gstreamer1.0-plugins-bad
-Description: A minimalist radio player
- eRadio (e stands for Elementary) is a radio player designed for Elementary OS. Created with Granite Framework and Vala language.
+Description: A minimalist and powerful radio player
+ eRadio is a radio player designed for Elementary OS.
  .
  Features:
-  - Support many stream types ( based on gstreamer plugins )
-  - Support for m3u, pls and asx.
-  - Import/Export Radio Stations with eRadio Packages (.erpkg)
-  - Sound Indicator Integration
-  - Media Keys Support
-  - Notifications when window is not visible
+  - Supports many stream types ( based on gstreamer plugins )
+  - Supports decoding of m3u, pls and asx.
+  - Import/Export radio stations with eRadio packages (.erpkg)
+  - Sound indicator integration.
+  - Media keys support.
+  - Notifications when window is not visible.
+  - Supports WebRadio URI Scheme to easily add stations from web pages.
