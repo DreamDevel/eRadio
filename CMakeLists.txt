@@ -127,3 +127,5 @@ install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/images/icons/48x48/apps/eRadio.png DES
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/images/icons/128x128/apps/eRadio.png DESTINATION ${SYSTEM_DEFAULT_THEME}/128x128/apps)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/images/icons/256x256/apps/eRadio.png DESTINATION ${SYSTEM_DEFAULT_THEME}/256x256/apps)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/images/icons/512x512/apps/eRadio.png DESTINATION ${SYSTEM_DEFAULT_THEME}/512x512/apps)
+
+install(CODE "execute_process(COMMAND \"xdg-mime\" \"default\" \"eradio.desktop\" \"x-scheme-handler/webradio\")")
