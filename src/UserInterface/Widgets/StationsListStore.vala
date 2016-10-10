@@ -78,7 +78,8 @@ public class Radio.Widgets.StationsListStore : Gtk.ListStore {
                     break;
                 }
             }
-        } else {
+        } else if ((current_filter_type == ListStoreFilterType.FAVORITES && station.favorite) ||
+          (current_filter_type == ListStoreFilterType.NONE)){
             add_station_entry (station);
         }
     }
