@@ -20,12 +20,15 @@
 
  public enum Radio.ListStoreFilterType {
     NONE,
+    FAVORITES,
     GENRE;
 
     public string to_string() {
         switch (this) {
             case NONE :
                 return "None";
+            case FAVORITES :
+                return "Favorites";
             case GENRE :
                 return "Genre";
             default :

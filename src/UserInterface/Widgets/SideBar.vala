@@ -24,6 +24,7 @@ public class Radio.Widgets.SideBar : Granite.Widgets.SourceList {
 
     public Widgets.SideBarExpandableItem genre_list_item;
     public Granite.Widgets.SourceList.Item all_stations_item;
+    public Granite.Widgets.SourceList.Item favorites_item;
 
     private HashMap <int,Granite.Widgets.SourceList.Item> genre_list_items;
 
@@ -50,11 +51,13 @@ public class Radio.Widgets.SideBar : Granite.Widgets.SourceList {
         genre_list_item.expanded = true;
 
         try_to_create_all_stations_item ();
+        try_to_create_favorites_item ();
     }
 
     private void try_to_create_all_stations_item () {
         try {
             all_stations_item = new Granite.Widgets.SourceList.Item ("All Stations");
+            all_stations_item.icon = new ThemedIcon("eradio-all-stations");
 
             var stations_number = Radio.App.database.count_stations ();
             all_stations_item.badge = @"$stations_number";
@@ -64,8 +67,22 @@ public class Radio.Widgets.SideBar : Granite.Widgets.SourceList {
         }
     }
 
+    private void try_to_create_favorites_item () {
+        try {
+            favorites_item = new Granite.Widgets.SourceList.Item ("Favorites");
+            favorites_item.icon = new ThemedIcon("eradio-favorites");
+
+            var stations_number = Radio.App.database.count_favorite_stations ();
+            favorites_item.badge = @"$stations_number";
+        } catch (Radio.Error error) {
+            warning (error.message);
+            favorites_item.badge = "0";
+        }
+    }
+
     private void append_items () {
         root.add (all_stations_item);
+        root.add (favorites_item);
         root.add (genre_list_item);
     }
 
@@ -112,6 +129,9 @@ public class Radio.Widgets.SideBar : Granite.Widgets.SourceList {
         foreach (var genre_name in station.genres) {
             increase_genre_badge (genre_name);
         }
+
+        if (station.favorite)
+          increase_favorite_badge();
     }
 
     private void handle_station_removed (Radio.Models.Station station) {
@@ -122,6 +142,9 @@ public class Radio.Widgets.SideBar : Granite.Widgets.SourceList {
         foreach (var genre_name in station.genres) {
             decrease_genre_badge (genre_name);
         }
+
+        if (station.favorite)
+          decrease_favorite_badge();
     }
 
     private void handle_station_updated (Models.Station old_station, Models.Station new_station) {
@@ -137,6 +160,13 @@ public class Radio.Widgets.SideBar : Granite.Widgets.SourceList {
 
         foreach (var genre_name in genres_added) {
             increase_genre_badge (genre_name);
+        }
+
+        if (old_station.favorite != new_station.favorite) {
+            if (old_station.favorite)
+                decrease_favorite_badge();
+            else
+                increase_favorite_badge ();
         }
     }
 
@@ -161,6 +191,7 @@ public class Radio.Widgets.SideBar : Granite.Widgets.SourceList {
     private void add_genre (Radio.Models.Genre genre,int stations) {
         var item = new Granite.Widgets.SourceList.Item (genre.name);
         item.badge = @"$stations";
+        item.icon = new ThemedIcon("eradio-genre");
 
         genre_list_item.add (item);
         genre_list_items[genre.id] = item;
@@ -203,12 +234,27 @@ public class Radio.Widgets.SideBar : Granite.Widgets.SourceList {
         }
     }
 
+    private void increase_favorite_badge () {
+        var number_of_favorites_entries = int.parse (favorites_item.badge);
+        number_of_favorites_entries++;
+        favorites_item.badge = @"$number_of_favorites_entries";
+    }
+
+    private void decrease_favorite_badge () {
+        var number_of_favorites_entries = int.parse (favorites_item.badge);
+        number_of_favorites_entries--;
+        favorites_item.badge = @"$number_of_favorites_entries";
+    }
+
     public override void item_selected (Granite.Widgets.SourceList.Item? item) {
         if (!App.ui_ready) // Prevent early call - IMPORTANT
             return;
         var liststore = App.main_window.view_stack.stations_list_view.stations_treeview.treeview.stations_liststore;
         if (item.name == "All Stations") {
             liststore.apply_filter (ListStoreFilterType.NONE,"");
+        }
+        else if (item.name == "Favorites") {
+            liststore.apply_filter (ListStoreFilterType.FAVORITES,"");
         } else {
             liststore.apply_filter (ListStoreFilterType.GENRE,item.name);
         }

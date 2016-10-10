@@ -78,7 +78,7 @@ public class Radio.Widgets.StationsListStore : Gtk.ListStore {
                     break;
                 }
             }
-        } else if (current_filter_type == Radio.ListStoreFilterType.NONE) {
+        } else {
             add_station_entry (station);
         }
     }
@@ -224,6 +224,10 @@ public class Radio.Widgets.StationsListStore : Gtk.ListStore {
             clear ();
             try_to_load_stations_from_database ();
 
+        } else if (filter_type == ListStoreFilterType.FAVORITES) {
+            clear ();
+            try_to_apply_favorites_filter ();
+
         } else if (filter_type == ListStoreFilterType.GENRE) {
             clear ();
             try_to_apply_genre_filter (filter_argument);
@@ -238,6 +242,17 @@ public class Radio.Widgets.StationsListStore : Gtk.ListStore {
         try {
             var genre = App.database.get_genre_by_name (filter_argument);
             var stations = App.database.get_stations_by_genre_id (genre.id);
+            foreach (var station in stations) {
+                add_station_entry (station);
+            }
+        } catch (Radio.Error error) {
+            warning (error.message);
+        }
+    }
+
+    private void try_to_apply_favorites_filter () {
+        try {
+            var stations = App.database.get_favorite_stations ();
             foreach (var station in stations) {
                 add_station_entry (station);
             }

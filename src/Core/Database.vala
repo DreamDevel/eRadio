@@ -66,7 +66,7 @@
 
     private void create_schema () throws Radio.Error {
         try {
-          db.run ("""CREATE TABLE IF NOT EXISTS `Stations`(id INTEGER PRIMARY KEY, name TEXT, url TEXT);
+          db.run ("""CREATE TABLE IF NOT EXISTS `Stations`(id INTEGER PRIMARY KEY, name TEXT, url TEXT, favorite INTEGER);
                      CREATE TABLE IF NOT EXISTS `Genres`(id INTEGER PRIMARY KEY, name TEXT);
                      CREATE TABLE IF NOT EXISTS `StationsGenres`(station_id INTEGER, genre_id INTEGER,
                      PRIMARY KEY(station_id,genre_id));""");
@@ -123,16 +123,16 @@
     }
 
     public void update_station (Radio.Models.Station station) throws Radio.Error {
-        update_station_details (station.id, station.name, station.genres, station.url);
+        update_station_details (station.id, station.name, station.genres, station.url, station.favorite);
     }
 
-    public void update_station_details (int id, string name, Gee.ArrayList<string> genres, string url) throws Radio.Error {
+    public void update_station_details (int id, string name, Gee.ArrayList<string> genres, string url, bool favorite) throws Radio.Error {
 
         var old_station = get_station_by_id (id);
         if (old_station == null)
             return;
 
-        station_model.update (id, name, url);
+        station_model.update (id, name, url,favorite);
         add_not_existing_genres (genres);
         link_unlinked_genres (genres, id);
         unlink_unused_linked_genres (genres, id);
@@ -205,6 +205,18 @@
         return stations_list;
     }
 
+    public Gee.ArrayList<Radio.Models.Station>? get_favorite_stations () throws Radio.Error {
+        var stations_list = station_model.select_favorites ();
+
+        if (stations_list.size!=0) {
+            foreach (Radio.Models.Station station in stations_list) {
+                var genres  = stations_genres_model.select_genres_by_station_id (station.id);
+                station.genres = genres;
+            }
+        }
+        return stations_list;
+    }
+
     public Gee.ArrayList<Radio.Models.Station> get_stations_by_genre_id (int id) throws Radio.Error {
         var stations_list = stations_genres_model.select_stations_by_genre_id (id);
 
@@ -243,6 +255,11 @@
         return number_of_stations;
     }
 
+    public int count_favorite_stations () throws Radio.Error {
+      var number_of_stations = station_model.count_favorite ();
+      return number_of_stations;
+    }
+
     public int count_entries_of_genre_id (int genre_id) throws Radio.Error {
         int number_of_entries = 0;
         number_of_entries = stations_genres_model.count_entries_of_genre (genre_id);
@@ -250,4 +267,3 @@
     }
 
 }
-

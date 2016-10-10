@@ -7,7 +7,7 @@ public class Radio.Core.DatabaseModels.StationModel {
 
     public void insert (string name, string url) throws Radio.Error {
         try {
-          SQLHeavy.Query query = db.prepare ("INSERT INTO `Stations` VALUES (null, :name, :url);");
+          SQLHeavy.Query query = db.prepare ("INSERT INTO `Stations` VALUES (null, :name, :url, 0);");
 
           query.set_string (":name", name);
           query.set_string (":url", url);
@@ -19,12 +19,13 @@ public class Radio.Core.DatabaseModels.StationModel {
         }
     }
 
-    public void update (int id, string name, string url) throws Radio.Error {
+    public void update (int id, string name, string url, bool favorite) throws Radio.Error {
 
         try {
-            SQLHeavy.Query query = db.prepare ("UPDATE `Stations` SET `name` = :name, `url` = :url WHERE `id` = :id;");
+            SQLHeavy.Query query = db.prepare ("UPDATE `Stations` SET `name` = :name, `url` = :url, `favorite` = :favorite WHERE `id` = :id;");
             query.set_string (":name", name);
             query.set_string (":url", url);
+            query.set_int (":favorite", favorite ? 1 : 0);
             query.set_int (":id", id);
             query.execute ();
         }
@@ -57,7 +58,8 @@ public class Radio.Core.DatabaseModels.StationModel {
             if (!results.finished) {
                 var station_id   = (int) results.get ("id").get_int64 ();
                 var station_url  = results.get ("url").get_string ();
-                station = new Radio.Models.Station (station_id, station_name, station_url);
+                var station_favorite = results.get ("favorite").get_int64 ();
+                station = new Radio.Models.Station (station_id, station_name, station_url, null, (bool) station_favorite);
             }
         }
         catch (SQLHeavy.Error e){
@@ -77,7 +79,8 @@ public class Radio.Core.DatabaseModels.StationModel {
             if (!results.finished) {
                 var station_name = results.get ("name").get_string ();
                 var station_url  = results.get ("url").get_string ();
-                station = new Radio.Models.Station (station_id, station_name, station_url);
+                var station_favorite = results.get ("favorite").get_int64 ();
+                station = new Radio.Models.Station (station_id, station_name, station_url, null, (bool) station_favorite);
             }
         }
         catch (SQLHeavy.Error e){
@@ -96,8 +99,30 @@ public class Radio.Core.DatabaseModels.StationModel {
                 string name = results.get ("name").get_string ();
                 string url  = results.get ("url").get_string ();
                 int  id     = (int) results.get ("id").get_int64 ();
+                bool favorite = (bool) results.get("favorite").get_int64();
 
-                var station = new Radio.Models.Station (id, name, url);
+                var station = new Radio.Models.Station (id, name, url, null, favorite);
+                stations_list.add (station);
+            }
+        }
+        catch (SQLHeavy.Error e) {
+            throw new Radio.Error.DatabaseRead (
+                "Couldn't Select Entry: Error Code %d \nError Message: %s\n".printf (e.code,e.message));
+        }
+        return stations_list;
+    }
+
+    public Gee.ArrayList<Radio.Models.Station> select_favorites () throws Radio.Error {
+        var stations_list = new Gee.ArrayList <Radio.Models.Station> ();
+        try {
+            SQLHeavy.Query query = db.prepare ("SELECT * FROM `Stations` WHERE `favorite` = 1;");
+
+            for (SQLHeavy.QueryResult results = query.execute (); !results.finished; results.next ()) {
+                string name = results.get ("name").get_string ();
+                string url  = results.get ("url").get_string ();
+                int  id     = (int) results.get ("id").get_int64 ();
+
+                var station = new Radio.Models.Station (id, name, url, null, true);
                 stations_list.add (station);
             }
         }
@@ -136,6 +161,21 @@ public class Radio.Core.DatabaseModels.StationModel {
         var number_of_stations = 0;
         try {
             SQLHeavy.QueryResult results = db.execute ("SELECT COUNT(id) FROM Stations");
+            if (!results.finished) {
+                number_of_stations = results.fetch_int (0);
+            }
+        }
+        catch (SQLHeavy.Error e) {
+            throw new Radio.Error.DatabaseRead (
+              "Couldn't Select Entry: Error Code %d \nError Message: %s\n".printf (e.code,e.message));
+        }
+        return number_of_stations;
+    }
+
+    public int count_favorite () throws Radio.Error {
+        var number_of_stations = 0;
+        try {
+            SQLHeavy.QueryResult results = db.execute ("SELECT COUNT(id) FROM Stations WHERE `favorite` = 1;");
             if (!results.finished) {
                 number_of_stations = results.fetch_int (0);
             }

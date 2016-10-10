@@ -24,11 +24,13 @@
     public string name {get;set;}
     public string url {get;set;}
     public Gee.ArrayList<string> genres {get;set;}
+    public bool favorite {get;set;}
 
-    public Station (int id, string name, string url, Gee.ArrayList<string>? genres=null) {
+    public Station (int id, string name, string url, Gee.ArrayList<string>? genres=null, bool favorite=false) {
         this.id = id;
         this.name = name;
         this.url = url;
         this.genres = genres;
+        this.favorite = favorite;
     }
 }

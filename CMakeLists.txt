@@ -128,4 +128,9 @@ install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/images/icons/128x128/apps/eRadio.png D
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/images/icons/256x256/apps/eRadio.png DESTINATION ${SYSTEM_DEFAULT_THEME}/256x256/apps)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/images/icons/512x512/apps/eRadio.png DESTINATION ${SYSTEM_DEFAULT_THEME}/512x512/apps)
 
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/images/icons/16x16/apps/eradio-all-stations.svg DESTINATION ${SYSTEM_DEFAULT_THEME}/16x16/apps)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/images/icons/16x16/apps/eradio-favorites.svg DESTINATION ${SYSTEM_DEFAULT_THEME}/16x16/apps)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/images/icons/16x16/apps/eradio-genre.svg DESTINATION ${SYSTEM_DEFAULT_THEME}/16x16/apps)
+
+install(CODE "execute_process(COMMAND \"gtk-update-icon-cache\" \"-f\" \"/usr/share/icons/hicolor/\")")
 install(CODE "execute_process(COMMAND \"xdg-mime\" \"default\" \"eradio.desktop\" \"x-scheme-handler/webradio\")")

@@ -21,6 +21,7 @@
 
 public class Radio.Menus.StationsTreeViewContextMenu : Gtk.Menu {
 
+    private Gtk.MenuItem favorite_item;
     private Gtk.MenuItem edit_item;
     private Gtk.MenuItem remove_item;
     private Radio.Models.Station context_station;
@@ -37,18 +38,21 @@ public class Radio.Menus.StationsTreeViewContextMenu : Gtk.Menu {
     }
 
     private void create_menu_entries () {
-        edit_item = new Gtk.MenuItem.with_label (_("Edit Station Info"));
-        remove_item = new Gtk.MenuItem.with_label (_("Remove From Library"));
+        favorite_item = new Gtk.MenuItem.with_label(_("Add to Favorites"));
+        edit_item = new Gtk.MenuItem.with_label (_("Edit station info"));
+        remove_item = new Gtk.MenuItem.with_label (_("Remove from Library"));
     }
 
     private void append_menu_entries () {
         append(edit_item);
+        append(favorite_item);
         append(remove_item);
     }
 
     private void connect_handlers_to_internal_signals () {
         edit_item.activate.connect (handle_edit_item_click);
         remove_item.activate.connect (handle_remove_item_click);
+        favorite_item.activate.connect (handle_favorite_item_click);
     }
 
     private void handle_edit_item_click () {
@@ -59,6 +63,10 @@ public class Radio.Menus.StationsTreeViewContextMenu : Gtk.Menu {
         try_to_remove_station ();
     }
 
+    private void handle_favorite_item_click () {
+      try_to_favorite_station();
+    }
+
     private void try_to_remove_station () {
         try {
             Radio.App.database.remove_station (context_station.id);
@@ -67,8 +75,28 @@ public class Radio.Menus.StationsTreeViewContextMenu : Gtk.Menu {
         }
     }
 
+    private void try_to_favorite_station () {
+        try {
+            var station = new Radio.Models.Station(context_station.id,
+              context_station.name,context_station.url,context_station.genres,
+              !context_station.favorite);
+            Radio.App.database.update_station (station);
+        } catch (Radio.Error error) {
+            warning (error.message);
+        }
+    }
+
     public void popup_with_station (Radio.Models.Station station) {
         context_station = station;
+        update_favorite_item_text(station.favorite);
         popup (null,null,null,3,Gtk.get_current_event_time ());
+    }
+
+    private void update_favorite_item_text(bool is_favorite) {
+      if (is_favorite)
+        favorite_item.set_label("Remove from Favorites");
+      else {
+        favorite_item.set_label("Add to Favorites");
+      }
     }
 }
