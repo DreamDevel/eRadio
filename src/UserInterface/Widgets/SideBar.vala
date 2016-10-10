@@ -41,7 +41,7 @@ public class Radio.Widgets.SideBar : Granite.Widgets.SourceList {
     }
 
     private void set_properties () {
-        width_request = 150;
+        width_request = 160;
     }
 
     private void create_items () {
@@ -112,7 +112,7 @@ public class Radio.Widgets.SideBar : Granite.Widgets.SourceList {
     }
 
     private void handle_genre_added (Radio.Models.Genre genre) {
-        add_genre (genre,0); // Note: station added handler will increase the badge
+        add_genre (genre,0);
     }
 
     private void handle_genre_removed (Radio.Models.Genre genre) {
@@ -126,10 +126,6 @@ public class Radio.Widgets.SideBar : Granite.Widgets.SourceList {
         number_of_stations++;
         all_stations_item.badge = @"$number_of_stations";
 
-        foreach (var genre_name in station.genres) {
-            increase_genre_badge (genre_name);
-        }
-
         if (station.favorite)
           increase_favorite_badge();
     }
@@ -139,28 +135,11 @@ public class Radio.Widgets.SideBar : Granite.Widgets.SourceList {
         number_of_stations--;
         all_stations_item.badge = @"$number_of_stations";
 
-        foreach (var genre_name in station.genres) {
-            decrease_genre_badge (genre_name);
-        }
-
         if (station.favorite)
           decrease_favorite_badge();
     }
 
     private void handle_station_updated (Models.Station old_station, Models.Station new_station) {
-        var old_genres = old_station.genres;
-        var new_genres = new_station.genres;
-
-        var genres_removed = remove_list_items (old_genres,new_genres);
-        var genres_added = remove_list_items (new_genres,old_genres);
-
-        foreach (var genre_name in genres_removed) {
-            decrease_genre_badge (genre_name);
-        }
-
-        foreach (var genre_name in genres_added) {
-            increase_genre_badge (genre_name);
-        }
 
         if (old_station.favorite != new_station.favorite) {
             if (old_station.favorite)
@@ -190,50 +169,11 @@ public class Radio.Widgets.SideBar : Granite.Widgets.SourceList {
 
     private void add_genre (Radio.Models.Genre genre,int stations) {
         var item = new Granite.Widgets.SourceList.Item (genre.name);
-        item.badge = @"$stations";
         item.icon = new ThemedIcon("eradio-genre");
 
         genre_list_item.add (item);
         genre_list_items[genre.id] = item;
     }
-
-    private void increase_genre_badge (string genre_name) {
-        try_to_increase_genre_badge (genre_name);
-    }
-
-    private void try_to_increase_genre_badge (string genre_name) {
-        try {
-            var genre = App.database.get_genre_by_name (genre_name);
-            var genre_item = genre_list_items[genre.id];
-            var number_of_genre_entries = int.parse (genre_item.badge);
-            number_of_genre_entries++;
-            genre_item.badge = @"$number_of_genre_entries";
-        } catch (Radio.Error error) {
-            warning (error.message);
-            warning ("Couldn't increase genre badge");
-        }
-    }
-
-    private void decrease_genre_badge (string genre_name) {
-        try_to_decrease_genre_badge (genre_name);
-    }
-
-    private void try_to_decrease_genre_badge (string genre_name) {
-        try {
-            var genre = App.database.get_genre_by_name (genre_name);
-            if (genre == null)
-                return;
-
-            var genre_item = genre_list_items[genre.id];
-            var number_of_genre_entries = int.parse (genre_item.badge);
-            number_of_genre_entries--;
-            genre_item.badge = @"$number_of_genre_entries";
-        } catch (Radio.Error error) {
-            warning (error.message);
-            warning ("Couldn't decrease genre badge");
-        }
-    }
-
     private void increase_favorite_badge () {
         var number_of_favorites_entries = int.parse (favorites_item.badge);
         number_of_favorites_entries++;
