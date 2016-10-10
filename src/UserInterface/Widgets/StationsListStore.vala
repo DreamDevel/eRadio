@@ -128,25 +128,38 @@ public class Radio.Widgets.StationsListStore : Gtk.ListStore {
     }
 
     private void handle_station_updated (Radio.Models.Station old_station, Radio.Models.Station new_station) {
-        var iterator = get_iterator_for_station_id (new_station.id);
-        set_value (iterator,TITLE_COLUMN_ID,new_station.name);
-        set_value (iterator,URL_COLUMN_ID,new_station.url);
 
-        // TODO do not create duplicate array to string in every file, create a global method
-        var genres_text = "";
-        int number_of_genres = new_station.genres.size;
-
-        if (number_of_genres != 0) {
-            for (int i = 0; i < number_of_genres; i++) {
-                genres_text += new_station.genres [i];
-                if (i != number_of_genres - 1)
-                    genres_text += ", ";
-            }
+        // If genre removed and navigating this genre then remove station
+        // else update genre row text
+        var current_genre = current_filter_argument;
+        if (current_genre != "" && !new_station.genres.contains(current_genre)) {
+            remove_station_with_id(new_station.id);
         } else {
-            genres_text = "Unknown";
-        }
 
-        set_value (iterator,GENRE_COLUMN_ID,genres_text);
+            var iterator = get_iterator_for_station_id (new_station.id);
+            set_value (iterator,TITLE_COLUMN_ID,new_station.name);
+            set_value (iterator,URL_COLUMN_ID,new_station.url);
+
+            var genres_text = "";
+            int number_of_genres = new_station.genres.size;
+
+            if (number_of_genres != 0) {
+                for (int i = 0; i < number_of_genres; i++) {
+                    genres_text += new_station.genres [i];
+                    if (i != number_of_genres - 1)
+                        genres_text += ", ";
+                }
+            } else {
+                genres_text = "Unknown";
+            }
+
+            set_value (iterator,GENRE_COLUMN_ID,genres_text);
+
+            if (old_station.favorite != new_station.favorite) {
+                if (old_station.favorite && current_filter_type == ListStoreFilterType.FAVORITES)
+                  remove_station_with_id(new_station.id);
+            }
+        }
     }
 
     private void handle_player_status_changed (PlayerStatus status) {
