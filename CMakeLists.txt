@@ -42,7 +42,7 @@ set (PROJECT_DEPS
 pkg_check_modules(DEPS REQUIRED ${PROJECT_DEPS})
 
 add_definitions(${DEPS_CFLAGS})
-link_libraries(${DEPS_LIBRARIES})
+link_libraries(${DEPS_LIBRARIES} m)
 link_directories(${DEPS_LIBRARY_DIRS})
 
 find_package(Vala REQUIRED)
@@ -95,6 +95,7 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/UserInterface/Widgets/GenresTreeViewScrollable.vala
     src/UserInterface/Widgets/GenresTreeViewToolbar.vala
     src/UserInterface/Widgets/SideBarExpandableItem.vala
+    src/UserInterface/Widgets/LevelBar.vala
 
     src/UserInterface/Dialogs/StationDialog.vala
     src/UserInterface/Dialogs/AddStationDialog.vala

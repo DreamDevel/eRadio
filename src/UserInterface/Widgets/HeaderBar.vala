@@ -26,6 +26,7 @@ public class Radio.Widgets.HeaderBar : Gtk.HeaderBar {
     private Gtk.ToolButton  previous_button;
     private Gtk.ToolButton  next_button;
     private Gtk.ToolItem    label_toolItem;
+    private Gtk.Box         title_box;
     private Granite.Widgets.AppMenu application_menu;
 
     private Gtk.Label       playback_label;
@@ -73,9 +74,19 @@ public class Radio.Widgets.HeaderBar : Gtk.HeaderBar {
         playback_label.ellipsize = Pango.EllipsizeMode.END;
         // TODO Do not let label wrap to more than one lines
 
-        label_toolItem = new Gtk.ToolItem ();
-        label_toolItem.set_expand (true);
-        label_toolItem.add (playback_label);
+        var level_bar = new Radio.Widgets.LevelBar ();
+        level_bar.width_request = 2;
+        level_bar.height_request = 15;
+
+        var level_bar2 = new Radio.Widgets.LevelBar ();
+        level_bar2.width_request = 2;
+        level_bar2.height_request = 15;
+
+        title_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL,6);
+        title_box.pack_start (level_bar,false);
+        title_box.pack_start (playback_label,false);
+        title_box.pack_start (level_bar2,false);
+        title_box.show_all ();
     }
 
     private void create_application_menu () {
@@ -87,7 +98,7 @@ public class Radio.Widgets.HeaderBar : Gtk.HeaderBar {
         pack_start (play_button);
         pack_start (next_button);
         pack_end (application_menu);
-        set_custom_title (label_toolItem);
+        set_custom_title (title_box);
     }
 
     private void connect_handlers_to_internal_signals () {

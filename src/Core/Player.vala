@@ -26,6 +26,7 @@ public class Radio.Core.Player : GLib.Object {
     private Gst.Pipeline pipeline;
     private Gst.Element  source;
     private Gst.Element  converter;
+    private Gst.Element  level;
     private Gst.Element  sink;
     private Gst.Bus bus;
 
@@ -37,6 +38,7 @@ public class Radio.Core.Player : GLib.Object {
     public signal void play_status_changed(PlayerStatus status);
     public signal void playback_error(GLib.Error error);
     public signal void playing_station_updated (Models.Station updated_station);
+    public signal void rms_db_updated (double db_value);
 
     public Player () {
         status = PlayerStatus.STOPPED;
@@ -56,15 +58,16 @@ public class Radio.Core.Player : GLib.Object {
         pipeline  = new Gst.Pipeline ("main-pipeline");
         source    = Gst.ElementFactory.make ("uridecodebin","source");
         converter = Gst.ElementFactory.make ("audioconvert","converter");
+        level     = Gst.ElementFactory.make ("level","level");
         sink      = Gst.ElementFactory.make ("autoaudiosink","sink");
         bus       = pipeline.get_bus();
     }
 
     // TODO throws critical error
     private void link_gstreamer_elements () {
-        pipeline.add_many (source,converter,sink);
+        pipeline.add_many (source,converter,level,sink);
 
-        if (!converter.link (sink))
+        if (!converter.link (level) || !level.link(sink))
             stdout.printf ("Error While linking convert with sink\n");
     }
 
@@ -91,7 +94,21 @@ public class Radio.Core.Player : GLib.Object {
 
     private bool handle_bus_has_message (Gst.Bus bus, Gst.Message message) {
         switch(message.type) {
-
+          case Gst.MessageType.ELEMENT:
+              if (message.has_name ("level")) {
+                   unowned Gst.Structure message_structure = message.get_structure ();
+                   GLib.Value? rms_array_value = message_structure.get_value ("rms");
+                   unowned GLib.ValueArray rms_array = (GLib.ValueArray) rms_array_value.get_boxed ();
+                   var channels = rms_array.n_values;
+                   double total_rms = 0;
+                   foreach (GLib.Value rms in rms_array.values) {
+                       total_rms += rms.get_double ();
+                   }
+                   double average_rms = total_rms / channels;
+                   double final_rms = GLib.Math.pow (10,average_rms/20);
+                   rms_db_updated (final_rms);
+               }
+               break;
             case Gst.MessageType.ERROR:
                 GLib.Error error;
                 string debug;
