@@ -5,7 +5,7 @@
  ```
 Project is under development but almost complete (v2.0). You are free to report any bugs or create pull requests. 
 ``` 
-<img src="http://i.imgur.com/O7SuOJo.png">  
+<img src="http://i.imgur.com/YCYgFEw.png">  
 
 ##Install Build Dependencies
 
