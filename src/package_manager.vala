@@ -94,7 +94,7 @@
         return stations_list;
     }
 
-    public void extract (Gee.ArrayList<Radio.Models.Station> stations,string file_path) throws GLib.Error {
+    public void extract (Gee.ArrayList<Radio.Models.Station> stations,string file_path) throws Radio.Error {
 
         extract_started (stations.size);
 
@@ -145,7 +145,7 @@
             generator.to_file(file_path);
         } catch (GLib.Error error) {
             extract_finished (false);
-            throw error;
+            throw new Radio.Error.General(error.message);
         }
 
         extract_finished (true);

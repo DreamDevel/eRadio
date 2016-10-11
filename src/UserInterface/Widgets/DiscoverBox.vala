@@ -45,7 +45,11 @@ public class Radio.Widgets.DiscoverBox : Gtk.Box {
         GtkLabel.donate{
             color: #666;
         }";
-          cssProvider.load_from_buffer(css.data);
+        try {
+            cssProvider.load_from_buffer(css.data);
+        } catch (GLib.Error error) {
+            warning ("Couldn't parse CSS data");
+        }
         Gtk.StyleContext.add_provider_for_screen(Gdk.Screen.get_default(),
         cssProvider,Gtk.STYLE_PROVIDER_PRIORITY_USER);
 

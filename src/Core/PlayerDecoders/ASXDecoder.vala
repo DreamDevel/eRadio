@@ -80,9 +80,8 @@
 
     private static string? get_file (string url) {
 
-        Soup.SessionSync session = new Soup.SessionSync ();
-        Soup.Message msg = new Soup.Message ("GET", url);
-
+        var session = new Soup.Session();
+        var msg = new Soup.Message ("GET", url);
         session.send_message (msg);
 
         var data = (string) msg.response_body.data;

@@ -255,9 +255,10 @@ public class Radio.Core.Player : GLib.Object {
     // Do we really need content type ? Check if pad_added reports the same content
     private string? get_content_type (string url) {
 
-        Soup.SessionSync session = new Soup.SessionSync ();
+        var session = new Soup.Session();
         session.timeout = 2;
-        Soup.Message msg = new Soup.Message ("GET", url);
+        var msg = new Soup.Message ("GET", url);
+
 
         string content_type = "";
         msg.got_headers.connect( ()=>{
@@ -266,7 +267,13 @@ public class Radio.Core.Player : GLib.Object {
             session.cancel_message (msg,Soup.Status.CANCELLED);
         });
 
-        session.send_message (msg);
+        try {
+            session.send (msg);
+        } catch (GLib.Error error) {
+            // Error code 19 is cancel, we do cancel after a while
+            if (error.code != 19)
+                warning(error.message);
+        }
 
         // Note: status code returns 1, possibly because we cancel request, so we check length
         if (content_type.length == 0) {
