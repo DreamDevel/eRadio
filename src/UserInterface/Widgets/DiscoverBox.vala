@@ -59,17 +59,17 @@ public class Radio.Widgets.DiscoverBox : Gtk.Box {
 
     private void create_elements () {
         discover_image = new Gtk.Image.from_file("/usr/share/eradio/discoverBig.png");
-        header = new Gtk.Label("Discover");
+        header = new Gtk.Label(_("Discover"));
         header.get_style_context().add_class("header");
-        subheader = new Gtk.Label("Find new radio stations instantly");
+        subheader = new Gtk.Label(_("Find new radio stations instantly"));
         subheader.margin_bottom = 40;
 
-        donateText1 = new Gtk.Label ("This feature is currently not implemented.");
+        donateText1 = new Gtk.Label (_("This feature is currently not implemented."));
         donateText1.get_style_context().add_class("donate");
-        donateText2 = new Gtk.Label ("Support our work to keep improving our free applications.");
+        donateText2 = new Gtk.Label (_("Support our work to keep improving our free applications."));
         donateText2.get_style_context().add_class("donate");
 
-        donate_button = new Gtk.Button.with_label("Donate");
+        donate_button = new Gtk.Button.with_label(_("Donate"));
         donate_button.margin_top = 20;
         donate_button.halign = Gtk.Align.CENTER;
     }

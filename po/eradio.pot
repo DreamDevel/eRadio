@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-02 13:30+0300\n"
+"POT-Creation-Date: 2016-10-11 16:44+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,129 +17,163 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../src/main_window.vala:115
+#: ../src/UserInterface/Menus/StationsTreeViewContextMenu.vala:41
+#: ../src/UserInterface/Menus/StationsTreeViewContextMenu.vala:99
+msgid "Add to Favorites"
+msgstr ""
+
+#: ../src/UserInterface/Menus/StationsTreeViewContextMenu.vala:42
+msgid "Edit station info"
+msgstr ""
+
+#: ../src/UserInterface/Menus/StationsTreeViewContextMenu.vala:43
+msgid "Remove from Library"
+msgstr ""
+
+#: ../src/UserInterface/Menus/StationsTreeViewContextMenu.vala:97
+msgid "Remove from Favorites"
+msgstr ""
+
+#: ../src/UserInterface/Menus/ApplicationMenu.vala:43
 msgid "Add New Station"
 msgstr ""
 
-#: ../src/main_window.vala:116
+#: ../src/UserInterface/Menus/ApplicationMenu.vala:44
+msgid "Backup"
+msgstr ""
+
+#: ../src/UserInterface/Menus/ApplicationMenu.vala:45
 msgid "Import Stations"
 msgstr ""
 
-#: ../src/main_window.vala:117
+#: ../src/UserInterface/Menus/ApplicationMenu.vala:46
 msgid "Export Stations"
 msgstr ""
 
-#: ../src/main_window.vala:141
+#: ../src/UserInterface/Menus/ApplicationMenu.vala:47
+#: ../src/UserInterface/Widgets/DiscoverBox.vala:72
+msgid "Donate"
+msgstr ""
+
+#: ../src/UserInterface/Views/WelcomeView.vala:26
 msgid "Add a station to begin listening"
 msgstr ""
 
-#: ../src/main_window.vala:142 ../src/main_window.vala:178
+#: ../src/UserInterface/Views/WelcomeView.vala:44
 msgid "Add"
 msgstr ""
 
-#: ../src/main_window.vala:142
+#: ../src/UserInterface/Views/WelcomeView.vala:44
 msgid "Add a new station."
 msgstr ""
 
-#: ../src/main_window.vala:143
+#: ../src/UserInterface/Views/WelcomeView.vala:45
 msgid "Import"
 msgstr ""
 
-#: ../src/main_window.vala:143
+#: ../src/UserInterface/Views/WelcomeView.vala:45
 msgid "Import stations from eradio package."
 msgstr ""
 
-#: ../src/main_window.vala:179
-msgid "Change"
-msgstr ""
-
-#: ../src/main_window.vala:247
-msgid "Radio Station Changed"
-msgstr ""
-
-#: ../src/main_window.vala:321
-msgid "No Station Selected"
-msgstr ""
-
-#: ../src/main_window.vala:337
-msgid "Paused"
-msgstr ""
-
-#: ../src/main_window.vala:411
+#: ../src/UserInterface/Others/FileChooserCreator.vala:24
 msgid "Import Radio Stations Package"
 msgstr ""
 
-#: ../src/main_window.vala:412 ../src/extract_dialog.vala:48
-#: ../src/extract_dialog.vala:69 ../src/station_dialog.vala:73
+#: ../src/UserInterface/Others/FileChooserCreator.vala:26
+#: ../src/UserInterface/Others/FileChooserCreator.vala:48
 msgid "Cancel"
 msgstr ""
 
-#: ../src/main_window.vala:412
+#: ../src/UserInterface/Others/FileChooserCreator.vala:27
 msgid "Open"
 msgstr ""
 
-#: ../src/main_window.vala:417 ../src/extract_dialog.vala:75
+#: ../src/UserInterface/Others/FileChooserCreator.vala:40
+#: ../src/UserInterface/Others/FileChooserCreator.vala:62
 msgid "eRadio Package"
 msgstr ""
 
-#: ../src/station_selection_list.vala:41 ../src/station_list.vala:68
-msgid "Station"
-msgstr ""
-
-#: ../src/station_selection_list.vala:42 ../src/station_dialog.vala:49
-#: ../src/station_list.vala:69
-msgid "Genre"
-msgstr ""
-
-#: ../src/station_selection_list.vala:43 ../src/station_dialog.vala:50
-#: ../src/station_list.vala:70
-msgid "Url"
-msgstr ""
-
-#: ../src/extract_dialog.vala:48 ../src/extract_dialog.vala:69
-msgid "Export"
-msgstr ""
-
-#: ../src/extract_dialog.vala:68
+#: ../src/UserInterface/Others/FileChooserCreator.vala:46
 msgid "Export Radio Stations"
 msgstr ""
 
-#: ../src/radio.vala:26
-msgid "Listen to radio stations"
+#: ../src/UserInterface/Others/FileChooserCreator.vala:49
+msgid "Save"
 msgstr ""
 
-#: ../src/radio.vala:27
-msgid "Radio"
+#: ../src/UserInterface/Dialogs/ImportProgressDialog.vala:42
+msgid "Importing stations, please wait."
 msgstr ""
 
-#: ../src/radio.vala:28
-msgid "Radio;Audio;Player;Media;Songs;"
+#: ../src/UserInterface/Dialogs/AddStationDialog.vala:33
+msgid "Add Station"
 msgstr ""
 
-#: ../src/station_dialog.vala:48
+#: ../src/UserInterface/Dialogs/ErrorDialog.vala:55
+#: ../src/UserInterface/Dialogs/StationDialog.vala:60
+msgid "Close"
+msgstr ""
+
+#: ../src/UserInterface/Dialogs/ErrorDialog.vala:56
+msgid "Report a bug"
+msgstr ""
+
+#: ../src/UserInterface/Dialogs/StationDialog.vala:90
+#: ../src/UserInterface/Widgets/SideBar.vala:56
+msgid "Genres"
+msgstr ""
+
+#: ../src/UserInterface/Dialogs/StationDialog.vala:116
 msgid "Name"
 msgstr ""
 
-#: ../src/station_dialog.vala:56
-msgid "enter station name"
+#: ../src/UserInterface/Dialogs/StationDialog.vala:117
+#: ../src/UserInterface/Widgets/StationsTreeView.vala:77
+msgid "Url"
 msgstr ""
 
-#: ../src/station_dialog.vala:57
-msgid "enter station genre"
+#: ../src/UserInterface/Dialogs/EditStationDialog.vala:35
+msgid "Update Station"
 msgstr ""
 
-#: ../src/station_dialog.vala:58
-msgid "enter station url"
+#: ../src/UserInterface/Widgets/StationsTreeView.vala:75
+msgid "Station"
 msgstr ""
 
-#: ../src/error_dialog.vala:38
-msgid "Ok"
+#: ../src/UserInterface/Widgets/StationsTreeView.vala:76
+#: ../src/UserInterface/Widgets/GenresTreeView.vala:58
+msgid "Genre"
 msgstr ""
 
-#: ../src/station_list.vala:98
-msgid "Edit"
+#: ../src/UserInterface/Widgets/SideBar.vala:66
+#: ../src/UserInterface/Widgets/StationsListStore.vala:213
+msgid "All Stations"
 msgstr ""
 
-#: ../src/station_list.vala:99
-msgid "Remove"
+#: ../src/UserInterface/Widgets/SideBar.vala:79
+#: ../src/UserInterface/Widgets/StationsListStore.vala:215
+msgid "Favorites"
+msgstr ""
+
+#: ../src/UserInterface/Widgets/SideBar.vala:91
+#: ../src/UserInterface/Widgets/MainStack.vala:61
+#: ../src/UserInterface/Widgets/DiscoverBox.vala:62
+#: ../src/UserInterface/Widgets/StationsListStore.vala:217
+msgid "Discover"
+msgstr ""
+
+#: ../src/UserInterface/Widgets/DiscoverBox.vala:64
+msgid "Find new radio stations instantly"
+msgstr ""
+
+#: ../src/UserInterface/Widgets/DiscoverBox.vala:67
+msgid "This feature is currently not implemented."
+msgstr ""
+
+#: ../src/UserInterface/Widgets/DiscoverBox.vala:69
+msgid "Support our work to keep improving our free applications."
+msgstr ""
+
+#: ../src/Core/Notifier.vala:47
+msgid "Radio Station Changed"
 msgstr ""

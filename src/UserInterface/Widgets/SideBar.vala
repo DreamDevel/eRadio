@@ -53,7 +53,7 @@ public class Radio.Widgets.SideBar : Granite.Widgets.SourceList {
     private void create_items () {
         genre_list_items = new HashMap <int,Granite.Widgets.SourceList.Item> ();
 
-        genre_list_item = new Widgets.SideBarExpandableItem ("Genres");
+        genre_list_item = new Widgets.SideBarExpandableItem (_("Genres"));
         genre_list_item.expanded = true;
 
         try_to_create_all_stations_item ();
@@ -63,7 +63,7 @@ public class Radio.Widgets.SideBar : Granite.Widgets.SourceList {
 
     private void try_to_create_all_stations_item () {
         try {
-            all_stations_item = new Granite.Widgets.SourceList.Item ("All Stations");
+            all_stations_item = new Granite.Widgets.SourceList.Item (_("All Stations"));
             all_stations_item.icon = new ThemedIcon("eradio-all-stations");
 
             var stations_number = Radio.App.database.count_stations ();
@@ -76,7 +76,7 @@ public class Radio.Widgets.SideBar : Granite.Widgets.SourceList {
 
     private void try_to_create_favorites_item () {
         try {
-            favorites_item = new Granite.Widgets.SourceList.Item ("Favorites");
+            favorites_item = new Granite.Widgets.SourceList.Item (_("Favorites"));
             favorites_item.icon = new ThemedIcon("eradio-favorites");
 
             var stations_number = Radio.App.database.count_favorite_stations ();
@@ -88,7 +88,7 @@ public class Radio.Widgets.SideBar : Granite.Widgets.SourceList {
     }
 
     private void create_discover_item () {
-        discover_item = new Granite.Widgets.SourceList.Item ("Discover");
+        discover_item = new Granite.Widgets.SourceList.Item (_("Discover"));
         discover_item.icon = new ThemedIcon("eradio-discover");
     }
 

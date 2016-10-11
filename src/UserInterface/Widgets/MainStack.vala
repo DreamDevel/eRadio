@@ -58,7 +58,7 @@ public class Radio.Widgets.MainStack : Gtk.Stack {
         if (!App.ui_ready) // Prevent early call - IMPORTANT
             return;
 
-		if (item.name == "Discover") {
+		if (item.name == _("Discover")) {
             change_to_view_with_name("discover");
         } else {
             change_to_view_with_name("stations");

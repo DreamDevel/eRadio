@@ -94,9 +94,9 @@ public class Radio.Menus.StationsTreeViewContextMenu : Gtk.Menu {
 
     private void update_favorite_item_text(bool is_favorite) {
       if (is_favorite)
-        favorite_item.set_label("Remove from Favorites");
+        favorite_item.set_label(_("Remove from Favorites"));
       else {
-        favorite_item.set_label("Add to Favorites");
+        favorite_item.set_label(_("Add to Favorites"));
       }
     }
 }

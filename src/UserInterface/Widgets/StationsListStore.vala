@@ -210,11 +210,11 @@ public class Radio.Widgets.StationsListStore : Gtk.ListStore {
     private void handle_sidebar_item_selected (Granite.Widgets.SourceList.Item? item) {
         if (!App.ui_ready) // Prevent early call - IMPORTANT
             return;
-        if (item.name == "All Stations") {
+        if (item.name == _("All Stations")) {
             apply_filter (ListStoreFilterType.NONE,"");
-        } else if (item.name == "Favorites") {
+        } else if (item.name == _("Favorites")) {
             apply_filter (ListStoreFilterType.FAVORITES,"");
-        } else if (item.name != "Discover"){
+        } else if (item.name != _("Discover")){
             apply_filter (ListStoreFilterType.GENRE,item.name);
         }
     }
