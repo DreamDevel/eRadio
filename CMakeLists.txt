@@ -77,6 +77,7 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/Core/PlayerDecoders/M3UDecoder.vala
     src/Core/PlayerDecoders/PLSDecoder.vala
     src/Core/PlayerDecoders/ASXDecoder.vala
+    src/Core/WidgetManager.vala
 
     src/UserInterface/Menus/ApplicationMenu.vala
     src/UserInterface/Menus/StationsTreeViewContextMenu.vala
@@ -96,6 +97,8 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/UserInterface/Widgets/GenresTreeViewToolbar.vala
     src/UserInterface/Widgets/SideBarExpandableItem.vala
     src/UserInterface/Widgets/LevelBar.vala
+    src/UserInterface/Widgets/DiscoverBox.vala
+    src/UserInterface/Widgets/MainStack.vala
 
     src/UserInterface/Dialogs/StationDialog.vala
     src/UserInterface/Dialogs/AddStationDialog.vala
@@ -121,6 +124,7 @@ install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/eradio.desktop DESTINATION ${DAT
 
 set(SYSTEM_DEFAULT_THEME ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/images/notify.png DESTINATION ${PKGDATADIR})
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/images/discoverBig.png DESTINATION ${PKGDATADIR})
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/images/icons/16x16/apps/eRadio.png DESTINATION ${SYSTEM_DEFAULT_THEME}/16x16/apps)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/images/icons/24x24/apps/eRadio.png DESTINATION ${SYSTEM_DEFAULT_THEME}/24x24/apps)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/images/icons/32x32/apps/eRadio.png DESTINATION ${SYSTEM_DEFAULT_THEME}/32x32/apps)
@@ -132,6 +136,7 @@ install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/images/icons/512x512/apps/eRadio.png D
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/images/icons/16x16/apps/eradio-all-stations.svg DESTINATION ${SYSTEM_DEFAULT_THEME}/16x16/apps)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/images/icons/16x16/apps/eradio-favorites.svg DESTINATION ${SYSTEM_DEFAULT_THEME}/16x16/apps)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/images/icons/16x16/apps/eradio-genre.svg DESTINATION ${SYSTEM_DEFAULT_THEME}/16x16/apps)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/images/icons/16x16/apps/eradio-discover.svg DESTINATION ${SYSTEM_DEFAULT_THEME}/16x16/apps)
 
 install(CODE "execute_process(COMMAND \"gtk-update-icon-cache\" \"-f\" \"/usr/share/icons/hicolor/\")")
 install(CODE "execute_process(COMMAND \"xdg-mime\" \"default\" \"eradio.desktop\" \"x-scheme-handler/webradio\")")

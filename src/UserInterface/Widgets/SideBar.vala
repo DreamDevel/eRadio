@@ -25,13 +25,19 @@ public class Radio.Widgets.SideBar : Granite.Widgets.SourceList {
     public Widgets.SideBarExpandableItem genre_list_item;
     public Granite.Widgets.SourceList.Item all_stations_item;
     public Granite.Widgets.SourceList.Item favorites_item;
+    public Granite.Widgets.SourceList.Item discover_item;
 
     private HashMap <int,Granite.Widgets.SourceList.Item> genre_list_items;
 
     public SideBar () {
+        initialize();
         build_interface ();
         connect_handlers_to_external_signals ();
         load_genres ();
+    }
+
+    private void initialize () {
+        Radio.App.widget_manager.add_widget(this,"SideBar");
     }
 
     private void build_interface () {
@@ -52,6 +58,7 @@ public class Radio.Widgets.SideBar : Granite.Widgets.SourceList {
 
         try_to_create_all_stations_item ();
         try_to_create_favorites_item ();
+        create_discover_item ();
     }
 
     private void try_to_create_all_stations_item () {
@@ -80,9 +87,15 @@ public class Radio.Widgets.SideBar : Granite.Widgets.SourceList {
         }
     }
 
+    private void create_discover_item () {
+        discover_item = new Granite.Widgets.SourceList.Item ("Discover");
+        discover_item.icon = new ThemedIcon("eradio-discover");
+    }
+
     private void append_items () {
         root.add (all_stations_item);
         root.add (favorites_item);
+        root.add (discover_item);
         root.add (genre_list_item);
     }
 
@@ -149,7 +162,7 @@ public class Radio.Widgets.SideBar : Granite.Widgets.SourceList {
         }
     }
 
-    private ArrayList <string> remove_list_items (ArrayList <string> old_list ,ArrayList <string> new_list) {
+    /*private ArrayList <string> remove_list_items (ArrayList <string> old_list ,ArrayList <string> new_list) {
         var not_found_entries = new ArrayList <string> ();
 
         foreach (var old_entry in old_list ) {
@@ -165,7 +178,7 @@ public class Radio.Widgets.SideBar : Granite.Widgets.SourceList {
                 not_found_entries.add (old_entry);
         }
         return not_found_entries;
-    }
+    }*/
 
     private void add_genre (Radio.Models.Genre genre,int stations) {
         var item = new Granite.Widgets.SourceList.Item (genre.name);
@@ -189,17 +202,6 @@ public class Radio.Widgets.SideBar : Granite.Widgets.SourceList {
     public override void item_selected (Granite.Widgets.SourceList.Item? item) {
         if (!App.ui_ready) // Prevent early call - IMPORTANT
             return;
-        var liststore = App.main_window.view_stack.stations_list_view.stations_treeview.treeview.stations_liststore;
-        if (item.name == "All Stations") {
-            liststore.apply_filter (ListStoreFilterType.NONE,"");
-        }
-        else if (item.name == "Favorites") {
-            liststore.apply_filter (ListStoreFilterType.FAVORITES,"");
-        } else {
-            liststore.apply_filter (ListStoreFilterType.GENRE,item.name);
-        }
-
-
     }
 
 }

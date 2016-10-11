@@ -32,9 +32,14 @@ public class Radio.Widgets.StationsTreeView : Gtk.TreeView {
     private Radio.Menus.StationsTreeViewContextMenu context_menu;
 
     public StationsTreeView () {
+		initialize();
         build_interface ();
         connect_handlers_to_internal_signals ();
     }
+
+	private void initialize () {
+		Radio.App.widget_manager.add_widget(this,"MainStationsTreeview");
+	}
 
     private void build_interface () {
     	create_liststore ();

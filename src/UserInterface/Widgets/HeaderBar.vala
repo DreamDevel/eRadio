@@ -25,7 +25,6 @@ public class Radio.Widgets.HeaderBar : Gtk.HeaderBar {
     private Gtk.ToolButton  play_button;
     private Gtk.ToolButton  previous_button;
     private Gtk.ToolButton  next_button;
-    private Gtk.ToolItem    label_toolItem;
     private Gtk.Box         title_box;
     private Granite.Widgets.AppMenu application_menu;
 
@@ -135,8 +134,7 @@ public class Radio.Widgets.HeaderBar : Gtk.HeaderBar {
         // Use ui_build_finished to connect to widgets after creation
         Radio.App.instance
         .ui_build_finished.connect ( () => {
-            var liststore =  Radio.App.main_window.view_stack
-            .stations_list_view.stations_treeview.treeview.stations_liststore;
+            var liststore =  (Radio.Widgets.StationsListStore) Radio.App.widget_manager.get_widget("MainStationsListStore");
 
             liststore.filter_applied.connect (handle_filter_applied);
             liststore.row_deleted.connect (update_previous_next_buttons_sensivity);
@@ -157,12 +155,7 @@ public class Radio.Widgets.HeaderBar : Gtk.HeaderBar {
             return;
         }
 
-        var treeview =  Radio.App
-                        .main_window
-                        .view_stack
-                        .stations_list_view
-                        .stations_treeview
-                        .treeview;
+        var treeview =  (Radio.Widgets.StationsTreeView) Radio.App.widget_manager.get_widget("MainStationsTreeview");
 
         var station_id_current = App.player.station.id;
         var station_id_next = treeview.get_next_station_id (station_id_current);

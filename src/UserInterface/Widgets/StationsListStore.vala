@@ -35,16 +35,21 @@ public class Radio.Widgets.StationsListStore : Gtk.ListStore {
     public signal void entry_added ();
 
     public StationsListStore () {
-
-        set_column_types (new Type[] {
-                typeof(string),  // station title column
-                typeof(string),  // station genre column
-                typeof(string),  // station url column
-                typeof(int),     // station id column (hidden)
-                typeof(string)  // icon column (icon name)
-            });
+        initialize();
         connect_handlers_to_external_signals ();
         try_to_load_stations_from_database ();
+    }
+
+    private void initialize () {
+        set_column_types (new Type[] {
+            typeof(string),  // station title column
+            typeof(string),  // station genre column
+            typeof(string),  // station url column
+            typeof(int),     // station id column (hidden)
+            typeof(string)  // icon column (icon name)
+        });
+
+        Radio.App.widget_manager.add_widget(this,"MainStationsListStore");
     }
 
     private void  connect_handlers_to_external_signals () {
@@ -53,6 +58,8 @@ public class Radio.Widgets.StationsListStore : Gtk.ListStore {
         Radio.App.database.station_removed.connect (handle_station_removed);
         Radio.App.database.station_updated.connect (handle_station_updated);
         Radio.App.player.play_status_changed.connect (handle_player_status_changed);
+        var sidebar =  (Radio.Widgets.SideBar) Radio.App.widget_manager.get_widget("SideBar");
+        sidebar.item_selected.connect(handle_sidebar_item_selected);
     }
 
     private void try_to_load_stations_from_database () {
@@ -198,6 +205,18 @@ public class Radio.Widgets.StationsListStore : Gtk.ListStore {
 
     private void remove_play_icon_from_iter (Gtk.TreeIter iterator) {
         set_value(iterator,ICON_COLUMN_ID,"");
+    }
+
+    private void handle_sidebar_item_selected (Granite.Widgets.SourceList.Item? item) {
+        if (!App.ui_ready) // Prevent early call - IMPORTANT
+            return;
+        if (item.name == "All Stations") {
+            apply_filter (ListStoreFilterType.NONE,"");
+        } else if (item.name == "Favorites") {
+            apply_filter (ListStoreFilterType.FAVORITES,"");
+        } else if (item.name != "Discover"){
+            apply_filter (ListStoreFilterType.GENRE,item.name);
+        }
     }
 
     public Gtk.TreeIter? get_iterator_for_station_id (int station_id) {

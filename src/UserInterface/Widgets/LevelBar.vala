@@ -44,7 +44,6 @@
     }
 
     private bool handle_draw (Cairo.Context cr) {
-        var width = this.get_allocated_width ();
         var height = this.height_request;
 
         if (max_level == 0)

@@ -1,5 +1,5 @@
 /*-
- *  Copyright (c) 2014 George Sofianos
+ *  Copyright (c) 2016 George Sofianos
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,23 +18,21 @@
  *
  */
 
+// Keeps track of widgets to quickly get an instance
+// Note* Be careful of the orded widgets added and requested
+public class Radio.Core.WidgetManager {
 
-public class Radio.Views.StationsListView : Gtk.Paned {
+    private Gee.HashMap<string,Object> widgets;
 
-    public Radio.Widgets.SideBar sidebar;
-    public Radio.Widgets.MainStack main_stack;
-
-    public StationsListView () {
-        build_interface ();
+    public WidgetManager () {
+        widgets = new Gee.HashMap<string,Object> ();
     }
 
-    private void build_interface () {
-        sidebar = new Widgets.SideBar();
-    	main_stack = new Radio.Widgets.MainStack();
-
-        add1 (sidebar);
-        add2 (main_stack);
-        show_all ();
+    public void add_widget(Object widget, string name) {
+        widgets[name] = widget;
     }
 
+    public Object get_widget(string name) {
+        return widgets[name];
+    }
 }

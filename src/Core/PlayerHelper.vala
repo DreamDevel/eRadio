@@ -40,12 +40,7 @@ public class Radio.Core.PlayerHelper {
 
     private void try_to_play_selected_station () {
         try {
-            var treeview =  Radio.App
-                            .main_window
-                            .view_stack
-                            .stations_list_view
-                            .stations_treeview
-                            .treeview;
+            var treeview =  (Radio.Widgets.StationsTreeView) Radio.App.widget_manager.get_widget("MainStationsTreeview");
             var selected_station_id = treeview.get_selected_station_id ();
             if (selected_station_id == -1) {
                 warning ("Could not get selected station from treeview");
@@ -72,12 +67,7 @@ public class Radio.Core.PlayerHelper {
             if (App.player.status != PlayerStatus.PLAYING)
                 return;
 
-            var treeview =  Radio.App
-                            .main_window
-                            .view_stack
-                            .stations_list_view
-                            .stations_treeview
-                            .treeview;
+            var treeview =  (Radio.Widgets.StationsTreeView) Radio.App.widget_manager.get_widget("MainStationsTreeview");
 
             var station_id_current = App.player.station.id;
             var station_id_next = treeview.get_next_station_id (station_id_current);
@@ -101,12 +91,7 @@ public class Radio.Core.PlayerHelper {
             if (App.player.status != PlayerStatus.PLAYING)
                 return;
 
-            var treeview =  Radio.App
-                            .main_window
-                            .view_stack
-                            .stations_list_view
-                            .stations_treeview
-                            .treeview;
+            var treeview =  (Radio.Widgets.StationsTreeView) Radio.App.widget_manager.get_widget("MainStationsTreeview");
 
             var station_id_current = App.player.station.id;
             var station_id_previous = treeview.get_previous_station_id (station_id_current);

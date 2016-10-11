@@ -13,21 +13,20 @@
    width="16"
    height="16"
    viewBox="0 0 16 16"
-   id="svg2"
+   id="svg83945"
    version="1.1"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="eradio-favorites.svg">
+   sodipodi:docname="eradio-discover.svg">
   <defs
-     id="defs4">
+     id="defs83947">
     <symbol
-       id="heart"
-       class="Web-Application-Icons Medical-Icons">
+       id="symbol88684">
       <title
-         id="title75933">Heart</title>
+         id="title88686">Explore</title>
       <path
-         transform="matrix(0.05,0,0,-0.05,0,76.8)"
-         d="M896 -128q-26 0 -44 18l-624 602q-10 8 -27.5 26t-55.5 65.5t-68 97.5t-53.5 121t-23.5 138q0 220 127 344t351 124q62 0 126.5 -21.5t120 -58t95.5 -68.5t76 -68q36 36 76 68t95.5 68.5t120 58t126.5 21.5q224 0 351 -124t127 -344q0 -221 -229 -450l-623 -600 q-18 -18 -44 -18z"
-         id="path75935" />
+         d="M24 21.8c-1.21 0-2.2.99-2.2 2.2s.99 2.2 2.2 2.2c1.22 0 2.2-.99 2.2-2.2s-.98-2.2-2.2-2.2zm0-17.8c-11.05 0-20 8.95-20 20 0 11.04 8.95 20 20 20s20-8.96 20-20c0-11.05-8.95-20-20-20zm4.38 24.38l-16.38 7.62 7.62-16.38 16.38-7.62-7.62 16.38z"
+         style="stroke:none"
+         id="path88688" />
     </symbol>
   </defs>
   <sodipodi:namedview
@@ -37,9 +36,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="31.678384"
-     inkscape:cx="-1.1509606"
-     inkscape:cy="7.1724839"
+     inkscape:zoom="1"
+     inkscape:cx="-194.3329"
+     inkscape:cy="5.9705741"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -51,10 +50,10 @@
      inkscape:window-maximized="1">
     <inkscape:grid
        type="xygrid"
-       id="grid154476" />
+       id="grid158126" />
   </sodipodi:namedview>
   <metadata
-     id="metadata7">
+     id="metadata83950">
     <rdf:RDF>
       <cc:Work
          rdf:about="">
@@ -71,13 +70,22 @@
      id="layer1"
      transform="translate(0,-1036.3622)">
     <use
-       id="use154462"
-       xlink:href="#heart"
-       transform="matrix(0.15552029,0,0,0.15552029,1.023762,1037.0722)"
+       id="use158072"
+       style="fill:#3689c0;fill-opacity:1;stroke:#000000"
+       xlink:href="#symbol88684"
+       transform="matrix(0.34780188,0,0,0.34780188,-0.33974754,1036.0018)"
+       x="0"
+       y="0"
+       width="100%"
+       height="100%" />
+    <use
+       id="use83844"
+       style="fill:#3d9bda;fill-opacity:1;stroke:#000000"
+       xlink:href="#symbol11221"
        x="0"
        y="0"
        width="100%"
        height="100%"
-       style="fill:#2b6e9a;fill-opacity:1" />
+       transform="matrix(0.29289322,0,0,0.29289322,-280.93102,1558.1689)" />
   </g>
 </svg>
