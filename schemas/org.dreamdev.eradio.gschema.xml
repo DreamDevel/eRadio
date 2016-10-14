@@ -1,4 +1,13 @@
 <schemalist>
+        <schema id="org.dreamdev.eradio.settings" path="/org/dreamdev/eradio/settings/">
+        <key name="stream-timeout" type="d">
+            <default>1.4</default>
+            <summary>Stream Timeout</summary>
+            <description>
+                How long should wait until drops station
+            </description>
+        </key>
+    </schema>
     <schema id="org.dreamdev.eradio.saved-state" path="/org/dreamdev/eradio/saved-state/">
         <key name="title-column-width" type="i">
             <default>190</default>

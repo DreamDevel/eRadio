@@ -18,17 +18,25 @@
  */
 namespace Radio.Core.Settings {
     public class SavedState : Granite.Services.Settings {
-    public int window_width {get;set;}
-    public int window_height {get;set;}
-    public int title_column_width {get;set;}
-    public int genre_column_width {get;set;}
-    public int sidebar_width {get;set;}
-
-
-    public SavedState () {
-        base("org.dreamdev.eradio.saved-state");
+        public int window_width {get;set;}
+        public int window_height {get;set;}
+        public int title_column_width {get;set;}
+        public int genre_column_width {get;set;}
+        public int sidebar_width {get;set;}
+        
+        
+        public SavedState () {
+            base("org.dreamdev.eradio.saved-state");
+        }
     }
-}
-
+    
+    public class Main : Granite.Services.Settings {
+        public double stream_timeout {get;set;}
+        
+        
+        public Main () {
+            base("org.dreamdev.eradio.settings");
+        }
+    }
     
 }
