@@ -16,15 +16,19 @@
  *
  *  Authored by: George Sofianos <georgesofianosgr@gmail.com>
  */
-
-public class Radio.Core.Settings : Granite.Services.Settings {
+namespace Radio.Core.Settings {
+    public class SavedState : Granite.Services.Settings {
     public int window_width {get;set;}
     public int window_height {get;set;}
     public int title_column_width {get;set;}
     public int genre_column_width {get;set;}
+    public int sidebar_width {get;set;}
 
 
-    public Settings () {
-        base("org.dreamdev.eradio.settings");
+    public SavedState () {
+        base("org.dreamdev.eradio.saved-state");
     }
+}
+
+    
 }

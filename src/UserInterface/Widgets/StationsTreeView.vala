@@ -77,8 +77,8 @@ public class Radio.Widgets.StationsTreeView : Gtk.TreeView {
     	url_column.set_title (_("Url"));
     	play_icon_column.set_title (" ");
 
-    	title_column.set_fixed_width(Radio.App.settings.title_column_width);
-    	genre_column.set_fixed_width(Radio.App.settings.genre_column_width);
+    	title_column.set_fixed_width(Radio.App.saved_state.title_column_width);
+    	genre_column.set_fixed_width(Radio.App.saved_state.genre_column_width);
 
     	play_icon_column.set_min_width(30);
     	title_column.set_min_width (140);
@@ -164,13 +164,13 @@ public class Radio.Widgets.StationsTreeView : Gtk.TreeView {
 
     private void handle_title_column_resized (GLib.ParamSpec param) {
         if (param.get_name () == "width") {
-            Radio.App.settings.title_column_width = title_column.width;
+            Radio.App.saved_state.title_column_width = title_column.width;
         }
     }
 
     private void handle_genre_column_resized (GLib.ParamSpec param) {
         if (param.get_name () == "width") {
-            Radio.App.settings.genre_column_width = genre_column.width;
+            Radio.App.saved_state.genre_column_width = genre_column.width;
         }
     }
 

@@ -47,7 +47,7 @@ public class Radio.Widgets.SideBar : Granite.Widgets.SourceList {
     }
 
     private void set_properties () {
-        width_request = 160;
+        //width_request = 160;
     }
 
     private void create_items () {

@@ -1,5 +1,5 @@
 <schemalist>
-    <schema id="org.dreamdev.eradio.settings" path="/org/dreamdev/eradio/settings/">
+    <schema id="org.dreamdev.eradio.saved-state" path="/org/dreamdev/eradio/saved-state/">
         <key name="title-column-width" type="i">
             <default>190</default>
             <summary>Title column width</summary>
@@ -29,6 +29,14 @@
             <summary>Window height</summary>
             <description>
                 The height of the window
+            </description>
+        </key>
+        
+        <key name="sidebar-width" type="i">
+            <default>160</default>
+            <summary>Sidebar Width</summary>
+            <description>
+                The width of the sidebar
             </description>
         </key>
     </schema>

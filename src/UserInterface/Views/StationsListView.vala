@@ -25,7 +25,14 @@ public class Radio.Views.StationsListView : Gtk.Paned {
     public Radio.Widgets.MainStack main_stack;
 
     public StationsListView () {
+        initialize();
         build_interface ();
+        connect_handlers_to_internal_signals();
+    }
+    
+    private void initialize () {
+        warning(Radio.App.saved_state.sidebar_width.to_string());
+        position = Radio.App.saved_state.sidebar_width;
     }
 
     private void build_interface () {
@@ -35,6 +42,17 @@ public class Radio.Views.StationsListView : Gtk.Paned {
         add1 (sidebar);
         add2 (main_stack);
         show_all ();
+    }
+    
+    private void connect_handlers_to_internal_signals () {
+        notify.connect(handle);
+    }
+    
+    private void handle (ParamSpec pspec) {
+    
+        if (pspec.get_name() == "position") {
+            Radio.App.saved_state.sidebar_width = position;
+        }
     }
 
 }

@@ -36,11 +36,11 @@ public class Radio.Windows.MainWindow : Gtk.Window {
     }
 
     private void set_window_properties () {
-        var settings = Radio.App.settings;
+        var saved_state = Radio.App.saved_state;
 
         this.set_title (Radio.App.instance.program_name);
         this.set_size_request (500, 250);
-        this.set_default_size(settings.window_width,settings.window_height);
+        this.set_default_size(saved_state.window_width,saved_state.window_height);
         this.set_application (Radio.App.instance);
         this.set_position (Gtk.WindowPosition.CENTER);
         this.icon_name = "eRadio";
@@ -59,15 +59,15 @@ public class Radio.Windows.MainWindow : Gtk.Window {
         this.add(main_box);
     }
 
-    /* Check for window resize and save new size to settings */
+    /* Check for window resize and save new size to saved_state */
     public override bool configure_event (Gdk.EventConfigure event) {
 
-        var settings = Radio.App.settings;
+        var saved_state = Radio.App.saved_state;
 
-        if (settings.window_width != event.width)
-            settings.window_width = event.width;
-        if (settings.window_height != event.height)
-            settings.window_height = event.height;
+        if (saved_state.window_width != event.width)
+            saved_state.window_width = event.width;
+        if (saved_state.window_height != event.height)
+            saved_state.window_height = event.height;
         return base.configure_event (event);
     }
 
