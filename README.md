@@ -2,50 +2,28 @@
 # eRadio #
 **A minimalist and powerfull radio player for elementary OS** 
 
- ```
-Project is under development but almost complete (v2.0). You are free to report any bugs or create pull requests. 
-``` 
 <img src="http://i.imgur.com/YCYgFEw.png">  
 
-##Install Build Dependencies
+##Build & Install
 
-**For elementary OS Loki and other ubuntu based distributions** 
+**elementary OS Loki**
 
-```
-Navigate to project's tools directory via terminal and run ./install-deps
-```
+* git clone https://github.com/DreamDevel/eRadio
+* cd eRadio
+* run ". ./tools/dev-shell" to export project PATH
+* run "install-deps" to install all dependencies
+* run "build" to build the project
+* run "install-eradio" to install eradio, icons and schemas
 
-**Note for ubuntu based distributions**
 
-You may need to include elementary OS repository for the latest libgranite library 
-```
-sudo add-apt-repository ppa:elementary-os/stable
-```
+**Ubuntu 16.04 Based Distros**
 
-##Build & Run
+* Install libsqlheavy & libsqlheavy-dev (https://launchpad.net/%7Eelementary-os/+archive/ubuntu/stable/+sourcepub/3335498/+listing-archive-extra)
+* git clone https://github.com/DreamDevel/eRadio
+* cd eRadio
+* run ". ./tools/dev-shell" to export project PATH
+* run "install-deps-ubuntu" to install all dependencies and add elementary ppa
+* run "build" to build the project
+* run "install-eradio" to install eradio, icons and schemas
 
-**If you are using Sublime Text 3**
-
-* Open eradio.sublime-project with sublime
-* Go to menu Tools -> Build System -> Vala/Cmake
-* Run ctrl+b to build the project
-* Navigate via terminal to build directory and run 'sudo make install' (1 time only)
-* Run ctrl+shift+b to run the project
-
-**If you are using the terminal - The simple way**
-
-* Run **. dev-shell** in the tools directory to add tools to your $PATH
-* Run **build** from any directory to build the project
-* Navigate via terminal to build directory and run 'sudo make install' (1 time only)
-* Run **run** from any directory to run the project
-
-**If you are using the terminal - The normal way**
-
-* Navigate to the **build** directory
-* Run **cmake -DCMAKE_INSTALL_PREFIX=/usr .. && make** to build the project
-* Navigate via terminal to build directory and run 'sudo make install' (1 time only)
-* Run **./eradio** to run the project
-
-## Installation
-
-After you build the project run **sudo make install** from the **build** directory
+Note : Use build & run command for development after installation

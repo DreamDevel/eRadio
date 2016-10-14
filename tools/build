@@ -1,2 +1,2 @@
-cd $BUILD_DIR && cmake -DCMAKE_INSTALL_PREFIX=/usr $PROJ_DIR
+cd $PROJ_DIR && mkdir -p build && cd $BUILD_DIR && cmake -DCMAKE_INSTALL_PREFIX=/usr $PROJ_DIR
 make -f $BUILD_DIR/Makefile
