@@ -20,7 +20,6 @@
 
 using Gst;
 
-// TODO refactor
 public class Radio.Core.Player : GLib.Object {
 
     private Gst.Pipeline pipeline;
@@ -53,7 +52,6 @@ public class Radio.Core.Player : GLib.Object {
         connect_handlers_to_external_signals ();
     }
 
-    // TODO throws critical error
     private void create_gstreamer_elements () {
         pipeline  = new Gst.Pipeline ("main-pipeline");
         source    = Gst.ElementFactory.make ("uridecodebin","source");
@@ -63,12 +61,11 @@ public class Radio.Core.Player : GLib.Object {
         bus       = pipeline.get_bus();
     }
 
-    // TODO throws critical error
     private void link_gstreamer_elements () {
         pipeline.add_many (source,converter,level,sink);
 
         if (!converter.link (level) || !level.link(sink))
-            stdout.printf ("Error While linking convert with sink\n");
+            error ("Couldn't link gstreamer elements");
     }
 
     private void connect_handlers_to_internal_signals () {
@@ -77,19 +74,12 @@ public class Radio.Core.Player : GLib.Object {
     }
 
     private void handle_url_decoded (Gst.Element element, Gst.Pad pad) {
-        debug ("URL decoded");
-        // Here we can check the type of the media TODO
-        //if (!waiting_uri_decode)
-            //return;
-
-        //waiting_uri_decode = false;
-
         var struct_string = pad.get_current_caps ().to_string ();
 
         if (struct_string.has_prefix ("audio"))
             pad.link (converter.get_static_pad ("sink"));
         else
-            stdout.printf ("- Stream is not an audio\n");
+            warning ("Stream is not an audio");
     }
 
     private bool handle_bus_has_message (Gst.Bus bus, Gst.Message message) {
@@ -115,16 +105,17 @@ public class Radio.Core.Player : GLib.Object {
                 message.parse_error(out error,out debug);
 
                 if(error.message != "Cancelled") {
-                    stdout.printf("Error Occurred %s \n",error.message);
+                    warning(error.message);
                     pipeline.set_state(State.NULL);
                     playback_error(error);
                     this.has_url = false;
+                    stop();
                 }
 
                 break;
 
             case Gst.MessageType.EOS:
-                stdout.printf ("DEBUG::End Of Stream Reached\n");
+                debug("End Of Stream Reached");
                 pipeline.set_state(State.NULL);
                 break;
         }
@@ -156,7 +147,7 @@ public class Radio.Core.Player : GLib.Object {
             stop ();
     }
 
-    public void add (Radio.Models.Station station) throws Radio.Error{
+    public void add (Radio.Models.Station station) throws Radio.Error {
 
         if (status == PlayerStatus.PLAYING)
             stop ();
@@ -210,49 +201,9 @@ public class Radio.Core.Player : GLib.Object {
 
         pipeline.set_state (State.READY);
         source.set ("uri",final_uri);
-        debug (@"Set station with name: $(station.name)");
+        debug (@"Station added: $(station.name)");
     }
-
-    public void set_volume (double value) {
-        pipeline.set_property ("volume",value);
-        volume_changed (value);
-    }
-
-    public double get_volume () {
-        var val = pipeline.get_property ("volume");
-        return (double)val;
-    }
-
-    public void play() {
-        if(pipeline != null) {
-            pipeline.set_state(State.PLAYING);
-            status = PlayerStatus.PLAYING;
-            debug ("Player status: Playing");
-            play_status_changed(PlayerStatus.PLAYING);
-        }
-    }
-
-    public void pause() {
-        if(pipeline != null) {
-            pipeline.set_state(State.PAUSED);
-            status = PlayerStatus.PAUSED;
-            debug ("Player status: Paused");
-            play_status_changed(PlayerStatus.PAUSED);
-        }
-
-    }
-
-    public void stop() {
-        if(pipeline != null) {
-            pipeline.set_state(State.NULL);
-            status = PlayerStatus.STOPPED;
-            debug ("Player status: Stopped");
-            play_status_changed(PlayerStatus.STOPPED);
-        }
-    }
-
-
-    // Do we really need content type ? Check if pad_added reports the same content
+    
     private string? get_content_type (string url) {
 
         var session = new Soup.Session();
@@ -271,18 +222,75 @@ public class Radio.Core.Player : GLib.Object {
             session.send (msg);
         } catch (GLib.Error error) {
             // Error code 19 is cancel, we do cancel after a while
-            if (error.code != 19)
+            if (error.code != 19) {
                 warning(error.message);
-        }
-
-        // Note: status code returns 1, possibly because we cancel request, so we check length
-        if (content_type.length == 0) {
-            stderr.printf("Could not get content type\n");
-            return null;
+                return null;
+            }
         }
 
         return content_type;
 
 
+    }
+
+    public void set_volume (double value) {
+        pipeline.set_property ("volume",value);
+        volume_changed (value);
+    }
+
+    public double get_volume () {
+        var val = pipeline.get_property ("volume");
+        return (double)val;
+    }
+    
+    public void play() {
+        start_streaming ();
+    }
+
+    public void pause() {
+        pause_streaming ();
+    }
+
+    public void stop() {
+        stop_streaming ();
+    }
+    
+    private void start_streaming () {
+        set_gstreamer_status(PlayerStatus.PLAYING);
+        set_status(PlayerStatus.PLAYING);
+    }
+    
+    private void pause_streaming () {
+        set_gstreamer_status(PlayerStatus.PAUSED);
+        set_status(PlayerStatus.PAUSED);
+    }
+    
+    private void stop_streaming () {
+        set_gstreamer_status(PlayerStatus.STOPPED);
+        set_status(PlayerStatus.STOPPED);
+    }
+    
+    private void set_gstreamer_status(PlayerStatus status) {
+        if (pipeline == null)
+            return;
+        
+        switch (status) {
+            case PlayerStatus.PLAYING:
+                pipeline.set_state(State.PLAYING);
+                break;
+            case PlayerStatus.PAUSED:
+                pipeline.set_state(State.PAUSED);
+                break;
+            case PlayerStatus.STOPPED:
+                pipeline.set_state(State.NULL);
+                break;
+        }
+        
+    }
+    
+    private void set_status(PlayerStatus status) {
+            this.status = status;
+            debug ("New player status: " + status.to_string());
+            play_status_changed(status);
     }
 }
