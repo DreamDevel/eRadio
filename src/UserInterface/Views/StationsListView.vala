@@ -31,7 +31,6 @@ public class Radio.Views.StationsListView : Gtk.Paned {
     }
     
     private void initialize () {
-        warning(Radio.App.saved_state.sidebar_width.to_string());
         position = Radio.App.saved_state.sidebar_width;
     }
 

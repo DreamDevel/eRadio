@@ -19,7 +19,7 @@
  */
 
 
-public class Radio.Widgets.StationsListStore : Gtk.ListStore {
+public class Radio.Widgets.StationsListStore : Gtk.ListStore, Gtk.TreeSortable {
 
     const int TITLE_COLUMN_ID = 0;
     const int GENRE_COLUMN_ID = 1;
@@ -48,6 +48,8 @@ public class Radio.Widgets.StationsListStore : Gtk.ListStore {
             typeof(int),     // station id column (hidden)
             typeof(string)  // icon column (icon name)
         });
+
+        set_sort_column_id(0,Gtk.SortType.ASCENDING);
 
         Radio.App.widget_manager.add_widget(this,"MainStationsListStore");
     }
