@@ -22,7 +22,7 @@
 public class Radio.Widgets.GenresListStore : Gtk.ListStore {
 
     const int GENRE_COLUMN_ID = 0;
-    const string DEFAULT_GENRE_STRING = "New Genre";
+    const string DEFAULT_GENRE_STRING = _("New Genre");
 
     public GenresListStore () {
         set_column_types (new Type[] {
