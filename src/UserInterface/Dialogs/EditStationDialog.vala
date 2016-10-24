@@ -32,7 +32,7 @@ public class Radio.Dialogs.EditStationDialog : Radio.Dialogs.StationDialog {
     }
 
     protected override string get_action_button_name () {
-        return _("Update Station");
+        return _("Update Details");
     }
 
     protected override void handle_action_button_click () {
