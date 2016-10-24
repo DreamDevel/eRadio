@@ -12,7 +12,7 @@
 * run ". ./tools/dev-shell" to export project PATH
 * run "install-deps" to install all dependencies
 * run "build" to build the project
-* run "install-eradio" to install eradio, icons and schemas
+* run "install-app" to install eradio, icons and schemas
 
 
 **Ubuntu 16.04 Based Distros**
@@ -23,6 +23,6 @@
 * run ". ./tools/dev-shell" to export project PATH
 * run "install-deps-ubuntu" to install all dependencies and add elementary ppa
 * run "build" to build the project
-* run "install-eradio" to install eradio, icons and schemas
+* run "install-app" to install eradio, icons and schemas
 
 Note : Use build & run command for development after installation
