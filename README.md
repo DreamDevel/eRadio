@@ -1,5 +1,5 @@
 # eRadio #
-**A minimalist and powerfull radio player for elementary OS** 
+**A minimalist and powerful radio player for elementary OS** 
 
 <img src="http://i.imgur.com/YCYgFEw.png">  
 
