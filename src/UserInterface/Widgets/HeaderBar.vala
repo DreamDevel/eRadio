@@ -176,16 +176,12 @@ public class Radio.Widgets.HeaderBar : Gtk.HeaderBar {
         switch (status) {
             case PlayerStatus.PLAYING :
                     handle_player_status_playing ();
-                    play_button.set_sensitive (true);
-                    change_title (App.player.station.name);
-                    update_previous_next_buttons_sensivity ();
                 break;
             case PlayerStatus.PAUSED  :
                 handle_player_status_paused ();
                 break;
             case PlayerStatus.STOPPED :
                 handle_player_status_stopped ();
-                playback_label.set_markup ("");
                 break;
             default :
                 assert_not_reached ();
@@ -194,6 +190,12 @@ public class Radio.Widgets.HeaderBar : Gtk.HeaderBar {
 
     private void handle_player_status_playing () {
         play_button.set_icon_name (pause_icon_image_name);
+        play_button.set_sensitive (true);
+
+        change_title (App.player.station.name);
+        title_box.visible = true;
+
+        update_previous_next_buttons_sensivity ();
     }
 
     private void handle_player_status_paused () {
@@ -202,6 +204,9 @@ public class Radio.Widgets.HeaderBar : Gtk.HeaderBar {
 
     private void handle_player_status_stopped () {
         play_button.set_icon_name (play_icon_image_name);
+
+        change_title ("");
+        title_box.visible = false;
     }
 
     private void change_title (string new_title) {
