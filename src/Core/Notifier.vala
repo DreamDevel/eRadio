@@ -20,19 +20,9 @@
 
  public class Radio.Core.Notifier {
     private Notify.Notification? notification;
-    private Gdk.Pixbuf notify_icon;
 
     public Notifier () {
-        try_to_load_notify_icon ();
         connect_handlers_to_external_signal ();
-    }
-
-    private void try_to_load_notify_icon () {
-        try {
-            notify_icon = new Gdk.Pixbuf.from_file ("/usr/share/eradio/notify.png");
-        } catch (GLib.Error e) {
-            warning (e.message);
-        }
     }
 
     private void connect_handlers_to_external_signal () {
@@ -53,11 +43,7 @@
             return;
 
         if (notification == null) {
-            notification = new Notify.Notification (title,subtitle,null);
-            if (icon != null)
-                notification.set_image_from_pixbuf (icon);
-            else
-                notification.set_image_from_pixbuf (notify_icon);
+            notification = new Notify.Notification (title,subtitle,"eRadio");
         } else {
             notification.update (title,subtitle,null);
         }
