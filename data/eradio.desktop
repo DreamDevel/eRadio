@@ -12,3 +12,8 @@ X-GNOME-Gettext-Domain=eradio
 X-GNOME-Keywords=Eradio;Stream;Radio;Music;Audio
 X-AppInstall-Keywords=Eradio;Stream;Radio;Music;Audio
 MimeType=x-scheme-handler/webradio;
+Actions=AboutDialog;
+
+[Desktop Action AboutDialog]
+Exec=eradio --about
+Name=About eRadio

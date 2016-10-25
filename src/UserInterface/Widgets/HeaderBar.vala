@@ -26,7 +26,7 @@ public class Radio.Widgets.HeaderBar : Gtk.HeaderBar {
     private Gtk.ToolButton  previous_button;
     private Gtk.ToolButton  next_button;
     private Gtk.Box         title_box;
-    private Granite.Widgets.AppMenu application_menu;
+    private Gtk.MenuButton application_menu;
 
     private Gtk.Label       playback_label;
 
@@ -89,7 +89,7 @@ public class Radio.Widgets.HeaderBar : Gtk.HeaderBar {
     }
 
     private void create_application_menu () {
-        application_menu = (new Radio.Menus.ApplicationMenu ()).get_as_granite_app_menu ();
+        application_menu = (new Radio.Menus.ApplicationMenu ()).get_as_gtk_menu_button ();
     }
 
     private void append_headerbar_items () {
