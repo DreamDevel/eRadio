@@ -314,11 +314,11 @@ public class MprisPlayer : GLib.Object {
     public signal void Seeked(int64 Position);
 
     public void Next() {
-        Radio.App.player_helper.play_next_station ();
+        Radio.App.player_helper.play_next_station (this);
     }
 
     public void Previous() {
-        Radio.App.player_helper.play_previous_station ();
+        Radio.App.player_helper.play_previous_station (this);
     }
 
     public void Pause() {
@@ -326,7 +326,7 @@ public class MprisPlayer : GLib.Object {
     }
 
     public void PlayPause() {
-        Radio.App.player_helper.play_pause ();
+        Radio.App.player_helper.play_pause (this);
     }
 
     public void Stop() {

@@ -34,12 +34,12 @@
             return;
 
         var playing_station = App.player.station;
-        new_notification (playing_station.name,_("Radio Station Changed"));
+        new_notification (playing_station.name,_("You are listening to."));
     }
 
     public void new_notification (string title, string subtitle, Gdk.Pixbuf? icon=null) {
-        // show only when main window is hidden
-        if (App.main_window.is_active)
+        // show only when main window is hidden && caller is Media keys
+        if (App.main_window.is_active || App.player_helper.last_object_caller != "RadioMediaKeyListener")
             return;
 
         if (notification == null) {

@@ -74,16 +74,13 @@ public class Radio.MediaKeyListener : Object {
             return;
 
         if(key == "Previous") {
-            App.player_helper.play_previous_station ();
+            App.player_helper.play_previous_station (this);
         }
         else if(key == "Play") {
-            App.player_helper.play_pause ();
+            App.player_helper.play_pause (this);
         }
         else if(key == "Next") {
-            App.player_helper.play_next_station ();
-        }
-        else if(key == "Pause") {
-           App.player.stop ();
+            App.player_helper.play_next_station (this);
         }
         else {
             message ("Unused key pressed: %s", key);

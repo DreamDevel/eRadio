@@ -20,6 +20,8 @@
 
 public class Radio.Core.PlayerHelper {
 
+    public string last_object_caller {get;set;}
+
     public void play_station_with_id (int station_id) {
         try_to_play_station_with_id (station_id);
     }
@@ -34,7 +36,8 @@ public class Radio.Core.PlayerHelper {
         }
     }
 
-    public void play_selected_station () {
+    public void play_selected_station (Object? caller = null) {
+        set_caller(caller);
         try_to_play_selected_station ();
     }
 
@@ -58,7 +61,8 @@ public class Radio.Core.PlayerHelper {
         }
     }
 
-    public void play_next_station () {
+    public void play_next_station (Object? caller = null) {
+        set_caller(caller);
         try_to_play_next_station ();
     }
 
@@ -82,7 +86,8 @@ public class Radio.Core.PlayerHelper {
         }
     }
 
-    public void play_previous_station () {
+    public void play_previous_station (Object? caller = null) {
+        set_caller(caller);
         try_to_play_previous_station ();
     }
 
@@ -106,11 +111,18 @@ public class Radio.Core.PlayerHelper {
         }
     }
 
-    public void play_pause () {
+    public void play_pause (Object? caller = null) {
+        set_caller(caller);
         if (App.player.status == PlayerStatus.PLAYING) {
             App.player.stop ();
         } else if (App.player.station != null) {
             App.player.play ();
+        }
+    }
+
+    public void set_caller (Object? obj) {
+        if (obj != null) {
+            last_object_caller = obj.get_type().name();
         }
     }
 }
