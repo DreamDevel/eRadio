@@ -1,0 +1,188 @@
+# German translation for eradio
+# Copyright (c) 2016 Rosetta Contributors and Canonical Ltd 2016
+# This file is distributed under the same license as the eradio package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: eradio\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2016-10-25 12:52+0300\n"
+"PO-Revision-Date: 2016-10-27 10:06+0000\n"
+"Last-Translator: J.Ar <Unknown>\n"
+"Language-Team: German <de@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2016-10-31 14:56+0000\n"
+"X-Generator: Launchpad (build 18246)\n"
+
+#: ../src/Core/Notifier.vala:37
+msgid "You are listening to."
+msgstr "Sie hören"
+
+#: ../src/UserInterface/Views/WelcomeView.vala:26
+msgid "Add a station to begin listening"
+msgstr "Sender hinzufügen um mit dem hören zu beginnen"
+
+#: ../src/UserInterface/Views/WelcomeView.vala:44
+msgid "Add"
+msgstr "Hinzufügen"
+
+#: ../src/UserInterface/Views/WelcomeView.vala:44
+msgid "Add a new station."
+msgstr "Neuen Sender hinzufügen"
+
+#: ../src/UserInterface/Views/WelcomeView.vala:45
+msgid "Import"
+msgstr "Importieren"
+
+#: ../src/UserInterface/Views/WelcomeView.vala:45
+msgid "Import stations from eradio package."
+msgstr "Sender aus eRadio Paket importieren"
+
+#: ../src/UserInterface/Dialogs/EditStationDialog.vala:35
+msgid "Update Details"
+msgstr "Details aktualisieren"
+
+#: ../src/UserInterface/Dialogs/ErrorDialog.vala:55
+#: ../src/UserInterface/Dialogs/StationDialog.vala:60
+msgid "Close"
+msgstr "Schließen"
+
+#: ../src/UserInterface/Dialogs/ErrorDialog.vala:56
+msgid "Report a bug"
+msgstr "Problem melden"
+
+#: ../src/UserInterface/Dialogs/ImportProgressDialog.vala:42
+msgid "Importing stations, please wait."
+msgstr "Sender werden importiert, bitte warten."
+
+#: ../src/UserInterface/Dialogs/AddStationDialog.vala:33
+msgid "Add Station"
+msgstr "Sender hinzufügen"
+
+#: ../src/UserInterface/Dialogs/StationDialog.vala:90
+#: ../src/UserInterface/Widgets/SideBar.vala:56
+msgid "Genres"
+msgstr "Genres"
+
+#: ../src/UserInterface/Dialogs/StationDialog.vala:116
+msgid "Name"
+msgstr "Name"
+
+#: ../src/UserInterface/Dialogs/StationDialog.vala:117
+#: ../src/UserInterface/Widgets/StationsTreeView.vala:77
+msgid "Url"
+msgstr "Internetadresse"
+
+#: ../src/UserInterface/Others/FileChooserCreator.vala:24
+msgid "Import Radio Stations Package"
+msgstr "Radiosender Paket importieren"
+
+#: ../src/UserInterface/Others/FileChooserCreator.vala:26
+#: ../src/UserInterface/Others/FileChooserCreator.vala:48
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#: ../src/UserInterface/Others/FileChooserCreator.vala:27
+msgid "Open"
+msgstr "Öffnen"
+
+#: ../src/UserInterface/Others/FileChooserCreator.vala:40
+#: ../src/UserInterface/Others/FileChooserCreator.vala:62
+msgid "eRadio Package"
+msgstr "eRadio Paket"
+
+#: ../src/UserInterface/Others/FileChooserCreator.vala:46
+msgid "Export Radio Stations"
+msgstr "Radiosender exportieren"
+
+#: ../src/UserInterface/Others/FileChooserCreator.vala:49
+msgid "Save"
+msgstr "Speichern"
+
+#: ../src/UserInterface/Widgets/SideBar.vala:66
+#: ../src/UserInterface/Widgets/StationsListStore.vala:215
+msgid "All Stations"
+msgstr "Alle Sender"
+
+#: ../src/UserInterface/Widgets/SideBar.vala:79
+#: ../src/UserInterface/Widgets/StationsListStore.vala:217
+msgid "Favorites"
+msgstr "Favoriten"
+
+#: ../src/UserInterface/Widgets/SideBar.vala:91
+#: ../src/UserInterface/Widgets/DiscoverBox.vala:66
+#: ../src/UserInterface/Widgets/StationsListStore.vala:219
+#: ../src/UserInterface/Widgets/MainStack.vala:61
+msgid "Discover"
+msgstr "Entdecken"
+
+#: ../src/UserInterface/Widgets/GenresListStore.vala:25
+msgid "New Genre"
+msgstr "Neues Genre"
+
+#: ../src/UserInterface/Widgets/DiscoverBox.vala:68
+msgid "Find new radio stations instantly"
+msgstr "Finde neue Radio Stationen sofort"
+
+#: ../src/UserInterface/Widgets/DiscoverBox.vala:71
+msgid "This feature is currently not implemented."
+msgstr "Diese Funktion ist derzeit nicht implementiert."
+
+#: ../src/UserInterface/Widgets/DiscoverBox.vala:73
+msgid "Support our work to keep improving our free applications."
+msgstr ""
+"Unterstützen Sie unsere Arbeit, um unsere kostenlosen Anwendungen zu "
+"verbessern."
+
+#: ../src/UserInterface/Widgets/DiscoverBox.vala:76
+#: ../src/UserInterface/Menus/ApplicationMenu.vala:47
+msgid "Donate"
+msgstr "Spenden"
+
+#: ../src/UserInterface/Widgets/GenresTreeView.vala:58
+#: ../src/UserInterface/Widgets/StationsTreeView.vala:76
+msgid "Genre"
+msgstr "Genre"
+
+#: ../src/UserInterface/Widgets/StationsTreeView.vala:75
+msgid "Station"
+msgstr "Sender"
+
+#: ../src/UserInterface/Menus/StationsTreeViewContextMenu.vala:41
+#: ../src/UserInterface/Menus/StationsTreeViewContextMenu.vala:99
+msgid "Add to Favorites"
+msgstr "Zu den Favoriten hinzufügen"
+
+#: ../src/UserInterface/Menus/StationsTreeViewContextMenu.vala:42
+msgid "Edit station info"
+msgstr "Senderliste bearbeiten"
+
+#: ../src/UserInterface/Menus/StationsTreeViewContextMenu.vala:43
+msgid "Remove from Library"
+msgstr "Aus der Sammlung entfernen"
+
+#: ../src/UserInterface/Menus/StationsTreeViewContextMenu.vala:97
+msgid "Remove from Favorites"
+msgstr "Aus den Favoriten entfernen"
+
+#: ../src/UserInterface/Menus/ApplicationMenu.vala:43
+msgid "Add New Station"
+msgstr "Neuen Sender hinzufügen"
+
+#: ../src/UserInterface/Menus/ApplicationMenu.vala:44
+msgid "Backup"
+msgstr "Sicherung"
+
+#: ../src/UserInterface/Menus/ApplicationMenu.vala:45
+msgid "Import Stations"
+msgstr "Sender importieren"
+
+#: ../src/UserInterface/Menus/ApplicationMenu.vala:46
+msgid "Export Stations"
+msgstr "Sender exportieren"
+
+#~ msgid "Radio Station Changed"
+#~ msgstr "Radiosender wechseln"
