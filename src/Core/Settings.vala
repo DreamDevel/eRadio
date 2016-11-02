@@ -26,7 +26,7 @@ namespace Radio.Core.Settings {
         
         
         public SavedState () {
-            base("org.dreamdev.eradio.saved-state");
+            base("com.dreamdevel.eradio.saved-state");
         }
     }
     
@@ -35,7 +35,7 @@ namespace Radio.Core.Settings {
         
         
         public Main () {
-            base("org.dreamdev.eradio.settings");
+            base("com.dreamdevel.eradio.settings");
         }
     }
     

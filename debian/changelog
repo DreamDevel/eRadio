@@ -1,4 +1,4 @@
-eradio (2.0) xenial; urgency=low
+eradio (2.0.0) xenial; urgency=low
 
   * Redesign UI
   * Added genre filtering

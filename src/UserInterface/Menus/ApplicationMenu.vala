@@ -62,6 +62,7 @@ public class Radio.Menus.ApplicationMenu : Gtk.Menu {
         add_item.activate.connect (handle_add_item_click);
         import_item.activate.connect (handle_import_item_click);
         export_item.activate.connect (handle_export_item_click);
+        donate_item.activate.connect (handle_donate_item_click);
     }
 
     private void handle_add_item_click () {
@@ -74,6 +75,14 @@ public class Radio.Menus.ApplicationMenu : Gtk.Menu {
 
     private void handle_export_item_click () {
         App.export_package ();
+    }
+
+    private void handle_donate_item_click () {
+        try {
+                Process.spawn_command_line_async("xdg-open http://eradio.dreamdevel.com/donate/");
+        } catch (SpawnError e) {
+                warning(e.message);
+        }
     }
 
     public Granite.Widgets.AppMenu get_as_granite_app_menu () {

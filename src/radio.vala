@@ -53,12 +53,12 @@ class Radio.App : Granite.Application {
         exec_name = "eradio";
 
         app_copyright = "2014-2016";
-        application_id = "org.dreamdev.eradio";
+        application_id = "com.dreamdevel.eradio";
         app_icon = "eRadio";
-        app_launcher = "eradio.desktop";
+        app_launcher = "com.dreamdevel.eradio.desktop";
         app_years = "2014 - 2016";
 
-        main_url = "https://launchpad.net/eradio";
+        main_url = "http://eradio.dreamdevel.com";
         bug_url = "https://github.com/DreamDevel/eRadio/issues";
         translate_url = "https://translations.launchpad.net/eradio";
         about_authors = {"George Sofianos <georgesofianosgr@gmail.com>",null};

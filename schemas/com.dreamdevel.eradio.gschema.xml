@@ -1,5 +1,5 @@
 <schemalist>
-        <schema id="org.dreamdev.eradio.settings" path="/org/dreamdev/eradio/settings/">
+        <schema id="com.dreamdevel.eradio.settings" path="/com/dreamdevel/eradio/settings/">
         <key name="stream-timeout" type="d">
             <default>1.4</default>
             <summary>Stream Timeout</summary>
@@ -8,7 +8,7 @@
             </description>
         </key>
     </schema>
-    <schema id="org.dreamdev.eradio.saved-state" path="/org/dreamdev/eradio/saved-state/">
+    <schema id="com.dreamdevel.eradio.saved-state" path="/com/dreamdevel/eradio/saved-state/">
         <key name="title-column-width" type="i">
             <default>190</default>
             <summary>Title column width</summary>

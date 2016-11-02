@@ -34,6 +34,7 @@ public class Radio.Widgets.DiscoverBox : Gtk.Box {
 
         initialize ();
         build_interface ();
+        connect_handlers_to_internal_signals ();
     }
 
     private void initialize () {
@@ -86,5 +87,17 @@ public class Radio.Widgets.DiscoverBox : Gtk.Box {
       pack_start (donateText1, false, false, 0);
       pack_start (donateText2, false, false, 0);
       pack_start (donate_button,false,false,0);
+    }
+
+    private void connect_handlers_to_internal_signals () {
+        donate_button.clicked.connect(handle_donate_clicked);
+    }
+
+    private void handle_donate_clicked () {
+        try {
+                Process.spawn_command_line_async("xdg-open http://eradio.dreamdevel.com/donate/");
+        } catch (SpawnError e) {
+                warning(e.message);
+        }
     }
   }
