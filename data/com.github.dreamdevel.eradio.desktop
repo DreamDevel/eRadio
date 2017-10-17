@@ -7,7 +7,6 @@ Exec=com.github.dreamdevel.eradio %U
 Icon=com.github.dreamdevel.eradio
 Terminal=false
 Type=Application
-Version=1.1
 X-GNOME-Gettext-Domain=com.github.dreamdevel.eradio
 X-GNOME-Keywords=Eradio;Stream;Radio;Music;Audio
 X-GNOME-UsesNotifications=true
