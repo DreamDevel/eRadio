@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Copyright 2017 Dream Development <support@dreamdevel.com> -->
 <component type="desktop">
-  <id>com.dreamdevel.eradio.desktop</id>
+  <id>com.github.dreamdevel.eradio.desktop</id>
   <metadata_license>CC0</metadata_license>
   <name>eRadio</name>
   <summary>A minimalist and powerful radio player for elementary OS</summary>

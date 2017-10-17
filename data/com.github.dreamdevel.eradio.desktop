@@ -3,12 +3,12 @@ Name=eRadio
 GenericName=Radio Player
 Comment=Stream online radio stations
 Categories=Audio;Music;Player;AudioVideo;GNOME;GTK;
-Exec=eradio %U
-Icon=eRadio
+Exec=com.github.dreamdevel.eradio %U
+Icon=com.github.dreamdevel.eradio
 Terminal=false
 Type=Application
-Version=2.0.1
-X-GNOME-Gettext-Domain=eradio
+Version=1.1
+X-GNOME-Gettext-Domain=com.github.dreamdevel.eradio
 X-GNOME-Keywords=Eradio;Stream;Radio;Music;Audio
 X-GNOME-UsesNotifications=true
 X-AppInstall-Keywords=Eradio;Stream;Radio;Music;Audio
@@ -16,5 +16,5 @@ MimeType=x-scheme-handler/webradio;
 Actions=AboutDialog;
 
 [Desktop Action AboutDialog]
-Exec=eradio --about
+Exec=com.github.dreamdevel.eradio --about
 Name=About eRadio

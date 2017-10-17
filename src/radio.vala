@@ -50,13 +50,13 @@ class Radio.App : Granite.Application {
         build_version_info = Build.VERSION_INFO;
 
         program_name = "eRadio";
-        exec_name = "eradio";
+        exec_name = "com.github.dreamdevel.eradio";
 
-        app_copyright = "2014-2016";
-        application_id = "com.dreamdevel.eradio";
-        app_icon = "eRadio";
-        app_launcher = "com.dreamdevel.eradio.desktop";
-        app_years = "2014 - 2016";
+        app_copyright = "2014-2017";
+        application_id = "com.github.dreamdevel.eradio";
+        app_icon = "com.github.dreamdevel.eradio";
+        app_launcher = "com.github.dreamdevel.eradio.desktop";
+        app_years = "2014 - 2017";
 
         main_url = "http://eradio.dreamdevel.com";
         bug_url = "https://github.com/DreamDevel/eRadio/issues";
