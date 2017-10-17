@@ -104,7 +104,7 @@ public class Radio.Widgets.GenresTreeView : Gtk.TreeView {
         var selection_exists = selection_helper.get_selected (null,out iterator);
 
         if (selection_exists)
-            genres_liststore.remove (iterator);
+            genres_liststore.remove (ref iterator);
     }
 
     public void clear_selection () {

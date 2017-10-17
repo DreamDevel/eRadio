@@ -130,7 +130,7 @@ public class Radio.Widgets.StationsListStore : Gtk.ListStore, Gtk.TreeSortable {
             get_value (iter, ID_COLUMN_ID, out id_value);
 
             if (id_value.get_int () == id) {
-                remove(iter);
+                remove(ref iter);
                 return true;
             }
             return false;
