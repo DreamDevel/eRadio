@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2017 Dream Development <support@dreamdevel.com> -->
+<component type="desktop">
+  <id>com.dreamdevel.eradio.desktop</id>
+  <metadata_license>CC0</metadata_license>
+  <name>eRadio</name>
+  <summary>A minimalist and powerful radio player for elementary OS</summary>
+  <description>
+    <p>eRadio is a radio player designed for elementary OS with native desktop features such us: Sound indicator integration, Media Keys Support, Notifications.</p>
+    <p>It support many stream types including m3u, pls, asx and has a webradio URI scheme to easily add new stations from your internet browser</p>
+    <p>You can also backup and import radio stations via erpkg files</p>
+  </description>
+ <custom>
+     <value key="x-appcenter-suggested-price">2</value>
+  </custom>
+</component>

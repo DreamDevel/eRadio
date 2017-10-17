@@ -1,7 +1,5 @@
-eradio (2.0.0) xenial; urgency=low
+eradio (2.0.1) xenial; urgency=low
 
-  * Redesign UI
-  * Added genre filtering
-  * Bug Fixes
+  * Updated for elementary OS App Center
 
- -- George Sofianos <georgesofianosgr@gmail.com>  Sat, 6 Jul 2014 11:56:39 -0500
+ -- George Sofianos <georgesofianosgr@gmail.com>  Sat, 17 Oct 2017 16:38:00 -0500

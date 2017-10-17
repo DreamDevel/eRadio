@@ -21,7 +21,7 @@ Package: eradio
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}, gstreamer1.0-plugins-good, gstreamer1.0-plugins-ugly, gstreamer1.0-plugins-bad
 Description: A minimalist and powerful radio player
- eRadio is a radio player designed for Elementary OS.
+ eRadio is a radio player designed for elementary OS.
  .
  Features:
   - Supports many stream types ( based on gstreamer plugins )
