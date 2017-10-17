@@ -121,6 +121,7 @@ add_subdirectory (po)
 add_executable(${EXEC_NAME} ${VALA_C})
 install (TARGETS ${EXEC_NAME} RUNTIME DESTINATION bin)
 install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/com.dreamdevel.eradio.desktop DESTINATION ${DATADIR}/applications/)
+install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/com.dreamdevel.eradio.appdata.xml DESTINATION ${DATADIR}/metainfo/)
 
 set(SYSTEM_DEFAULT_THEME ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor)
 
