@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.dreamdevel.eradio\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-22 17:14+0200\n"
+"POT-Creation-Date: 2019-04-22 19:26+0200\n"
 "PO-Revision-Date: 2019-04-22 16:44+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -119,6 +119,11 @@ msgstr "Genre"
 #: src/UserInterface/Dialogs/StationDialog.vala:117
 msgid "Url"
 msgstr "Url"
+
+#: src/UserInterface/Widgets/GenresListStore.vala:25
+#, fuzzy
+msgid "New Genre"
+msgstr "Genre"
 
 #: src/UserInterface/Widgets/DiscoverBox.vala:69
 msgid "Find new radio stations instantly"

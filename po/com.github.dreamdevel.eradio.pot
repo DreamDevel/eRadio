@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.dreamdevel.eradio\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-22 17:14+0200\n"
+"POT-Creation-Date: 2019-04-22 19:26+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -118,6 +118,10 @@ msgstr ""
 #: src/UserInterface/Widgets/StationsTreeView.vala:77
 #: src/UserInterface/Dialogs/StationDialog.vala:117
 msgid "Url"
+msgstr ""
+
+#: src/UserInterface/Widgets/GenresListStore.vala:25
+msgid "New Genre"
 msgstr ""
 
 #: src/UserInterface/Widgets/DiscoverBox.vala:69
