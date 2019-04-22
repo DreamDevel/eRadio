@@ -1,0 +1,193 @@
+# Catalan translations for com.github.dreamdevel.eradio package.
+# Copyright (C) 2019 THE com.github.dreamdevel.eradio'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the com.github.dreamdevel.eradio package.
+# Automatically generated, 2019.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: com.github.dreamdevel.eradio\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-04-22 16:44+0200\n"
+"PO-Revision-Date: 2019-04-22 16:44+0200\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: ca\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ASCII\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/Core/Notifier.vala:37
+msgid "You are listening to."
+msgstr ""
+
+#: src/UserInterface/Menus/ApplicationMenu.vala:43
+msgid "Add New Station"
+msgstr ""
+
+#: src/UserInterface/Menus/ApplicationMenu.vala:44
+msgid "Backup"
+msgstr ""
+
+#: src/UserInterface/Menus/ApplicationMenu.vala:45
+msgid "Import Stations"
+msgstr ""
+
+#: src/UserInterface/Menus/ApplicationMenu.vala:46
+msgid "Export Stations"
+msgstr ""
+
+#: src/UserInterface/Menus/ApplicationMenu.vala:47
+#: src/UserInterface/Widgets/DiscoverBox.vala:77
+msgid "Donate"
+msgstr ""
+
+#: src/UserInterface/Menus/StationsTreeViewContextMenu.vala:41
+#: src/UserInterface/Menus/StationsTreeViewContextMenu.vala:99
+msgid "Add to Favorites"
+msgstr ""
+
+#: src/UserInterface/Menus/StationsTreeViewContextMenu.vala:42
+msgid "Edit station info"
+msgstr ""
+
+#: src/UserInterface/Menus/StationsTreeViewContextMenu.vala:43
+msgid "Remove from Library"
+msgstr ""
+
+#: src/UserInterface/Menus/StationsTreeViewContextMenu.vala:97
+msgid "Remove from Favorites"
+msgstr ""
+
+#: src/UserInterface/Views/WelcomeView.vala:26
+msgid "Add a station to begin listening"
+msgstr ""
+
+#: src/UserInterface/Views/WelcomeView.vala:44
+msgid "Add"
+msgstr ""
+
+#: src/UserInterface/Views/WelcomeView.vala:44
+msgid "Add a new station."
+msgstr ""
+
+#: src/UserInterface/Views/WelcomeView.vala:45
+msgid "Import"
+msgstr ""
+
+#: src/UserInterface/Views/WelcomeView.vala:45
+msgid "Import stations from eradio package."
+msgstr ""
+
+#: src/UserInterface/Widgets/SideBar.vala:56
+#: src/UserInterface/Dialogs/StationDialog.vala:90
+msgid "Genres"
+msgstr ""
+
+#: src/UserInterface/Widgets/SideBar.vala:66
+#: src/UserInterface/Widgets/StationsListStore.vala:215
+msgid "All Stations"
+msgstr ""
+
+#: src/UserInterface/Widgets/SideBar.vala:79
+#: src/UserInterface/Widgets/StationsListStore.vala:217
+msgid "Favorites"
+msgstr ""
+
+#: src/UserInterface/Widgets/SideBar.vala:91
+#: src/UserInterface/Widgets/StationsListStore.vala:219
+#: src/UserInterface/Widgets/DiscoverBox.vala:67
+#: src/UserInterface/Widgets/MainStack.vala:61
+msgid "Discover"
+msgstr ""
+
+#: src/UserInterface/Widgets/StationsListStore.vala:107
+#: src/UserInterface/Widgets/StationsListStore.vala:163
+msgid "Unknown"
+msgstr ""
+
+#: src/UserInterface/Widgets/StationsTreeView.vala:75
+msgid "Station"
+msgstr ""
+
+#: src/UserInterface/Widgets/StationsTreeView.vala:76
+#: src/UserInterface/Widgets/GenresTreeView.vala:58
+msgid "Genre"
+msgstr ""
+
+#: src/UserInterface/Widgets/StationsTreeView.vala:77
+#: src/UserInterface/Dialogs/StationDialog.vala:117
+msgid "Url"
+msgstr ""
+
+#: src/UserInterface/Widgets/DiscoverBox.vala:69
+msgid "Find new radio stations instantly"
+msgstr ""
+
+#: src/UserInterface/Widgets/DiscoverBox.vala:72
+msgid "This feature is currently not implemented."
+msgstr ""
+
+#: src/UserInterface/Widgets/DiscoverBox.vala:74
+msgid "Support our work to keep improving our free applications."
+msgstr ""
+
+#: src/UserInterface/Dialogs/StationDialog.vala:60
+#: src/UserInterface/Dialogs/ErrorDialog.vala:55
+msgid "Close"
+msgstr ""
+
+#: src/UserInterface/Dialogs/StationDialog.vala:116
+msgid "Name"
+msgstr ""
+
+#: src/UserInterface/Dialogs/AddStationDialog.vala:33
+msgid "Add Station"
+msgstr ""
+
+#: src/UserInterface/Dialogs/EditStationDialog.vala:35
+msgid "Update Details"
+msgstr ""
+
+#: src/UserInterface/Dialogs/ErrorDialog.vala:56
+msgid "Report a bug"
+msgstr ""
+
+#: src/UserInterface/Dialogs/ErrorDialog.vala:67
+msgid "A problem occured while inserting station to database.ddddddddddddd"
+msgstr ""
+
+#: src/UserInterface/Dialogs/ErrorDialog.vala:76
+msgid ""
+"If you believe this is a bug please report it to help us improve our "
+"software."
+msgstr ""
+
+#: src/UserInterface/Dialogs/ImportProgressDialog.vala:42
+msgid "Importing stations, please wait."
+msgstr ""
+
+#: src/UserInterface/Others/FileChooserCreator.vala:24
+msgid "Import Radio Stations Package"
+msgstr ""
+
+#: src/UserInterface/Others/FileChooserCreator.vala:26
+#: src/UserInterface/Others/FileChooserCreator.vala:48
+msgid "Cancel"
+msgstr ""
+
+#: src/UserInterface/Others/FileChooserCreator.vala:27
+msgid "Open"
+msgstr ""
+
+#: src/UserInterface/Others/FileChooserCreator.vala:40
+#: src/UserInterface/Others/FileChooserCreator.vala:62
+msgid "eRadio Package"
+msgstr ""
+
+#: src/UserInterface/Others/FileChooserCreator.vala:46
+msgid "Export Radio Stations"
+msgstr ""
+
+#: src/UserInterface/Others/FileChooserCreator.vala:49
+msgid "Save"
+msgstr ""

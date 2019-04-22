@@ -1,0 +1,62 @@
+# Pali translations for extra package.
+# Copyright (C) 2019 THE extra'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the extra package.
+# Automatically generated, 2019.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: extra\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-04-22 16:45+0200\n"
+"PO-Revision-Date: 2019-04-22 16:45+0200\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: pi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ASCII\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: data/com.github.dreamdevel.eradio.desktop.in:3
+#: data/com.github.dreamdevel.eradio.appdata.xml.in:7
+msgid "eRadio"
+msgstr ""
+
+#: data/com.github.dreamdevel.eradio.desktop.in:4
+msgid "Radio Player"
+msgstr ""
+
+#: data/com.github.dreamdevel.eradio.desktop.in:5
+msgid "Stream online radio stations"
+msgstr ""
+
+#: data/com.github.dreamdevel.eradio.desktop.in:8
+msgid "com.github.dreamdevel.eradio"
+msgstr ""
+
+#: data/com.github.dreamdevel.eradio.desktop.in:20
+msgid "About eRadio"
+msgstr ""
+
+#: data/com.github.dreamdevel.eradio.appdata.xml.in:8
+msgid "A minimalist and powerful radio player"
+msgstr ""
+
+#: data/com.github.dreamdevel.eradio.appdata.xml.in:10
+msgid ""
+"eRadio is a radio player with native desktop features such as: Sound "
+"indicator integration, Media Keys Support, Notifications."
+msgstr ""
+
+#: data/com.github.dreamdevel.eradio.appdata.xml.in:11
+msgid ""
+"It support many stream types including m3u, pls, asx and has a webradio URI "
+"scheme to easily add new stations from your internet browser"
+msgstr ""
+
+#: data/com.github.dreamdevel.eradio.appdata.xml.in:12
+msgid "You can also backup and import radio stations via erpkg files"
+msgstr ""
+
+#: data/com.github.dreamdevel.eradio.appdata.xml.in:14
+msgid "Dream Development"
+msgstr ""
