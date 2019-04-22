@@ -104,7 +104,7 @@ public class Radio.Widgets.StationsListStore : Gtk.ListStore, Gtk.TreeSortable {
                     genres_text += ", ";
             }
         } else {
-            genres_text = "Unknown";
+            genres_text = _("Unknown");
         }
 
         Gtk.TreeIter iterator;
@@ -160,7 +160,7 @@ public class Radio.Widgets.StationsListStore : Gtk.ListStore, Gtk.TreeSortable {
                         genres_text += ", ";
                 }
             } else {
-                genres_text = "Unknown";
+                genres_text = _("Unknown");
             }
 
             set_value (iterator,GENRE_COLUMN_ID,genres_text);
