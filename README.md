@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="data/com.github.dreamdevel.eradio.svg" alt="Icon"/>
+    <img src="data/com.github.dreamdevel.eradio.png" alt="Icon"/>
 </p>
 
 <h1 align="center">eRadio</h1>
