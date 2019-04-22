@@ -1,7 +1,7 @@
 # French translations for com.github.dreamdevel.eradio package.
 # Copyright (C) 2019 THE com.github.dreamdevel.eradio'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the com.github.dreamdevel.eradio package.
-# Automatically generated, 2019.
+# NathanBnm, 2019.
 #
 msgid ""
 msgstr ""
@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-22 16:44+0200\n"
 "PO-Revision-Date: 2019-04-22 16:44+0200\n"
-"Last-Translator: Automatically generated\n"
+"Last-Translator: NathanBnm\n"
 "Language-Team: none\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -19,176 +19,178 @@ msgstr ""
 
 #: src/Core/Notifier.vala:37
 msgid "You are listening to."
-msgstr ""
+msgstr "Vous êtes en train d'écouter"
 
 #: src/UserInterface/Menus/ApplicationMenu.vala:43
 msgid "Add New Station"
-msgstr ""
+msgstr "Ajouter une nouvelle station"
 
 #: src/UserInterface/Menus/ApplicationMenu.vala:44
 msgid "Backup"
-msgstr ""
+msgstr "Sauvegarde"
 
 #: src/UserInterface/Menus/ApplicationMenu.vala:45
 msgid "Import Stations"
-msgstr ""
+msgstr "Importer des stations"
 
 #: src/UserInterface/Menus/ApplicationMenu.vala:46
 msgid "Export Stations"
-msgstr ""
+msgstr "Exporter des stations"
 
 #: src/UserInterface/Menus/ApplicationMenu.vala:47
 #: src/UserInterface/Widgets/DiscoverBox.vala:77
 msgid "Donate"
-msgstr ""
+msgstr "Donner"
 
 #: src/UserInterface/Menus/StationsTreeViewContextMenu.vala:41
 #: src/UserInterface/Menus/StationsTreeViewContextMenu.vala:99
 msgid "Add to Favorites"
-msgstr ""
+msgstr "Ajouter aux favoris"
 
 #: src/UserInterface/Menus/StationsTreeViewContextMenu.vala:42
 msgid "Edit station info"
-msgstr ""
+msgstr "Modifier les informations sur la station"
 
 #: src/UserInterface/Menus/StationsTreeViewContextMenu.vala:43
 msgid "Remove from Library"
-msgstr ""
+msgstr "Supprimer de la bibliothèque"
 
 #: src/UserInterface/Menus/StationsTreeViewContextMenu.vala:97
 msgid "Remove from Favorites"
-msgstr ""
+msgstr "Supprimer des favoris"
 
 #: src/UserInterface/Views/WelcomeView.vala:26
 msgid "Add a station to begin listening"
-msgstr ""
+msgstr "Ajoutez une station pour commencer à écouter"
 
 #: src/UserInterface/Views/WelcomeView.vala:44
 msgid "Add"
-msgstr ""
+msgstr "Ajouter"
 
 #: src/UserInterface/Views/WelcomeView.vala:44
 msgid "Add a new station."
-msgstr ""
+msgstr "Ajouter une nouvelle station."
 
 #: src/UserInterface/Views/WelcomeView.vala:45
 msgid "Import"
-msgstr ""
+msgstr "Importer"
 
 #: src/UserInterface/Views/WelcomeView.vala:45
 msgid "Import stations from eradio package."
-msgstr ""
+msgstr "Importer des stations à partir d'un paquet eradio."
 
 #: src/UserInterface/Widgets/SideBar.vala:56
 #: src/UserInterface/Dialogs/StationDialog.vala:90
 msgid "Genres"
-msgstr ""
+msgstr "Genres"
 
 #: src/UserInterface/Widgets/SideBar.vala:66
 #: src/UserInterface/Widgets/StationsListStore.vala:215
 msgid "All Stations"
-msgstr ""
+msgstr "Toutes les stations"
 
 #: src/UserInterface/Widgets/SideBar.vala:79
 #: src/UserInterface/Widgets/StationsListStore.vala:217
 msgid "Favorites"
-msgstr ""
+msgstr "Favoris"
 
 #: src/UserInterface/Widgets/SideBar.vala:91
 #: src/UserInterface/Widgets/StationsListStore.vala:219
 #: src/UserInterface/Widgets/DiscoverBox.vala:67
 #: src/UserInterface/Widgets/MainStack.vala:61
 msgid "Discover"
-msgstr ""
+msgstr "Découvrir"
 
 #: src/UserInterface/Widgets/StationsListStore.vala:107
 #: src/UserInterface/Widgets/StationsListStore.vala:163
 msgid "Unknown"
-msgstr ""
+msgstr "Inconnu"
 
 #: src/UserInterface/Widgets/StationsTreeView.vala:75
 msgid "Station"
-msgstr ""
+msgstr "Station"
 
 #: src/UserInterface/Widgets/StationsTreeView.vala:76
 #: src/UserInterface/Widgets/GenresTreeView.vala:58
 msgid "Genre"
-msgstr ""
+msgstr "Genre"
 
 #: src/UserInterface/Widgets/StationsTreeView.vala:77
 #: src/UserInterface/Dialogs/StationDialog.vala:117
 msgid "Url"
-msgstr ""
+msgstr "URL"
 
 #: src/UserInterface/Widgets/DiscoverBox.vala:69
 msgid "Find new radio stations instantly"
-msgstr ""
+msgstr "Trouvez de nouvelles stations de radio en un instant"
 
 #: src/UserInterface/Widgets/DiscoverBox.vala:72
 msgid "This feature is currently not implemented."
-msgstr ""
+msgstr "Cette fonctionnalité n'est pour le moment pas implémentée."
 
 #: src/UserInterface/Widgets/DiscoverBox.vala:74
 msgid "Support our work to keep improving our free applications."
-msgstr ""
+msgstr "Supportez notre travail pour continuer d'améliorer nos applications gratuites."
 
 #: src/UserInterface/Dialogs/StationDialog.vala:60
 #: src/UserInterface/Dialogs/ErrorDialog.vala:55
 msgid "Close"
-msgstr ""
+msgstr "Fermer"
 
 #: src/UserInterface/Dialogs/StationDialog.vala:116
 msgid "Name"
-msgstr ""
+msgstr "Nom"
 
 #: src/UserInterface/Dialogs/AddStationDialog.vala:33
 msgid "Add Station"
-msgstr ""
+msgstr "Ajouter la station"
 
 #: src/UserInterface/Dialogs/EditStationDialog.vala:35
 msgid "Update Details"
-msgstr ""
+msgstr "Mettre à jour les détails"
 
 #: src/UserInterface/Dialogs/ErrorDialog.vala:56
 msgid "Report a bug"
-msgstr ""
+msgstr "Signaler un bug"
 
 #: src/UserInterface/Dialogs/ErrorDialog.vala:67
 msgid "A problem occured while inserting station to database.ddddddddddddd"
-msgstr ""
+msgstr "Une erreur s'est produite lors de l'ajout de la station dans la base de données."
 
 #: src/UserInterface/Dialogs/ErrorDialog.vala:76
 msgid ""
 "If you believe this is a bug please report it to help us improve our "
 "software."
 msgstr ""
+"Si vous pensez qu'il s'agit d'un bug, veuillez le signaler pour nous aider à"
+"améliorer notre logiciel."
 
 #: src/UserInterface/Dialogs/ImportProgressDialog.vala:42
 msgid "Importing stations, please wait."
-msgstr ""
+msgstr "Importation des stations, veuillez patienter."
 
 #: src/UserInterface/Others/FileChooserCreator.vala:24
 msgid "Import Radio Stations Package"
-msgstr ""
+msgstr "Importer un paquet de stations de radio"
 
 #: src/UserInterface/Others/FileChooserCreator.vala:26
 #: src/UserInterface/Others/FileChooserCreator.vala:48
 msgid "Cancel"
-msgstr ""
+msgstr "Annuler"
 
 #: src/UserInterface/Others/FileChooserCreator.vala:27
 msgid "Open"
-msgstr ""
+msgstr "Ouvrir"
 
 #: src/UserInterface/Others/FileChooserCreator.vala:40
 #: src/UserInterface/Others/FileChooserCreator.vala:62
 msgid "eRadio Package"
-msgstr ""
+msgstr "Paquet eRadio"
 
 #: src/UserInterface/Others/FileChooserCreator.vala:46
 msgid "Export Radio Stations"
-msgstr ""
+msgstr "Exporter des stations de radio"
 
 #: src/UserInterface/Others/FileChooserCreator.vala:49
 msgid "Save"
-msgstr ""
+msgstr "Enregistrer"
