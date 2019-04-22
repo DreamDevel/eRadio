@@ -40,7 +40,7 @@ msgstr "Exporter des stations"
 #: src/UserInterface/Menus/ApplicationMenu.vala:47
 #: src/UserInterface/Widgets/DiscoverBox.vala:77
 msgid "Donate"
-msgstr "Donner"
+msgstr "Soutenir"
 
 #: src/UserInterface/Menus/StationsTreeViewContextMenu.vala:41
 #: src/UserInterface/Menus/StationsTreeViewContextMenu.vala:99
