@@ -63,9 +63,11 @@ public class Radio.Widgets.GenresTreeViewToolbar : Gtk.Toolbar {
         // TODO add tooltips
         Gtk.Image add_toolbutton_image = new Gtk.Image.from_icon_name ("list-add-symbolic", Gtk.IconSize.SMALL_TOOLBAR);
         add_toolbutton = new Gtk.ToolButton (add_toolbutton_image,null);
+        add_toolbutton.tooltip_text = _("Add Genre");
 
         Gtk.Image remove_toolbutton_image = new Gtk.Image.from_icon_name ("list-remove-symbolic", Gtk.IconSize.SMALL_TOOLBAR);
         remove_toolbutton = new Gtk.ToolButton (remove_toolbutton_image,null);
+        remove_toolbutton.tooltip_text = _("Remove Genre");
     }
 
     private void append_toolbar_buttons () {

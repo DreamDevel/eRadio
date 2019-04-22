@@ -26,7 +26,7 @@ public class Radio.Widgets.HeaderBar : Gtk.HeaderBar {
     private Gtk.ToolButton  previous_button;
     private Gtk.ToolButton  next_button;
     private Gtk.Box         title_box;
-    private Gtk.MenuButton application_menu;
+    private Gtk.MenuButton  application_menu;
 
     private Gtk.Label       playback_label;
 
@@ -59,8 +59,11 @@ public class Radio.Widgets.HeaderBar : Gtk.HeaderBar {
         next_button = new Gtk.ToolButton (null,"");
 
         play_button.set_icon_name (play_icon_image_name);
+        play_button.tooltip_text = _("Play");
         next_button.set_icon_name (next_icon_image_name);
+        next_button.tooltip_text = _("Next");
         previous_button.set_icon_name (previous_icon_image_name);
+        previous_button.tooltip_text = _("Previous");
 
         // By default we disable the buttons
         play_button.set_sensitive (false);
@@ -90,6 +93,7 @@ public class Radio.Widgets.HeaderBar : Gtk.HeaderBar {
 
     private void create_application_menu () {
         application_menu = (new Radio.Menus.ApplicationMenu ()).get_as_gtk_menu_button ();
+        application_menu.tooltip_text = _("Menu");
     }
 
     private void append_headerbar_items () {
@@ -190,6 +194,7 @@ public class Radio.Widgets.HeaderBar : Gtk.HeaderBar {
 
     private void handle_player_status_playing () {
         play_button.set_icon_name (pause_icon_image_name);
+        play_button.tooltip_text = _("Pause");
         play_button.set_sensitive (true);
 
         change_title (App.player.station.name);
