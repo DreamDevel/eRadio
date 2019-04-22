@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" 
+   xmlns:cc="http://creativecommons.org/ns#" 
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
+   xmlns:svg="http://www.w3.org/2000/svg" 
+   xmlns="http://www.w3.org/2000/svg" 
+   xmlns:xlink="http://www.w3.org/1999/xlink" 
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" 
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" width="16" height="16" viewBox="0 0 16 16" id="svg83945" version="1.1" inkscape:version="0.91 r13725" sodipodi:docname="eradio-discover.svg">
+   <defs id="defs83947">
+      <symbol id="symbol88684">
+         <title id="title88686">Explore</title>
+         <path d="M24 21.8c-1.21 0-2.2.99-2.2 2.2s.99 2.2 2.2 2.2c1.22 0 2.2-.99 2.2-2.2s-.98-2.2-2.2-2.2zm0-17.8c-11.05 0-20 8.95-20 20 0 11.04 8.95 20 20 20s20-8.96 20-20c0-11.05-8.95-20-20-20zm4.38 24.38l-16.38 7.62 7.62-16.38 16.38-7.62-7.62 16.38z" style="stroke:none" id="path88688" />
+      </symbol>
+   </defs>
+   <sodipodi:namedview id="base" pagecolor="#ffffff" bordercolor="#666666" borderopacity="1.0" inkscape:pageopacity="0.0" inkscape:pageshadow="2" inkscape:zoom="1" inkscape:cx="-194.3329" inkscape:cy="5.9705741" inkscape:document-units="px" inkscape:current-layer="layer1" showgrid="true" units="px" inkscape:window-width="1366" inkscape:window-height="712" inkscape:window-x="0" inkscape:window-y="30" inkscape:window-maximized="1">
+      <inkscape:grid type="xygrid" id="grid158126" />
+   </sodipodi:namedview>
+   <metadata id="metadata83950">
+      <rdf:RDF>
+         <cc:Work rdf:about="">
+            <dc:format>image/svg+xml</dc:format>
+            <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+            <dc:title />
+         </cc:Work>
+      </rdf:RDF>
+   </metadata>
+   <g inkscape:label="Layer 1" inkscape:groupmode="layer" id="layer1" transform="translate(0,-1036.3622)">
+      <use id="use158072" style="fill:#3689c0;fill-opacity:1;stroke:#000000" xlink:href="#symbol88684" transform="matrix(0.34780188,0,0,0.34780188,-0.33974754,1036.0018)" x="0" y="0" width="100%" height="100%" />
+      <use id="use83844" style="fill:#3d9bda;fill-opacity:1;stroke:#000000" xlink:href="#symbol11221" x="0" y="0" width="100%" height="100%" transform="matrix(0.29289322,0,0,0.29289322,-280.93102,1558.1689)" />
+   </g>
+</svg>
