@@ -86,23 +86,23 @@ msgstr "Importer des stations à partir d'un paquet eradio."
 
 #: src/UserInterface/Widgets/HeaderBar.vala:62
 msgid "Play"
-msgstr ""
+msgstr "Lecture"
 
 #: src/UserInterface/Widgets/HeaderBar.vala:64
 msgid "Next"
-msgstr ""
+msgstr "Suivant"
 
 #: src/UserInterface/Widgets/HeaderBar.vala:66
 msgid "Previous"
-msgstr ""
+msgstr "Précédent"
 
 #: src/UserInterface/Widgets/HeaderBar.vala:96
 msgid "Menu"
-msgstr ""
+msgstr "Menu"
 
 #: src/UserInterface/Widgets/HeaderBar.vala:197
 msgid "Pause"
-msgstr ""
+msgstr "Pause"
 
 #: src/UserInterface/Widgets/SideBar.vala:56
 #: src/UserInterface/Dialogs/StationDialog.vala:90
@@ -145,14 +145,12 @@ msgid "New Genre"
 msgstr "Nouveau genre"
 
 #: src/UserInterface/Widgets/GenresTreeViewToolbar.vala:66
-#, fuzzy
 msgid "Add Genre"
-msgstr "Genre"
+msgstr "Ajouter un genre"
 
 #: src/UserInterface/Widgets/GenresTreeViewToolbar.vala:70
-#, fuzzy
 msgid "Remove Genre"
-msgstr "Nouveau genre"
+msgstr "Supprimer le genre"
 
 #: src/UserInterface/Widgets/DiscoverBox.vala:69
 msgid "Find new radio stations instantly"
