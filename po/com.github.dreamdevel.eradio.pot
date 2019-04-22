@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.dreamdevel.eradio\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-22 19:55+0200\n"
+"POT-Creation-Date: 2019-04-22 20:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -89,11 +89,11 @@ msgid "Play"
 msgstr ""
 
 #: src/UserInterface/Widgets/HeaderBar.vala:64
-msgid "Next"
+msgid "Next Station"
 msgstr ""
 
 #: src/UserInterface/Widgets/HeaderBar.vala:66
-msgid "Previous"
+msgid "Previous Station"
 msgstr ""
 
 #: src/UserInterface/Widgets/HeaderBar.vala:96

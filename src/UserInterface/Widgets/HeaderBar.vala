@@ -61,9 +61,9 @@ public class Radio.Widgets.HeaderBar : Gtk.HeaderBar {
         play_button.set_icon_name (play_icon_image_name);
         play_button.tooltip_text = _("Play");
         next_button.set_icon_name (next_icon_image_name);
-        next_button.tooltip_text = _("Next");
+        next_button.tooltip_text = _("Next Station");
         previous_button.set_icon_name (previous_icon_image_name);
-        previous_button.tooltip_text = _("Previous");
+        previous_button.tooltip_text = _("Previous Station");
 
         // By default we disable the buttons
         play_button.set_sensitive (false);

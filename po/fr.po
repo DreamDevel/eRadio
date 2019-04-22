@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.dreamdevel.eradio\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-22 19:55+0200\n"
+"POT-Creation-Date: 2019-04-22 20:00+0200\n"
 "PO-Revision-Date: 2019-04-22 16:44+0200\n"
 "Last-Translator: NathanBnm\n"
 "Language-Team: none\n"
@@ -89,12 +89,12 @@ msgid "Play"
 msgstr "Lecture"
 
 #: src/UserInterface/Widgets/HeaderBar.vala:64
-msgid "Next"
-msgstr "Suivant"
+msgid "Next Station"
+msgstr "Station suivante"
 
 #: src/UserInterface/Widgets/HeaderBar.vala:66
-msgid "Previous"
-msgstr "Précédent"
+msgid "Previous Station"
+msgstr "Station précédente"
 
 #: src/UserInterface/Widgets/HeaderBar.vala:96
 msgid "Menu"
@@ -229,3 +229,6 @@ msgstr "Exporter des stations de radio"
 #: src/UserInterface/Others/FileChooserCreator.vala:49
 msgid "Save"
 msgstr "Enregistrer"
+
+#~ msgid "Next"
+#~ msgstr "Suivant"
