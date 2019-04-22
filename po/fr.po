@@ -131,7 +131,7 @@ msgstr "Cette fonctionnalité n'est pour le moment pas implémentée."
 #: src/UserInterface/Widgets/DiscoverBox.vala:74
 msgid "Support our work to keep improving our free applications."
 msgstr ""
-"Supportez notre travail pour continuer d'améliorer nos applications "
+"Soutenez notre travail pour continuer d'améliorer nos applications "
 "gratuites."
 
 #: src/UserInterface/Dialogs/StationDialog.vala:60
@@ -149,7 +149,7 @@ msgstr "Ajouter la station"
 
 #: src/UserInterface/Dialogs/EditStationDialog.vala:35
 msgid "Update Details"
-msgstr "Mettre à jour les détails"
+msgstr "Mettre à jour"
 
 #: src/UserInterface/Dialogs/ErrorDialog.vala:56
 msgid "Report a bug"
