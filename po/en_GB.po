@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.dreamdevel.eradio\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-22 16:44+0200\n"
+"POT-Creation-Date: 2019-04-22 17:01+0200\n"
 "PO-Revision-Date: 2019-04-22 16:44+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -154,8 +154,8 @@ msgid "Report a bug"
 msgstr "Report a bug"
 
 #: src/UserInterface/Dialogs/ErrorDialog.vala:67
-msgid "A problem occured while inserting station to database.ddddddddddddd"
-msgstr "A problem occured while inserting station to database.ddddddddddddd"
+msgid "A problem occured while inserting station to database."
+msgstr "A problem occured while inserting station to database."
 
 #: src/UserInterface/Dialogs/ErrorDialog.vala:76
 msgid ""

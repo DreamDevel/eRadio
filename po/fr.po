@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.dreamdevel.eradio\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-22 16:44+0200\n"
+"POT-Creation-Date: 2019-04-22 17:01+0200\n"
 "PO-Revision-Date: 2019-04-22 16:44+0200\n"
 "Last-Translator: NathanBnm\n"
 "Language-Team: none\n"
@@ -130,7 +130,9 @@ msgstr "Cette fonctionnalité n'est pour le moment pas implémentée."
 
 #: src/UserInterface/Widgets/DiscoverBox.vala:74
 msgid "Support our work to keep improving our free applications."
-msgstr "Supportez notre travail pour continuer d'améliorer nos applications gratuites."
+msgstr ""
+"Supportez notre travail pour continuer d'améliorer nos applications "
+"gratuites."
 
 #: src/UserInterface/Dialogs/StationDialog.vala:60
 #: src/UserInterface/Dialogs/ErrorDialog.vala:55
@@ -154,16 +156,18 @@ msgid "Report a bug"
 msgstr "Signaler un bug"
 
 #: src/UserInterface/Dialogs/ErrorDialog.vala:67
-msgid "A problem occured while inserting station to database.ddddddddddddd"
-msgstr "Une erreur s'est produite lors de l'ajout de la station dans la base de données."
+msgid "A problem occured while inserting station to database."
+msgstr ""
+"Une erreur s'est produite lors de l'ajout de la station dans la base de "
+"données."
 
 #: src/UserInterface/Dialogs/ErrorDialog.vala:76
 msgid ""
 "If you believe this is a bug please report it to help us improve our "
 "software."
 msgstr ""
-"Si vous pensez qu'il s'agit d'un bug, veuillez le signaler pour nous aider à"
-"améliorer notre logiciel."
+"Si vous pensez qu'il s'agit d'un bug, veuillez le signaler pour nous aider "
+"àaméliorer notre logiciel."
 
 #: src/UserInterface/Dialogs/ImportProgressDialog.vala:42
 msgid "Importing stations, please wait."

@@ -64,7 +64,7 @@ public class Radio.Dialogs.ErrorDialog : Gtk.Dialog {
 
         set_dialog_margins ();
         // TODO implement inkscape mockup
-        var error_message = new Gtk.Label(_("A problem occured while inserting station to database.ddddddddddddd"));
+        var error_message = new Gtk.Label(_("A problem occured while inserting station to database."));
         error_message.set_line_wrap (true);
         error_message.set_max_width_chars (44);
 
