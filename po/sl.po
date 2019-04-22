@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.dreamdevel.eradio\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-22 17:01+0200\n"
+"POT-Creation-Date: 2019-04-22 17:14+0200\n"
 "PO-Revision-Date: 2019-04-22 16:44+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -17,6 +17,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
 "%100==4 ? 2 : 3);\n"
+
+#: src/Core/MPRIS.vala:187 src/UserInterface/Widgets/StationsListStore.vala:107
+#: src/UserInterface/Widgets/StationsListStore.vala:163
+msgid "Unknown"
+msgstr ""
 
 #: src/Core/Notifier.vala:37
 msgid "You are listening to."
@@ -100,11 +105,6 @@ msgstr ""
 #: src/UserInterface/Widgets/DiscoverBox.vala:67
 #: src/UserInterface/Widgets/MainStack.vala:61
 msgid "Discover"
-msgstr ""
-
-#: src/UserInterface/Widgets/StationsListStore.vala:107
-#: src/UserInterface/Widgets/StationsListStore.vala:163
-msgid "Unknown"
 msgstr ""
 
 #: src/UserInterface/Widgets/StationsTreeView.vala:75

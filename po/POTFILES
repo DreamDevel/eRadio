@@ -1,3 +1,4 @@
+src/Core/MPRIS.vala
 src/Core/Notifier.vala
 
 src/UserInterface/Menus/ApplicationMenu.vala

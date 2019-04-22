@@ -184,7 +184,7 @@ public class MprisPlayer : GLib.Object {
     private void set_media_metadata (Radio.Models.Station? station) {
         _metadata = new HashTable<string, Variant> (null, null);
         _metadata.insert("xesam:title", station.name);
-        _metadata.insert("xesam:artist", get_simple_string_array("Unknown"));
+        _metadata.insert("xesam:artist", get_simple_string_array(_("Unknown"));
     }
 
     private static string[] get_simple_string_array (string? text) {
