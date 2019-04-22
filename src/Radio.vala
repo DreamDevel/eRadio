@@ -41,33 +41,10 @@ class Radio.App : Granite.Application {
     public signal void ui_build_finished ();
     public static bool ui_ready = false;
 
+    public const string PROGRAM_NAME = "eRadio";
+    public const string APPLICATION_ID = "com.github.dreamdevel.eradio";
+
     construct {
-        // Application info
-        build_data_dir = Build.DATADIR;
-        build_pkg_data_dir = Build.PKG_DATADIR;
-        build_release_name = Build.RELEASE_NAME;
-        build_version = Build.VERSION;
-        build_version_info = Build.VERSION_INFO;
-
-        program_name = "eRadio";
-        exec_name = "com.github.dreamdevel.eradio";
-
-        app_copyright = "2014-2017";
-        application_id = "com.github.dreamdevel.eradio";
-        app_icon = "com.github.dreamdevel.eradio";
-        app_launcher = "com.github.dreamdevel.eradio.desktop";
-        app_years = "2014 - 2017";
-
-        main_url = "http://eradio.dreamdevel.com";
-        bug_url = "https://github.com/DreamDevel/eRadio/issues";
-        translate_url = "https://translations.launchpad.net/eradio";
-        about_authors = {"George Sofianos <georgesofianosgr@gmail.com>",null};
-        help_url = "https://answers.launchpad.net/eradio";
-        about_artists = {"George Sofianos <georgesofianosgr@gmail.com>", null};
-        about_documenters = { "George Sofianos <georgesofianosgr@gmail.com>",
-                                      null };
-        about_license_type = Gtk.License.GPL_3_0;
-
         this.set_flags (ApplicationFlags.HANDLES_COMMAND_LINE);
     }
 
@@ -81,6 +58,8 @@ class Radio.App : Granite.Application {
         else if (!main_window.visible)
             main_window.show ();
 
+        weak Gtk.IconTheme default_theme = Gtk.IconTheme.get_default ();
+        default_theme.add_resource_path ("/com/github/dreamdevel/eradio");
     }
 
     public void initialize () {
@@ -101,7 +80,7 @@ class Radio.App : Granite.Application {
         initialize_database ();
         Radio.MediaKeyListener.instance.init ();
         mpris.initialize ();
-        Notify.init (this.program_name);
+        Notify.init (PROGRAM_NAME);
     }
 
     private void create_user_interface () {

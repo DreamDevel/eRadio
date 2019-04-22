@@ -1,5 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <schemalist>
-        <schema id="com.dreamdevel.eradio.settings" path="/com/dreamdevel/eradio/settings/">
+    <schema id="com.dreamdevel.eradio.settings" path="/com/dreamdevel/eradio/settings/">
         <key name="stream-timeout" type="d">
             <default>1.4</default>
             <summary>Stream Timeout</summary>
@@ -41,7 +42,7 @@
                 The height of the window
             </description>
         </key>
-        
+
         <key name="sidebar-width" type="i">
             <default>160</default>
             <summary>Sidebar Width</summary>
