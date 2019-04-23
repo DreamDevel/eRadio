@@ -43,7 +43,7 @@
             return;
 
         if (notification == null) {
-            notification = new Notify.Notification (title,subtitle,Radio.App.instance.PROGRAM_NAME);
+            notification = new Notify.Notification (title,subtitle,Radio.App.PROGRAM_NAME);
         } else {
             notification.update (title,subtitle,null);
         }

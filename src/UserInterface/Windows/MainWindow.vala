@@ -38,7 +38,7 @@ public class Radio.Windows.MainWindow : Gtk.Window {
     private void set_window_properties () {
         var saved_state = Radio.App.saved_state;
 
-        this.set_title (Radio.App.instance.PROGRAM_NAME);
+        this.set_title (Radio.App.PROGRAM_NAME);
         this.set_size_request (500, 250);
         this.set_default_size(saved_state.window_width,saved_state.window_height);
         this.set_application (Radio.App.instance);

@@ -31,7 +31,7 @@ public class Radio.Core.MPRIS : GLib.Object {
 
     public void initialize () {
         owner_id = Bus.own_name(BusType.SESSION,
-                                "org.mpris.MediaPlayer2." + Radio.App.instance.APPLICATION_ID,
+                                "org.mpris.MediaPlayer2." + Radio.App.APPLICATION_ID,
                                 GLib.BusNameOwnerFlags.NONE,
                                 on_bus_acquired,
                                 on_name_acquired,
@@ -87,13 +87,13 @@ public class MprisRoot : GLib.Object {
     }
     public string DesktopEntry {
         owned get {
-            return Radio.App.instance.APPLICATION_ID;
+            return Radio.App.APPLICATION_ID;
         }
     }
 
     public string Identity {
         owned get {
-            return Radio.App.instance.PROGRAM_NAME;
+            return Radio.App.PROGRAM_NAME;
         }
     }
 

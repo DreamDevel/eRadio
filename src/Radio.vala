@@ -18,7 +18,7 @@
  *               Fotini Skoti <fotini.skoti@gmail.com>
  */
 
-class Radio.App : Granite.Application {
+class Radio.App : Gtk.Application {
 
     public static Radio.Windows.MainWindow main_window {get;private set;default = null;}
     public static Radio.App instance;

@@ -85,10 +85,6 @@ public class Radio.Menus.ApplicationMenu : Gtk.Menu {
         }
     }
 
-    public Granite.Widgets.AppMenu get_as_granite_app_menu () {
-        return  Radio.App.instance.create_appmenu (this);
-    }
-
     public Gtk.MenuButton get_as_gtk_menu_button () {
     Gtk.MenuButton appMenu = new Gtk.MenuButton();
     var menu_icon = new Gtk.Image.from_icon_name ("open-menu", Gtk.IconSize.LARGE_TOOLBAR);

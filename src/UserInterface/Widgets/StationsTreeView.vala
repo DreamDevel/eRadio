@@ -48,7 +48,6 @@ public class Radio.Widgets.StationsTreeView : Gtk.TreeView {
         create_context_menu ();
 
     	set_model (stations_liststore);
-    	set_rules_hint(true);
     }
 
     private void create_liststore () {
