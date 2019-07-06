@@ -9,7 +9,8 @@ add_project_arguments(
 )
 
 asresources = gnome.compile_resources(
-    'as-resources', join_paths('data', meson.project_name() + '.gresource.xml'),
+    'as-resources',
+    join_paths('data', meson.project_name() + '.gresource.xml'),
     source_dir: 'data',
     c_name: 'as'
 )
@@ -20,7 +21,6 @@ executable(
     meson.project_name(),
     asresources,
     sources,
-    config_header,
     dependencies: [
         dependency('gstreamer-1.0'),
         dependency('gtk+-3.0'),
