@@ -13,7 +13,3 @@ X-GNOME-UsesNotifications=true
 X-AppInstall-Keywords=Eradio;Stream;Radio;Music;Audio
 MimeType=x-scheme-handler/webradio;
 Actions=AboutDialog;
-
-[Desktop Action AboutDialog]
-Exec=com.github.dreamdevel.eradio --about
-Name=About eRadio
