@@ -29,6 +29,7 @@ public class Radio.Widgets.StationsListStore : Gtk.ListStore, Gtk.TreeSortable {
     const int FAVORITE_COLUMN_ID = 5;
     const string play_icon_name = "audio-volume-high-symbolic";
     const string favorite_icon_name = "eradio-favorites";
+    const string empty_favorite_icon_name = "eradio-empty-favorites";
 
     public ListStoreFilterType current_filter_type = ListStoreFilterType.NONE;
     public string current_filter_argument = "";
@@ -117,11 +118,14 @@ public class Radio.Widgets.StationsListStore : Gtk.ListStore, Gtk.TreeSortable {
         set_value (iterator,URL_COLUMN_ID,station.url);
         set_value (iterator,ID_COLUMN_ID,station.id);
 
-        if (station.favorite == true)
-             set_favorite_icon_to_iter (iterator);
+        if (station.favorite) {
+            set_favorite_icon_to_iter (iterator);
+        } else {
+            set_empty_favorite_icon_to_iter (iterator);
+        }
 
         if (App.player.status == PlayerStatus.PLAYING && App.player.station.id == station.id)
-             set_play_icon_to_iter (iterator);
+            set_play_icon_to_iter (iterator);
 
         entry_added ();
     }
@@ -214,6 +218,10 @@ public class Radio.Widgets.StationsListStore : Gtk.ListStore, Gtk.TreeSortable {
     private void set_favorite_icon_to_iter (Gtk.TreeIter iterator) {
         set_value(iterator,FAVORITE_COLUMN_ID,favorite_icon_name);
     }
+
+    private void set_empty_favorite_icon_to_iter (Gtk.TreeIter iterator) {
+        set_value(iterator,FAVORITE_COLUMN_ID,empty_favorite_icon_name);
+    }
     
     private void set_play_icon_to_iter (Gtk.TreeIter iterator) {
         set_value(iterator,ICON_COLUMN_ID,play_icon_name);
@@ -237,7 +245,7 @@ public class Radio.Widgets.StationsListStore : Gtk.ListStore, Gtk.TreeSortable {
     }
 
     private void remove_favorite_icon_from_iter (Gtk.TreeIter iterator) {
-        set_value(iterator,FAVORITE_COLUMN_ID,"");
+        set_value(iterator,FAVORITE_COLUMN_ID,empty_favorite_icon_name);
     }
 
     private void remove_play_icon_from_iter (Gtk.TreeIter iterator) {
