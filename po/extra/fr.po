@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-22 16:45+0200\n"
+"POT-Creation-Date: 2020-01-11 18:44+0100\n"
 "PO-Revision-Date: 2019-04-22 16:45+0200\n"
 "Last-Translator: NathanBnm\n"
 "Language-Team: none\n"
@@ -34,10 +34,6 @@ msgstr "Écoutez des stations de radio en ligne"
 msgid "com.github.dreamdevel.eradio"
 msgstr "com.github.dreamdevel.eradio"
 
-#: data/com.github.dreamdevel.eradio.desktop.in:20
-msgid "About eRadio"
-msgstr "À propos d'eRadio"
-
 #: data/com.github.dreamdevel.eradio.appdata.xml.in:8
 msgid "A minimalist and powerful radio player"
 msgstr "Un lecteur de radio minimaliste et puissant"
@@ -47,21 +43,32 @@ msgid ""
 "eRadio is a radio player with native desktop features such as: Sound "
 "indicator integration, Media Keys Support, Notifications."
 msgstr ""
-"eRadio est un lecteur de radio avec des fonctionnalités d'intégration du bureau natuves comme "
-"l'indicateur de volume, la prise en charge des touches de média et les notifications."
+"eRadio est un lecteur de radio avec des fonctionnalités d'intégration du "
+"bureau natuves comme l'indicateur de volume, la prise en charge des touches "
+"de média et les notifications."
 
 #: data/com.github.dreamdevel.eradio.appdata.xml.in:11
 msgid ""
 "It support many stream types including m3u, pls, asx and has a webradio URI "
 "scheme to easily add new stations from your internet browser"
 msgstr ""
-"L'application prend en charge divers formats incluant le M3U, le PLS et l'ASX et possède "
-"un schéma de reconaissance des webradios pour ajouter de nouvelles stations directement depuis votre navigateur web"
+"L'application prend en charge divers formats incluant le M3U, le PLS et "
+"l'ASX et possède un schéma de reconaissance des webradios pour ajouter de "
+"nouvelles stations directement depuis votre navigateur web"
 
 #: data/com.github.dreamdevel.eradio.appdata.xml.in:12
 msgid "You can also backup and import radio stations via erpkg files"
-msgstr "Vous pouvez aussi sauvegarder et importer des stations de radio à l'aide de fichiers ERPKG"
+msgstr ""
+"Vous pouvez aussi sauvegarder et importer des stations de radio à l'aide de "
+"fichiers ERPKG"
 
-#: data/com.github.dreamdevel.eradio.appdata.xml.in:14
+#: data/com.github.dreamdevel.eradio.appdata.xml.in:20
+msgid "Initial release for elementary Juno"
+msgstr ""
+
+#: data/com.github.dreamdevel.eradio.appdata.xml.in:58
 msgid "Dream Development"
 msgstr "Dream Development"
+
+#~ msgid "About eRadio"
+#~ msgstr "À propos d'eRadio"

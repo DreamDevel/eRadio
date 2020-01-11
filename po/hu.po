@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.dreamdevel.eradio\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-22 20:00+0200\n"
+"POT-Creation-Date: 2020-01-11 18:45+0100\n"
 "PO-Revision-Date: 2019-04-22 13:32+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -17,8 +17,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/Core/MPRIS.vala:187 src/UserInterface/Widgets/StationsListStore.vala:107
-#: src/UserInterface/Widgets/StationsListStore.vala:163
+#: src/Core/MPRIS.vala:187 src/UserInterface/Widgets/StationsListStore.vala:111
+#: src/UserInterface/Widgets/StationsListStore.vala:173
 msgid "Unknown"
 msgstr ""
 
@@ -110,32 +110,32 @@ msgid "Genres"
 msgstr "Műfaj"
 
 #: src/UserInterface/Widgets/SideBar.vala:66
-#: src/UserInterface/Widgets/StationsListStore.vala:215
+#: src/UserInterface/Widgets/StationsListStore.vala:258
 msgid "All Stations"
 msgstr "Összes állomás"
 
 #: src/UserInterface/Widgets/SideBar.vala:79
-#: src/UserInterface/Widgets/StationsListStore.vala:217
+#: src/UserInterface/Widgets/StationsListStore.vala:260
 msgid "Favorites"
 msgstr "Kedvencek"
 
 #: src/UserInterface/Widgets/SideBar.vala:91
-#: src/UserInterface/Widgets/StationsListStore.vala:219
+#: src/UserInterface/Widgets/StationsListStore.vala:262
 #: src/UserInterface/Widgets/DiscoverBox.vala:67
 #: src/UserInterface/Widgets/MainStack.vala:61
 msgid "Discover"
 msgstr "Felfedezés"
 
-#: src/UserInterface/Widgets/StationsTreeView.vala:75
+#: src/UserInterface/Widgets/StationsTreeView.vala:76
 msgid "Station"
 msgstr "Állomás"
 
-#: src/UserInterface/Widgets/StationsTreeView.vala:76
+#: src/UserInterface/Widgets/StationsTreeView.vala:77
 #: src/UserInterface/Widgets/GenresTreeView.vala:58
 msgid "Genre"
 msgstr "Műfaj"
 
-#: src/UserInterface/Widgets/StationsTreeView.vala:77
+#: src/UserInterface/Widgets/StationsTreeView.vala:78
 #: src/UserInterface/Dialogs/StationDialog.vala:117
 msgid "Url"
 msgstr "URL"

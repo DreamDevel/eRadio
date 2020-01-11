@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-22 16:45+0200\n"
+"POT-Creation-Date: 2020-01-11 18:44+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -34,10 +34,6 @@ msgstr ""
 msgid "com.github.dreamdevel.eradio"
 msgstr ""
 
-#: data/com.github.dreamdevel.eradio.desktop.in:20
-msgid "About eRadio"
-msgstr ""
-
 #: data/com.github.dreamdevel.eradio.appdata.xml.in:8
 msgid "A minimalist and powerful radio player"
 msgstr ""
@@ -58,6 +54,10 @@ msgstr ""
 msgid "You can also backup and import radio stations via erpkg files"
 msgstr ""
 
-#: data/com.github.dreamdevel.eradio.appdata.xml.in:14
+#: data/com.github.dreamdevel.eradio.appdata.xml.in:20
+msgid "Initial release for elementary Juno"
+msgstr ""
+
+#: data/com.github.dreamdevel.eradio.appdata.xml.in:58
 msgid "Dream Development"
 msgstr ""

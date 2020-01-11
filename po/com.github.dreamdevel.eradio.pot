@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.dreamdevel.eradio\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-22 20:00+0200\n"
+"POT-Creation-Date: 2020-01-11 18:45+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,8 +17,8 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/Core/MPRIS.vala:187 src/UserInterface/Widgets/StationsListStore.vala:107
-#: src/UserInterface/Widgets/StationsListStore.vala:163
+#: src/Core/MPRIS.vala:187 src/UserInterface/Widgets/StationsListStore.vala:111
+#: src/UserInterface/Widgets/StationsListStore.vala:173
 msgid "Unknown"
 msgstr ""
 
@@ -110,32 +110,32 @@ msgid "Genres"
 msgstr ""
 
 #: src/UserInterface/Widgets/SideBar.vala:66
-#: src/UserInterface/Widgets/StationsListStore.vala:215
+#: src/UserInterface/Widgets/StationsListStore.vala:258
 msgid "All Stations"
 msgstr ""
 
 #: src/UserInterface/Widgets/SideBar.vala:79
-#: src/UserInterface/Widgets/StationsListStore.vala:217
+#: src/UserInterface/Widgets/StationsListStore.vala:260
 msgid "Favorites"
 msgstr ""
 
 #: src/UserInterface/Widgets/SideBar.vala:91
-#: src/UserInterface/Widgets/StationsListStore.vala:219
+#: src/UserInterface/Widgets/StationsListStore.vala:262
 #: src/UserInterface/Widgets/DiscoverBox.vala:67
 #: src/UserInterface/Widgets/MainStack.vala:61
 msgid "Discover"
 msgstr ""
 
-#: src/UserInterface/Widgets/StationsTreeView.vala:75
+#: src/UserInterface/Widgets/StationsTreeView.vala:76
 msgid "Station"
 msgstr ""
 
-#: src/UserInterface/Widgets/StationsTreeView.vala:76
+#: src/UserInterface/Widgets/StationsTreeView.vala:77
 #: src/UserInterface/Widgets/GenresTreeView.vala:58
 msgid "Genre"
 msgstr ""
 
-#: src/UserInterface/Widgets/StationsTreeView.vala:77
+#: src/UserInterface/Widgets/StationsTreeView.vala:78
 #: src/UserInterface/Dialogs/StationDialog.vala:117
 msgid "Url"
 msgstr ""
