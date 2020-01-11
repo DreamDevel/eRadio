@@ -31,7 +31,7 @@ public class Radio.Core.MPRIS : GLib.Object {
 
     public void initialize () {
         owner_id = Bus.own_name(BusType.SESSION,
-                                "org.mpris.MediaPlayer2." + Radio.App.instance.exec_name,
+                                "org.mpris.MediaPlayer2." + Radio.App.APPLICATION_ID,
                                 GLib.BusNameOwnerFlags.NONE,
                                 on_bus_acquired,
                                 on_name_acquired,
@@ -87,13 +87,13 @@ public class MprisRoot : GLib.Object {
     }
     public string DesktopEntry {
         owned get {
-            return Radio.App.instance.app_launcher.replace (".desktop", "");
+            return Radio.App.APPLICATION_ID;
         }
     }
 
     public string Identity {
         owned get {
-            return Radio.App.instance.program_name;
+            return Radio.App.PROGRAM_NAME;
         }
     }
 
@@ -184,7 +184,7 @@ public class MprisPlayer : GLib.Object {
     private void set_media_metadata (Radio.Models.Station? station) {
         _metadata = new HashTable<string, Variant> (null, null);
         _metadata.insert("xesam:title", station.name);
-        _metadata.insert("xesam:artist", get_simple_string_array("Unknown"));
+        _metadata.insert("xesam:artist", get_simple_string_array(_("Unknown")));
     }
 
     private static string[] get_simple_string_array (string? text) {

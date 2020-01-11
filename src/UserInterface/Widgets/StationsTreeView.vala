@@ -21,6 +21,7 @@
 
 public class Radio.Widgets.StationsTreeView : Gtk.TreeView {
 
+	private Gtk.TreeViewColumn favorite_icon_column;
 	private Gtk.TreeViewColumn play_icon_column;
 	private Gtk.TreeViewColumn title_column;
 	private Gtk.TreeViewColumn genre_column;
@@ -48,7 +49,6 @@ public class Radio.Widgets.StationsTreeView : Gtk.TreeView {
         create_context_menu ();
 
     	set_model (stations_liststore);
-    	set_rules_hint(true);
     }
 
     private void create_liststore () {
@@ -56,6 +56,7 @@ public class Radio.Widgets.StationsTreeView : Gtk.TreeView {
     }
 
     private void create_columns () {
+    	favorite_icon_column = new Gtk.TreeViewColumn ();
     	play_icon_column = new Gtk.TreeViewColumn ();
     	title_column = new Gtk.TreeViewColumn ();
     	genre_column = new Gtk.TreeViewColumn ();
@@ -76,17 +77,20 @@ public class Radio.Widgets.StationsTreeView : Gtk.TreeView {
     	genre_column.set_title (_("Genre"));
     	url_column.set_title (_("Url"));
     	play_icon_column.set_title (" ");
+    	favorite_icon_column.set_title (" ");
 
     	title_column.set_fixed_width(Radio.App.saved_state.title_column_width);
     	genre_column.set_fixed_width(Radio.App.saved_state.genre_column_width);
 
     	play_icon_column.set_min_width(30);
+    	favorite_icon_column.set_min_width(30);
     	title_column.set_min_width (140);
     	genre_column.set_min_width (100);
 
     	title_column.set_sort_column_id(0);
 
     	play_icon_column.resizable = false;
+    	favorite_icon_column.resizable = false;
         title_column.resizable = true;
         genre_column.resizable = true;
     }
@@ -96,14 +100,17 @@ public class Radio.Widgets.StationsTreeView : Gtk.TreeView {
     	genre_column.pack_start(cell_text_renderer,false);
     	url_column.pack_start(cell_text_renderer,false);
     	play_icon_column.pack_start(cell_pixbuf_renderer,false);
+    	favorite_icon_column.pack_start(cell_pixbuf_renderer,false);
 
     	title_column.add_attribute(cell_text_renderer,"text",0);
     	genre_column.add_attribute(cell_text_renderer,"text",1);
     	url_column.add_attribute(cell_text_renderer,"text",2);
     	play_icon_column.add_attribute(cell_pixbuf_renderer,"icon-name",4);
+    	favorite_icon_column.add_attribute(cell_pixbuf_renderer,"icon-name",5);
     }
 
     private void append_columns () {
+    	append_column(favorite_icon_column);
     	append_column(play_icon_column);
     	append_column(title_column);
     	append_column(genre_column);

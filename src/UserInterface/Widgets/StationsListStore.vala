@@ -26,7 +26,10 @@ public class Radio.Widgets.StationsListStore : Gtk.ListStore, Gtk.TreeSortable {
     const int URL_COLUMN_ID = 2;
     const int ID_COLUMN_ID = 3;
     const int ICON_COLUMN_ID = 4;
+    const int FAVORITE_COLUMN_ID = 5;
     const string play_icon_name = "audio-volume-high-symbolic";
+    const string favorite_icon_name = "eradio-favorites";
+    const string empty_favorite_icon_name = "eradio-empty-favorites";
 
     public ListStoreFilterType current_filter_type = ListStoreFilterType.NONE;
     public string current_filter_argument = "";
@@ -46,6 +49,7 @@ public class Radio.Widgets.StationsListStore : Gtk.ListStore, Gtk.TreeSortable {
             typeof(string),  // station genre column
             typeof(string),  // station url column
             typeof(int),     // station id column (hidden)
+            typeof(string),  // icon column (icon name)
             typeof(string)  // icon column (icon name)
         });
 
@@ -104,7 +108,7 @@ public class Radio.Widgets.StationsListStore : Gtk.ListStore, Gtk.TreeSortable {
                     genres_text += ", ";
             }
         } else {
-            genres_text = "Unknown";
+            genres_text = _("Unknown");
         }
 
         Gtk.TreeIter iterator;
@@ -114,8 +118,14 @@ public class Radio.Widgets.StationsListStore : Gtk.ListStore, Gtk.TreeSortable {
         set_value (iterator,URL_COLUMN_ID,station.url);
         set_value (iterator,ID_COLUMN_ID,station.id);
 
+        if (station.favorite) {
+            set_favorite_icon_to_iter (iterator);
+        } else {
+            set_empty_favorite_icon_to_iter (iterator);
+        }
+
         if (App.player.status == PlayerStatus.PLAYING && App.player.station.id == station.id)
-             set_play_icon_to_iter (iterator);
+            set_play_icon_to_iter (iterator);
 
         entry_added ();
     }
@@ -160,12 +170,17 @@ public class Radio.Widgets.StationsListStore : Gtk.ListStore, Gtk.TreeSortable {
                         genres_text += ", ";
                 }
             } else {
-                genres_text = "Unknown";
+                genres_text = _("Unknown");
             }
 
             set_value (iterator,GENRE_COLUMN_ID,genres_text);
 
             if (old_station.favorite != new_station.favorite) {
+                if(new_station.favorite) {
+                    set_favorite_icon_to_edited_station (new_station);
+                } else {
+                    remove_favorite_icon_from_edited_station (new_station);
+                }
                 if (old_station.favorite && current_filter_type == ListStoreFilterType.FAVORITES)
                   remove_station_with_id(new_station.id);
             }
@@ -192,6 +207,22 @@ public class Radio.Widgets.StationsListStore : Gtk.ListStore, Gtk.TreeSortable {
         set_play_icon_to_iter (station_iter);
     }
 
+    private void set_favorite_icon_to_edited_station (Radio.Models.Station edited_station) {
+        var station_iter = get_iterator_for_station_id (edited_station.id);
+        if (station_iter == null)
+            return;
+
+        set_favorite_icon_to_iter (station_iter);
+    }
+
+    private void set_favorite_icon_to_iter (Gtk.TreeIter iterator) {
+        set_value(iterator,FAVORITE_COLUMN_ID,favorite_icon_name);
+    }
+
+    private void set_empty_favorite_icon_to_iter (Gtk.TreeIter iterator) {
+        set_value(iterator,FAVORITE_COLUMN_ID,empty_favorite_icon_name);
+    }
+    
     private void set_play_icon_to_iter (Gtk.TreeIter iterator) {
         set_value(iterator,ICON_COLUMN_ID,play_icon_name);
     }
@@ -203,6 +234,18 @@ public class Radio.Widgets.StationsListStore : Gtk.ListStore, Gtk.TreeSortable {
             return;
 
         remove_play_icon_from_iter (station_iter);
+    }
+
+    private void remove_favorite_icon_from_edited_station (Radio.Models.Station edited_station) {
+        var station_iter = get_iterator_for_station_id (edited_station.id);
+        if (station_iter == null)
+            return;
+
+        remove_favorite_icon_from_iter (station_iter);
+    }
+
+    private void remove_favorite_icon_from_iter (Gtk.TreeIter iterator) {
+        set_value(iterator,FAVORITE_COLUMN_ID,empty_favorite_icon_name);
     }
 
     private void remove_play_icon_from_iter (Gtk.TreeIter iterator) {

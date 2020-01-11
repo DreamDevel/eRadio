@@ -63,7 +63,7 @@ public class Radio.Widgets.DiscoverBox : Gtk.Box {
     }
 
     private void create_elements () {
-        discover_image = new Gtk.Image.from_file("/usr/share/eradio/discoverBig.png");
+        discover_image = new Gtk.Image.from_icon_name("eradio-discover", Gtk.IconSize.DIALOG);
         header = new Gtk.Label(_("Discover"));
         header.get_style_context().add_class("header");
         subheader = new Gtk.Label(_("Find new radio stations instantly"));

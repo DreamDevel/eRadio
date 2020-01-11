@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2019 Dream Development <support@dreamdevel.com> -->
+<component type="desktop">
+  <id>com.github.dreamdevel.eradio.desktop</id>
+  <metadata_license>CC0</metadata_license>
+  <project_license>GPL-3.0+</project_license>
+  <name>eRadio</name>
+  <summary>A minimalist and powerful radio player</summary>
+  <description>
+    <p>eRadio is a radio player with native desktop features such as: Sound indicator integration, Media Keys Support, Notifications.</p>
+    <p>It support many stream types including m3u, pls, asx and has a webradio URI scheme to easily add new stations from your internet browser</p>
+    <p>You can also backup and import radio stations via erpkg files</p>
+  </description>
+  <provides>
+    <binary>com.github.dreamdevel.eradio</binary>
+  </provides>
+  <releases>
+    <release version="3.0" date="2019-06-01">
+      <description>
+        <p>Initial release for elementary Juno</p>
+      </description>
+    </release>
+  </releases>
+  <screenshots>
+    <screenshot type="default">
+      <image>https://raw.githubusercontent.com/dreamdevel/eradio/master/data/window-screenshot.png</image>
+    </screenshot>
+  </screenshots>
+  <content_rating type="oars-1.1">
+    <content_attribute id="violence-cartoon">none</content_attribute>
+    <content_attribute id="violence-fantasy">none</content_attribute>
+    <content_attribute id="violence-realistic">none</content_attribute>
+    <content_attribute id="violence-bloodshed">none</content_attribute>
+    <content_attribute id="violence-sexual">none</content_attribute>
+    <content_attribute id="violence-desecration">none</content_attribute>
+    <content_attribute id="violence-slavery">none</content_attribute>
+    <content_attribute id="violence-worship">none</content_attribute>
+    <content_attribute id="drugs-alcohol">none</content_attribute>
+    <content_attribute id="drugs-narcotics">none</content_attribute>
+    <content_attribute id="drugs-tobacco">none</content_attribute>
+    <content_attribute id="sex-nudity">none</content_attribute>
+    <content_attribute id="sex-themes">none</content_attribute>
+    <content_attribute id="sex-homosexuality">none</content_attribute>
+    <content_attribute id="sex-prostitution">none</content_attribute>
+    <content_attribute id="sex-adultery">none</content_attribute>
+    <content_attribute id="sex-appearance">none</content_attribute>
+    <content_attribute id="language-profanity">none</content_attribute>
+    <content_attribute id="language-humor">none</content_attribute>
+    <content_attribute id="language-discrimination">none</content_attribute>
+    <content_attribute id="social-chat">none</content_attribute>
+    <content_attribute id="social-info">none</content_attribute>
+    <content_attribute id="social-audio">none</content_attribute>
+    <content_attribute id="social-location">none</content_attribute>
+    <content_attribute id="social-contacts">none</content_attribute>
+    <content_attribute id="money-purchasing">none</content_attribute>
+    <content_attribute id="money-gambling">none</content_attribute>
+  </content_rating>
+  <developer_name>Dream Development</developer_name>
+  <url type="homepage">https://github.com/dreamdevel/eradio/</url>
+  <url type="bugtracker">https://github.com/dreamdevel/eradio/issues</url>
+  <url type="translate">https://github.com/dreamdevel/eradio/tree/master/po</url>
+  <url type="donation">http://eradio.dreamdevel.com/donate</url>
+  <custom>
+    <value key="x-appcenter-color-primary">#039be5</value>
+    <value key="x-appcenter-color-primary-text">#212121</value>*
+    <value key="x-appcenter-suggested-price">2</value>
+  </custom>
+</component>

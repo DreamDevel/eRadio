@@ -64,7 +64,7 @@ public class Radio.Dialogs.ErrorDialog : Gtk.Dialog {
 
         set_dialog_margins ();
         // TODO implement inkscape mockup
-        var error_message = new Gtk.Label("A problem occured while inserting station to database.ddddddddddddd");
+        var error_message = new Gtk.Label(_("A problem occured while inserting station to database."));
         error_message.set_line_wrap (true);
         error_message.set_max_width_chars (44);
 
@@ -73,7 +73,7 @@ public class Radio.Dialogs.ErrorDialog : Gtk.Dialog {
         error_message_box.pack_start (new Gtk.Image.from_icon_name ("dialog-error", Gtk.IconSize.DIALOG),false);
         error_message_box.pack_start (error_message,false);
 
-        var report_info = new Gtk.Label("If you believe this is a bug please report it to help us improve our software.");
+        var report_info = new Gtk.Label(_("If you believe this is a bug please report it to help us improve our software."));
         report_info.set_line_wrap (true);
         report_info.set_max_width_chars (44);
         main_box.pack_start (error_message_box,false);
@@ -88,9 +88,9 @@ public class Radio.Dialogs.ErrorDialog : Gtk.Dialog {
         var content_area = get_content_area ();
 
         main_box.margin_bottom = 24;
-        main_box.margin_left = 12;
-        main_box.margin_right = 6;
-        content_area.margin_right = 6;
+        main_box.margin_start = 12;
+        main_box.margin_end = 6;
+        content_area.margin_end = 6;
         content_area.margin_bottom = 6;
     }
 

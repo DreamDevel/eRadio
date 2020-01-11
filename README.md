@@ -1,28 +1,49 @@
-# eRadio #
-**A minimalist and powerful radio player for elementary OS** 
+<p align="center">
+    <img src="data/icons/64/com.github.dreamdevel.eradio.svg" alt="Icon"/>
+</p>
 
-<img src="http://i.imgur.com/YCYgFEw.png">  
+<h1 align="center">eRadio</h1>
+<p align="center">A minimalist and powerful radio player for elementary OS</p>
 
-## Build & Install
+<p align="center">
+    <img src="data/window-screenshot.png" alt="Screenshot">
+</p>
 
-**elementary OS Loki**
+## Developing and building
 
-* git clone https://github.com/DreamDevel/eRadio
-* cd eRadio
-* run ". ./tools/dev-shell" to export project PATH
-* run "install-deps" to install all dependencies
-* run "build" to build the project
-* run "install-app" to install eradio, icons and schemas
+Development is targeted at [elementary OS] Juno. If you want to hack on and
+build eRadio yourself, you'll need the following dependencies:
 
+- gstreamer-1.0
+- gtk+-3.0
+- granite
+- sqlite3
+- gee-0.8
+- libnotify
+- json-glib-1.0
+- libsoup-2.4
+- libxml-2.0
+- sqlheavy-0.1
 
-**Ubuntu 16.04 Based Distros**
+You can install them on elementary OS Juno with:
 
-* Install libsqlheavy & libsqlheavy-dev (https://launchpad.net/%7Eelementary-os/+archive/ubuntu/stable/+sourcepub/3335498/+listing-archive-extra)
-* git clone https://github.com/DreamDevel/eRadio
-* cd eRadio
-* run ". ./tools/dev-shell" to export project PATH
-* run "install-deps-ubuntu" to install all dependencies and add elementary ppa
-* run "build" to build the project
-* run "install-app" to install eradio, icons and schemas
+```shell
+sudo apt install elementary-sdk
+```
 
-Note : Use build & run command for development after installation
+Run `meson build` to configure the build environment and run `ninja install`
+to install:
+
+```shell
+meson build --prefix=/usr
+cd build
+sudo ninja install
+```
+
+Then run it with:
+
+```shell
+com.github.dreamdevel.eradio
+```
+
+[elementary OS]: https://elementary.io

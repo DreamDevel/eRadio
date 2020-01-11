@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+  <gresource prefix="/com/github/dreamdevel/eradio">
+    <file alias="eradio-all-stations.svg">icons/eradio/eradio-all-stations.svg</file>
+    <file alias="eradio-discover.svg">icons/eradio/eradio-discover.svg</file>
+    <file alias="eradio-empty-favorites.svg">icons/eradio/eradio-empty-favorites.svg</file>
+    <file alias="eradio-favorites.svg">icons/eradio/eradio-favorites.svg</file>
+    <file alias="eradio-genre.svg">icons/eradio/eradio-genre.svg</file>
+  </gresource>
+</gresources>

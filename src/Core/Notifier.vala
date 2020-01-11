@@ -34,7 +34,7 @@
             return;
 
         var playing_station = App.player.station;
-        new_notification (playing_station.name,_("You are listening to."));
+        new_notification (playing_station.name, _("You are listening to."));
     }
 
     public void new_notification (string title, string subtitle, Gdk.Pixbuf? icon=null) {
@@ -43,7 +43,7 @@
             return;
 
         if (notification == null) {
-            notification = new Notify.Notification (title,subtitle,"eRadio");
+            notification = new Notify.Notification (title,subtitle,Radio.App.PROGRAM_NAME);
         } else {
             notification.update (title,subtitle,null);
         }

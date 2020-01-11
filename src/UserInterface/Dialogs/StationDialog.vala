@@ -134,9 +134,9 @@ public abstract class Radio.Dialogs.StationDialog : Gtk.Dialog {
         var content_area = get_content_area ();
 
         main_box.margin_bottom = 24;
-        main_box.margin_left = 12;
-        main_box.margin_right = 6;
-        content_area.margin_right = 6;
+        main_box.margin_start = 12;
+        main_box.margin_end = 6;
+        content_area.margin_end = 6;
         content_area.margin_bottom = 6;
     }
 

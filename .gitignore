@@ -1,5 +1,2 @@
 build/
-build/*
-*~
-src/config.vala
-eradio.sublime-workspace
+app/

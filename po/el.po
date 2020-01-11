@@ -1,179 +1,227 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Greek translations for com.github.dreamdevel.eradio package.
+# Copyright (C) 2019 THE com.github.dreamdevel.eradio'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the com.github.dreamdevel.eradio package.
+# Automatically generated, 2019.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Project-Id-Version: com.github.dreamdevel.eradio\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-11 16:37+0300\n"
-"PO-Revision-Date: 2016-10-11 16:44+0300\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"POT-Creation-Date: 2020-01-11 18:45+0100\n"
+"PO-Revision-Date: 2019-04-22 13:32+0200\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.7.1\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../src/UserInterface/Menus/StationsTreeViewContextMenu.vala:41
-#: ../src/UserInterface/Menus/StationsTreeViewContextMenu.vala:99
-msgid "Add to Favorites"
-msgstr "Προσθήκη στα Αγαπημένα"
+#: src/Core/MPRIS.vala:187 src/UserInterface/Widgets/StationsListStore.vala:111
+#: src/UserInterface/Widgets/StationsListStore.vala:173
+msgid "Unknown"
+msgstr ""
 
-#: ../src/UserInterface/Menus/StationsTreeViewContextMenu.vala:42
-msgid "Edit station info"
-msgstr "Επεξεργασία"
+#: src/Core/Notifier.vala:37
+msgid "You are listening to."
+msgstr ""
 
-#: ../src/UserInterface/Menus/StationsTreeViewContextMenu.vala:43
-msgid "Remove from Library"
-msgstr "Διαγραφή"
-
-#: ../src/UserInterface/Menus/StationsTreeViewContextMenu.vala:97
-msgid "Remove from Favorites"
-msgstr "Αφαίρεση από Αγαπημένα"
-
-#: ../src/UserInterface/Menus/ApplicationMenu.vala:43
+#: src/UserInterface/Menus/ApplicationMenu.vala:43
 msgid "Add New Station"
 msgstr "Προσθήκη Νέου Σταθμού"
 
-#: ../src/UserInterface/Menus/ApplicationMenu.vala:44
+#: src/UserInterface/Menus/ApplicationMenu.vala:44
 msgid "Backup"
 msgstr "Αντίγραφο Ασφαλείας"
 
-#: ../src/UserInterface/Menus/ApplicationMenu.vala:45
+#: src/UserInterface/Menus/ApplicationMenu.vala:45
 msgid "Import Stations"
 msgstr "Εισαγωγή Σταθμών"
 
-#: ../src/UserInterface/Menus/ApplicationMenu.vala:46
+#: src/UserInterface/Menus/ApplicationMenu.vala:46
 msgid "Export Stations"
 msgstr "Εξαγωγή Σταθμών"
 
-#: ../src/UserInterface/Menus/ApplicationMenu.vala:47
-#: ../src/UserInterface/Widgets/DiscoverBox.vala:72
+#: src/UserInterface/Menus/ApplicationMenu.vala:47
+#: src/UserInterface/Widgets/DiscoverBox.vala:77
 msgid "Donate"
 msgstr "Κάντε Δωρεά"
 
-#: ../src/UserInterface/Views/WelcomeView.vala:26
+#: src/UserInterface/Menus/StationsTreeViewContextMenu.vala:41
+#: src/UserInterface/Menus/StationsTreeViewContextMenu.vala:99
+msgid "Add to Favorites"
+msgstr "Προσθήκη στα Αγαπημένα"
+
+#: src/UserInterface/Menus/StationsTreeViewContextMenu.vala:42
+msgid "Edit station info"
+msgstr "Επεξεργασία"
+
+#: src/UserInterface/Menus/StationsTreeViewContextMenu.vala:43
+msgid "Remove from Library"
+msgstr "Διαγραφή"
+
+#: src/UserInterface/Menus/StationsTreeViewContextMenu.vala:97
+msgid "Remove from Favorites"
+msgstr "Αφαίρεση από Αγαπημένα"
+
+#: src/UserInterface/Views/WelcomeView.vala:26
 msgid "Add a station to begin listening"
 msgstr "Προσθέστε σταθμό για να ξεκινήσετε την ακρόαση"
 
-#: ../src/UserInterface/Views/WelcomeView.vala:44
+#: src/UserInterface/Views/WelcomeView.vala:44
 msgid "Add"
 msgstr "Προσθήκη"
 
-#: ../src/UserInterface/Views/WelcomeView.vala:44
+#: src/UserInterface/Views/WelcomeView.vala:44
 msgid "Add a new station."
 msgstr "Προσθήκη νέου σταθμού."
 
-#: ../src/UserInterface/Views/WelcomeView.vala:45
+#: src/UserInterface/Views/WelcomeView.vala:45
 msgid "Import"
 msgstr "Εισαγωγή"
 
-#: ../src/UserInterface/Views/WelcomeView.vala:45
+#: src/UserInterface/Views/WelcomeView.vala:45
 msgid "Import stations from eradio package."
 msgstr "Εισαγωγή σταθμών από πακέτο eradio."
 
-#: ../src/UserInterface/Others/FileChooserCreator.vala:24
-msgid "Import Radio Stations Package"
-msgstr "Εισαγωγή πακέτου σταθμών"
+#: src/UserInterface/Widgets/HeaderBar.vala:62
+msgid "Play"
+msgstr ""
 
-#: ../src/UserInterface/Others/FileChooserCreator.vala:26
-#: ../src/UserInterface/Others/FileChooserCreator.vala:48
-msgid "Cancel"
-msgstr "Άκυρο"
+#: src/UserInterface/Widgets/HeaderBar.vala:64
+msgid "Next Station"
+msgstr ""
 
-#: ../src/UserInterface/Others/FileChooserCreator.vala:27
-msgid "Open"
-msgstr "Άνοιγμα"
+#: src/UserInterface/Widgets/HeaderBar.vala:66
+msgid "Previous Station"
+msgstr ""
 
-#: ../src/UserInterface/Others/FileChooserCreator.vala:40
-#: ../src/UserInterface/Others/FileChooserCreator.vala:62
-msgid "eRadio Package"
-msgstr "Πακέτο eRadio"
+#: src/UserInterface/Widgets/HeaderBar.vala:96
+msgid "Menu"
+msgstr ""
 
-#: ../src/UserInterface/Others/FileChooserCreator.vala:46
-msgid "Export Radio Stations"
-msgstr "Εξαγωγή Σταθμών"
+#: src/UserInterface/Widgets/HeaderBar.vala:197
+msgid "Pause"
+msgstr ""
 
-#: ../src/UserInterface/Others/FileChooserCreator.vala:49
-msgid "Save"
-msgstr "Αποθήκευση"
-
-#: ../src/UserInterface/Dialogs/ImportProgressDialog.vala:42
-msgid "Importing stations, please wait."
-msgstr "Εισαγωγή σταθμών, παρακαλώ περιμένετε."
-
-#: ../src/UserInterface/Dialogs/AddStationDialog.vala:33
-msgid "Add Station"
-msgstr "Προσθήκη Σταθμού"
-
-#: ../src/UserInterface/Dialogs/ErrorDialog.vala:55
-#: ../src/UserInterface/Dialogs/StationDialog.vala:60
-msgid "Close"
-msgstr "Κλείσιμο"
-
-#: ../src/UserInterface/Dialogs/ErrorDialog.vala:56
-msgid "Report a bug"
-msgstr "Αναφέρετε κάποιο σφάλμα"
-
-#: ../src/UserInterface/Dialogs/StationDialog.vala:90
-#: ../src/UserInterface/Widgets/SideBar.vala:56
+#: src/UserInterface/Widgets/SideBar.vala:56
+#: src/UserInterface/Dialogs/StationDialog.vala:90
 msgid "Genres"
 msgstr "Είδη"
 
-#: ../src/UserInterface/Dialogs/StationDialog.vala:116
-msgid "Name"
-msgstr "Όνομα"
-
-#: ../src/UserInterface/Dialogs/StationDialog.vala:117
-#: ../src/UserInterface/Widgets/StationsTreeView.vala:77
-msgid "Url"
-msgstr "Σύνδεσμος"
-
-#: ../src/UserInterface/Dialogs/EditStationDialog.vala:35
-msgid "Update Station"
-msgstr "Ανανέωση Σταθμού"
-
-#: ../src/UserInterface/Widgets/StationsTreeView.vala:75
-msgid "Station"
-msgstr "Σταθμός"
-
-#: ../src/UserInterface/Widgets/StationsTreeView.vala:76
-#: ../src/UserInterface/Widgets/GenresTreeView.vala:58
-msgid "Genre"
-msgstr "Είδος"
-
-#: ../src/UserInterface/Widgets/SideBar.vala:66
-#: ../src/UserInterface/Widgets/StationsListStore.vala:213
+#: src/UserInterface/Widgets/SideBar.vala:66
+#: src/UserInterface/Widgets/StationsListStore.vala:258
 msgid "All Stations"
 msgstr "Όλοι οι Σταθμοί"
 
-#: ../src/UserInterface/Widgets/SideBar.vala:79
-#: ../src/UserInterface/Widgets/StationsListStore.vala:215
+#: src/UserInterface/Widgets/SideBar.vala:79
+#: src/UserInterface/Widgets/StationsListStore.vala:260
 msgid "Favorites"
 msgstr "Αγαπημένα"
 
-#: ../src/UserInterface/Widgets/SideBar.vala:91
-#: ../src/UserInterface/Widgets/DiscoverBox.vala:62
-#: ../src/UserInterface/Widgets/StationsListStore.vala:217
+#: src/UserInterface/Widgets/SideBar.vala:91
+#: src/UserInterface/Widgets/StationsListStore.vala:262
+#: src/UserInterface/Widgets/DiscoverBox.vala:67
+#: src/UserInterface/Widgets/MainStack.vala:61
 msgid "Discover"
 msgstr "Ανακάλυψη"
 
-#: ../src/UserInterface/Widgets/DiscoverBox.vala:64
+#: src/UserInterface/Widgets/StationsTreeView.vala:76
+msgid "Station"
+msgstr "Σταθμός"
+
+#: src/UserInterface/Widgets/StationsTreeView.vala:77
+#: src/UserInterface/Widgets/GenresTreeView.vala:58
+msgid "Genre"
+msgstr "Είδος"
+
+#: src/UserInterface/Widgets/StationsTreeView.vala:78
+#: src/UserInterface/Dialogs/StationDialog.vala:117
+msgid "Url"
+msgstr "Σύνδεσμος"
+
+#: src/UserInterface/Widgets/GenresListStore.vala:25
+msgid "New Genre"
+msgstr ""
+
+#: src/UserInterface/Widgets/GenresTreeViewToolbar.vala:66
+msgid "Add Genre"
+msgstr ""
+
+#: src/UserInterface/Widgets/GenresTreeViewToolbar.vala:70
+msgid "Remove Genre"
+msgstr ""
+
+#: src/UserInterface/Widgets/DiscoverBox.vala:69
 msgid "Find new radio stations instantly"
 msgstr "Βρείτε νέους ραδιοφωνικούς σταθμούς άμεσα"
 
-#: ../src/UserInterface/Widgets/DiscoverBox.vala:67
+#: src/UserInterface/Widgets/DiscoverBox.vala:72
 msgid "This feature is currently not implemented."
 msgstr "Αυτή η λειτουργία δεν έχει ακόμη υλοποιηθεί."
 
-#: ../src/UserInterface/Widgets/DiscoverBox.vala:69
+#: src/UserInterface/Widgets/DiscoverBox.vala:74
 msgid "Support our work to keep improving our free applications."
-msgstr "Υποστηρίξτε μας για να συνεχίσουμε να βελτιώνουμε τις δωρεάν εφαρμογές μας"
+msgstr ""
+"Υποστηρίξτε μας για να συνεχίσουμε να βελτιώνουμε τις δωρεάν εφαρμογές μας"
 
-#: ../src/Core/Notifier.vala:47
-msgid "Radio Station Changed"
-msgstr "Ο σταθμός άλλαξε"
+#: src/UserInterface/Dialogs/StationDialog.vala:60
+#: src/UserInterface/Dialogs/ErrorDialog.vala:55
+msgid "Close"
+msgstr "Κλείσιμο"
+
+#: src/UserInterface/Dialogs/StationDialog.vala:116
+msgid "Name"
+msgstr "Όνομα"
+
+#: src/UserInterface/Dialogs/AddStationDialog.vala:33
+msgid "Add Station"
+msgstr "Προσθήκη Σταθμού"
+
+#: src/UserInterface/Dialogs/EditStationDialog.vala:35
+msgid "Update Details"
+msgstr ""
+
+#: src/UserInterface/Dialogs/ErrorDialog.vala:56
+msgid "Report a bug"
+msgstr "Αναφέρετε κάποιο σφάλμα"
+
+#: src/UserInterface/Dialogs/ErrorDialog.vala:67
+msgid "A problem occured while inserting station to database."
+msgstr ""
+
+#: src/UserInterface/Dialogs/ErrorDialog.vala:76
+msgid ""
+"If you believe this is a bug please report it to help us improve our "
+"software."
+msgstr ""
+
+#: src/UserInterface/Dialogs/ImportProgressDialog.vala:42
+msgid "Importing stations, please wait."
+msgstr "Εισαγωγή σταθμών, παρακαλώ περιμένετε."
+
+#: src/UserInterface/Others/FileChooserCreator.vala:24
+msgid "Import Radio Stations Package"
+msgstr "Εισαγωγή πακέτου σταθμών"
+
+#: src/UserInterface/Others/FileChooserCreator.vala:26
+#: src/UserInterface/Others/FileChooserCreator.vala:48
+msgid "Cancel"
+msgstr "Άκυρο"
+
+#: src/UserInterface/Others/FileChooserCreator.vala:27
+msgid "Open"
+msgstr "Άνοιγμα"
+
+#: src/UserInterface/Others/FileChooserCreator.vala:40
+#: src/UserInterface/Others/FileChooserCreator.vala:62
+msgid "eRadio Package"
+msgstr "Πακέτο eRadio"
+
+#: src/UserInterface/Others/FileChooserCreator.vala:46
+msgid "Export Radio Stations"
+msgstr "Εξαγωγή Σταθμών"
+
+#: src/UserInterface/Others/FileChooserCreator.vala:49
+msgid "Save"
+msgstr "Αποθήκευση"

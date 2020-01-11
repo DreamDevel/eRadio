@@ -2,7 +2,7 @@ Format: http://dep.debian.net/deps/dep5
 Upstream-Name: eradio
 Source: https://launchpad.net/eradio/
 
-Files: src/* data/* cmake/* debian/* shemas/*
+Files: src/* data/* debian/* schemas/*
 Copyright: 2014-2016 George Sofianos <georgesofianosgr@gmail.com>
 License: GPL-3.0+
 

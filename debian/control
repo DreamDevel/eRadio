@@ -2,8 +2,8 @@ Source: com.github.dreamdevel.eradio
 Section: sound
 Priority: extra
 Maintainer: George Sofianos <georgesofianosgr@gmail.com>
-Build-Depends: cmake (>= 2.8),
-               debhelper (>= 8.0.0),
+Build-Depends: debhelper (>= 8.0.0),
+               gettext,
                valac-0.24 | valac (>= 0.24),
                libgstreamer1.0-dev,
                libgtk-3-dev,
@@ -14,8 +14,9 @@ Build-Depends: cmake (>= 2.8),
                libjson-glib-dev,
                libsoup2.4-dev,
                libxml2-dev,
-               libsqlheavy-dev
-Standards-Version: 3.9.3
+               libsqlheavy-dev,
+               meson
+Standards-Version: 4.1.1
 
 Package: com.github.dreamdevel.eradio
 Architecture: any
